@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Alert, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useForm, Controller, set } from "react-hook-form";
+import MMKVStorage from "react-native-mmkv-storage";
 
-const Login = () => {
+const MMKV = new MMKVStorage.Loader();
+MMKV.initialize();
+
+const Login = ({ navigation }) => {
     const { control, handleSubmit, formState: { errors } } = useForm();
     const [isLoading, setLoading] = useState(false)
 
@@ -20,8 +24,9 @@ const Login = () => {
             })
             .then((response) => response.json())
             .then((json) => {
-              alert(JSON.stringify(json))
-              setLoading(false)
+                alert(JSON.stringify(json))
+                setLoading(false)
+                navigation.navigate('daily', {})
             })
             .catch((error) => {
               console.error(error);
