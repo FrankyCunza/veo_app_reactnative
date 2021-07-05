@@ -1,10 +1,15 @@
 import React from 'react';
-import { View, Text, TextInput, Button, Alert, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, Alert, StyleSheet, TouchableOpacity } from 'react-native';
 import { useForm, Controller } from "react-hook-form";
 
 const Login = () => {
     const { control, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = data => console.log(data);
+
+    const onSubmit = data => {
+        alert(data)
+        console.log(data)
+    };
+
     return (
         <View style={{paddingHorizontal: 12}}>
             <Text style={styles.title}>Iniciar sesión</Text>
@@ -46,9 +51,9 @@ const Login = () => {
                     defaultValue=""
                 />
             </View>
-            <View style={{marginTop: 16}}>
-                <Button title="Enviar" style={styles.send} onPress={handleSubmit(onSubmit)} />
-            </View>
+            <TouchableOpacity onPress={onSubmit} style={styles.appButtonContainer}>
+                <Text style={styles.appButtonText}>Enviar</Text>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -59,11 +64,27 @@ const styles = StyleSheet.create({
         marginBottom: 6
     },
     send: {
-        height: 54
+        height: 54,
+        backgroundColor: '#f2f2f2'
     },
     item: {
 
     },
+    appButtonContainer: {
+        elevation: 8,
+        backgroundColor: "#009688",
+        marginTop: 20,
+        borderRadius: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 12
+      },
+      appButtonText: {
+        fontSize: 18,
+        color: "#fff",
+        fontWeight: "bold",
+        alignSelf: "center",
+        textTransform: "uppercase"
+    },    
     input: {
       backgroundColor: "#ffffff",
       borderRadius: 5,
