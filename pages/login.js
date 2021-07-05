@@ -1,57 +1,83 @@
-import React from 'react';
-import { View, Text, TextInput, Button, Alert, StyleSheet, TouchableOpacity } from 'react-native';
-import { useForm, Controller } from "react-hook-form";
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, Alert, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { useForm, Controller, set } from "react-hook-form";
 
 const Login = () => {
     const { control, handleSubmit, formState: { errors } } = useForm();
+    const [isLoading, setLoading] = useState(false)
 
     const onSubmit = data => {
-        alert(data)
-        console.log(data)
+        setLoading(true)
+        const param = {
+            user: 'franky.demo',
+            password: '123456',
+            social: false
+        }
+        fetch('https://gateway.vim365.com/users/checkuser?user=franky.demo&password=123456&social=false', {
+                headers: {
+                    'security-header': 'Vim365Aputek/2020.04'
+                }
+            })
+            .then((response) => response.json())
+            .then((json) => {
+              alert(JSON.stringify(json))
+              setLoading(false)
+            })
+            .catch((error) => {
+              console.error(error);
+            });
     };
 
     return (
         <View style={{paddingHorizontal: 12}}>
             <Text style={styles.title}>Iniciar sesión</Text>
-            <View style={styles.item}>
-                <Text style={styles.label}>Usuario:</Text>
-                <Controller
-                    control={control}
-                    rules={{
-                    required: true,
-                    }}
-                    render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
-                        style={styles.input}
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
-                    />
-                    )}
-                    name="firstName"
-                    defaultValue=""
-                />
+            
+            <View>
+                {isLoading ? <ActivityIndicator size="small" color="#0000ff" /> : (
+                    <>
+                    <View style={styles.item}>
+                        <Text style={styles.label}>Usuario:</Text>
+                        <Controller
+                            control={control}
+                            rules={{
+                            required: true,
+                            }}
+                            render={({ field: { onChange, onBlur, value } }) => (
+                            <TextInput
+                                style={styles.input}
+                                onBlur={onBlur}
+                                onChangeText={onChange}
+                                value={value}
+                            />
+                            )}
+                            name="user"
+                            defaultValue=""
+                        />
+                        {errors.user && <Text>This is required. </Text>}
+                    </View>
+                    <View style={styles.item, {marginTop: 14}}>
+                        <Text style={styles.label}>Contraseña:</Text>
+                        <Controller
+                            control={control}
+                            rules={{
+                            required: true,
+                            }}
+                            render={({ field: { onChange, onBlur, value } }) => (
+                            <TextInput
+                                style={styles.input}
+                                onBlur={onBlur}
+                                onChangeText={onChange}
+                                value={value}
+                            />
+                            )}
+                            name="password"
+                            defaultValue=""
+                        />
+                    </View>
+                    </>
+                )}
             </View>
-            <View style={styles.item, {marginTop: 14}}>
-                <Text style={styles.label}>Contraseña:</Text>
-                <Controller
-                    control={control}
-                    rules={{
-                    required: true,
-                    }}
-                    render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
-                        style={styles.input}
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
-                    />
-                    )}
-                    name="firstName"
-                    defaultValue=""
-                />
-            </View>
-            <TouchableOpacity onPress={onSubmit} style={styles.appButtonContainer}>
+            <TouchableOpacity onPress={handleSubmit(onSubmit)} style={styles.appButtonContainer}>
                 <Text style={styles.appButtonText}>Enviar</Text>
             </TouchableOpacity>
         </View>
