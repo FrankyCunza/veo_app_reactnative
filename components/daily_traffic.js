@@ -30,13 +30,16 @@ const DailyTraffic = ({ name }) => {
                     })
                     .then((response) => response.json())
                     .then((json) => {
-                        alert(JSON.stringify(json))
+                        // alert(JSON.stringify(json))
                         if (name == 'green') {
                             setData(json.data[0]['traffic_green'])
+                            alert(JSON.stringify(json.data[0]['traffic_green']))
                         } else if (name == 'yellow') {
                             setData(json.data['traffic_yellow'])
+                            alert(JSON.stringify(json.data[0]['traffic_yellow']))
                         } else {
                             setData(json.data[0]['traffic_red'])
+                            alert(JSON.stringify(json.data[0]['traffic_red']))
                         }
                     })
                     .catch((error) => {
@@ -54,9 +57,24 @@ const DailyTraffic = ({ name }) => {
 
     }
 
+    const renderItem = ({item}) => {
+        return (
+            <View>
+                <View style={{ paddingVertical: 14, paddingHorizontal: 16}}>
+                    <Text style={{fontSize: 14, textAlign: 'center'}}>{item.name}</Text>
+                </View>
+            </View>
+        )
+    }
+
     return (
         <View>
-            <Text>{name}</Text>
+            {data ? (
+            <View>
+                <Text>{data.title}</Text>
+                <FlatList data={data.recomendations} numColumns={1} renderItem={renderItem} keyExtractor={((item, i) => i)} />
+            </View>
+            ) : ''}
         </View>
     )
 }

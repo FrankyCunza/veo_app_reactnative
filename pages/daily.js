@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, ActivityIndicator, TouchableHighlight, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Image, FlatList, ActivityIndicator, TouchableHighlight, TouchableOpacity, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CheckBox from '@react-native-community/checkbox';
 import DailyTraffic from '../components/daily_traffic';
@@ -50,8 +50,9 @@ const Daily = ({navigation}) => {
         }
     }
 
-    const changeCheck = (check, id, value) => {
-        alert(JSON.stringify(range))
+    const changeCheck = (check, id, value, icon) => {
+        // alert(icon)
+        // alert(JSON.stringify(range))
         if (check == true) {
             setValues(values+value)
         } else {
@@ -117,6 +118,9 @@ const Daily = ({navigation}) => {
             alert(e)
         }
     }
+
+    // const test = () =>
+    // ../assets/svgs/td7.svg
     
 
     const renderItem = ({item}) => {
@@ -125,13 +129,18 @@ const Daily = ({navigation}) => {
                 <TouchableHighlight style={{minHeight: 110}}>
                     <>
                     <View style={{ paddingVertical: 14, paddingHorizontal: 16}}>
+                        <Image
+                            style={styles.tinyLogo}
+                            source={require('../assets/svgs/logo-veo365.png')}
+                        />
+                        {/* <Image source={'../assets/svgs/logo-veo365.png'}></Image> */}
                         <Text style={{fontSize: 14, textAlign: 'center'}}>{item.title}</Text>
                     </View>
                     <CheckBox
                             disabled={false}
                             style={styles.checkbox}
                             value={collectData[item.code].selected}
-                            onValueChange={(newValue) => { setCollectData({...collectData, [item.code]: {...item, selected: newValue}}, changeCheck(newValue, item.id, item.value) ) }}
+                            onValueChange={(newValue) => { setCollectData({...collectData, [item.code]: {...item, selected: newValue}}, changeCheck(newValue, item.id, item.value, item.image) ) }}
                         />
                     </>
                 </TouchableHighlight>
@@ -157,6 +166,10 @@ const Daily = ({navigation}) => {
 const styles = StyleSheet.create({
     checked: {
         backgroundColor: 'red'
+    },
+    tinyLogo: {
+        width: 50,
+        height: 50,
     },
     checkbox: {
         position: 'absolute',
