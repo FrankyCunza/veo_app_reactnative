@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from './pages/home';
-import Daily from './pages/daily';
+import Daily from './pages/testdiario';
 import Login from './pages/login';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -15,7 +15,8 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login" component={Login} options={{ title: 'Overview' }} />
-        <Stack.Screen name="Daily" component={Daily} options={{ title: 'Daily' }} />
+        <Stack.Screen name="/testdiario" component={Daily} options={{ title: 'Declaración diaria' }} />
+        <Stack.Screen name="Home" component={Home} options={{ title: 'Home' }} />
       </Stack.Navigator>
     </NavigationContainer>
     // <NativeRouter>

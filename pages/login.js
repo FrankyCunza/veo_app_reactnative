@@ -9,9 +9,11 @@ const Login = ({ navigation }) => {
 
     const storeData = async (value) => {
         try {
-          await AsyncStorage.setItem('storage_Key', 'Hello')
+            for (const [key, val] of Object.entries(value)) {
+                await AsyncStorage.setItem(key, val ? val : 'false')
+            }
         } catch (e) {
-          // saving error
+            console.log(e)
         }
     }
 
@@ -30,10 +32,9 @@ const Login = ({ navigation }) => {
             })
             .then((response) => response.json())
             .then((json) => {
-                alert(JSON.stringify(json))
-                storeData('name')
+                storeData(json)
                 setLoading(false)
-                navigation.navigate('Daily', {})
+                navigation.navigate('Home', {})
             })
             .catch((error) => {
               console.error(error);
