@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from './pages/home';
-import Daily from './pages/testdiario';
+import Daily from './pages/daily';
 import Login from './pages/login';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
