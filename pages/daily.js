@@ -7,7 +7,7 @@ const Daily = ({navigation}) => {
     const [cards, setCards] = useState([])
     const [isLoading, setLoading] = useState(true);
     const [checked, setChecked] = React.useState({});
-
+    const [collectData, setCollectData] = useState([])
     useEffect(() => {
         getData()
     }, [])
@@ -27,9 +27,14 @@ const Daily = ({navigation}) => {
                 })
                 .then((response) => response.json())
                 .then((json) => {
-                    setCards(json.data)
                     setLoading(false)
-                    // alert(JSON.stringify(json))
+                    let pruebita = {}
+                    for (let item of json.data) {
+                        pruebita[item.code] = item
+                    }
+                    setCollectData(pruebita)
+                    setCards(json.data)
+                    // alert(JSON.stringify(pruebita))
                     // for (const item of json.data) {
                     //     setBoxes((s) => [...s, {"code": item.code, "id": item.id, "response": false, "image": item.image, "type": item.type, "title": item.text}])
                     // }
@@ -54,7 +59,7 @@ const Daily = ({navigation}) => {
     }
 
     const senData = () => {
-        alert(JSON.stringify(checked))
+        alert(JSON.stringify(collectData))
     }
     
 
@@ -68,8 +73,8 @@ const Daily = ({navigation}) => {
                         </View>
                         <CheckBox
                             disabled={false}
-                            value={checked[item.code]}
-                            onValueChange={(newValue) => { setChecked({...checked, [item.code]: newValue} ) }}
+                            value={collectData[item.code].selected}
+                            onValueChange={(newValue) => { setCollectData({...collectData, [item.code]: {...item, selected: newValue}} ) }}
                         />
                     </View>
                 </TouchableHighlight>
