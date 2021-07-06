@@ -8,7 +8,7 @@ const Daily = ({navigation}) => {
     const [cards, setCards] = useState([])
     const [isLoading, setLoading] = useState(true);
     const [collectData, setCollectData] = useState([])
-    const [resultTraffic, setResultTraffic] = useState('green')
+    const [resultTraffic, setResultTraffic] = useState('')
     const [values, setValues] = useState(0)
     const [range, setRange] = useState([]);
     useEffect(() => {
@@ -61,6 +61,7 @@ const Daily = ({navigation}) => {
 
     const senData =  async () => {
         // alert(JSON.stringify(collectData))
+        setLoading(true)
         try {
             // Data Storage
             const keys = await AsyncStorage.getAllKeys()
@@ -79,7 +80,6 @@ const Daily = ({navigation}) => {
             } else if (values === range['min_hig_range'] || values <= range['max_hig_range']) {
                 traffic = 'red'
             } else {}
-            setResultTraffic(traffic)
             
             // Collect Data
             let data = {
@@ -108,7 +108,7 @@ const Daily = ({navigation}) => {
                 })
                 .then((response) => response.json())
                 .then((json) => {
-                    alert(JSON.stringify(json))
+                    setResultTraffic(traffic)
                 })
                 .catch((error) => {
                     alert(error)
