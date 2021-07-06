@@ -1,23 +1,29 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Alert, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useForm, Controller, set } from "react-hook-form";
-import MMKVStorage from "react-native-mmkv-storage";
-
-const MMKV = new MMKVStorage.Loader();
-MMKV.initialize();
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ({ navigation }) => {
     const { control, handleSubmit, formState: { errors } } = useForm();
     const [isLoading, setLoading] = useState(false)
 
-    const onSubmit = data => {
+    const storeData = async (value) => {
+        try {
+          await AsyncStorage.setItem('storage_Key', 'Hello')
+        } catch (e) {
+          // saving error
+        }
+    }
+
+    const onSubmit = async data => {
         setLoading(true)
         const param = {
             user: 'franky.demo',
             password: '123456',
             social: false
         }
-        fetch('https://gateway.vim365.com/users/checkuser?user=franky.demo&password=123456&social=false', {
+        try {
+            fetch('https://gateway.vim365.com/users/checkuser?user=franky.demo&password=123456&social=false', {
                 headers: {
                     'security-header': 'Vim365Aputek/2020.04'
                 }
@@ -25,12 +31,17 @@ const Login = ({ navigation }) => {
             .then((response) => response.json())
             .then((json) => {
                 alert(JSON.stringify(json))
+                storeData('name')
                 setLoading(false)
-                navigation.navigate('daily', {})
+                navigation.navigate('Daily', {})
             })
             .catch((error) => {
               console.error(error);
             });
+        } catch(e) {
+            console.log(e)
+        }
+        
     };
 
     return (

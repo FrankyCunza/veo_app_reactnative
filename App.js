@@ -8,9 +8,16 @@ import Home from './pages/home';
 import Daily from './pages/daily';
 import Login from './pages/login';
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 const App = () => {
   return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen name="Login" component={Login} options={{ title: 'Overview' }} />
+        <Stack.Screen name="Daily" component={Daily} options={{ title: 'Daily' }} />
+      </Stack.Navigator>
+    </NavigationContainer>
     // <NativeRouter>
     //   <View style={styles.container}>
     //     <View style={styles.nav}>
@@ -18,7 +25,7 @@ const App = () => {
     //         <Text>Login</Text>
     //       </Link>
     //       <Link
-    //         to="/daily"
+    //         to="/Daily"
     //         underlayColor="#f0f4f7"
     //         style={styles.navItem}
     //       >
@@ -26,17 +33,17 @@ const App = () => {
     //       </Link>
     //     </View>
 
-    //     <Route exact path="/" component={Login} children />
-    //     <Route path="/daily" component={Daily} />
+    //     <Route exact path="/" component={Login} />
+    //     <Route path="/Daily" component={Daily} />
     //   </View>
     // </NativeRouter>
-    <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Search" component={Search} />
-        <Tab.Screen name="Compare" component={Compare} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    // <NavigationContainer>
+    //   <Tab.Navigator>
+    //     <Tab.Screen name="Login" component={Login} />
+    //     <Tab.Screen name="Home" component={Home} />
+    //     <Tab.Screen name="Daily" component={Daily} />
+    //   </Tab.Navigator>
+    // </NavigationContainer>
   )
 }
 
