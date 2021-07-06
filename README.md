@@ -22,7 +22,7 @@ or
 `adb devices`
 
 # Async storage
-https://github.com/mrousavy/react-native-mmkv
+https://react-native-async-storage.github.io/async-storage/docs/usage
 
 # Type annotations can only be used in TypeScript files.ts(8010) on React-Native CLI Startup
 1. Set "javascript.validate.enable": false in your VS Code settings.

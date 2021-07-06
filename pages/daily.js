@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, ActivityIndicator, TouchableHighlight } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import CheckBox from '@react-native-community/checkbox';
 
 const Daily = ({navigation}) => {
     const [cards, setCards] = useState([])
     const [isLoading, setLoading] = useState(true);
+    const [toggleCheckBox, setToggleCheckBox] = useState(false)
 
     useEffect(() => {
         getData()
@@ -54,9 +56,14 @@ const Daily = ({navigation}) => {
                     height: 120
                     }}
                     /> */}
-                    <View style={{ paddingVertical: 14, paddingHorizontal: 10}}>
-                        <Text style={{height: 32, fontSize: 12}}>{item.title}</Text>
-                    </View>
+                        <View style={{ paddingVertical: 14, paddingHorizontal: 10}}>
+                            <Text style={{height: 32, fontSize: 12}}>{item.title}</Text>
+                        </View>
+                        <CheckBox
+                            disabled={false}
+                            value={toggleCheckBox}
+                            onValueChange={(newValue) => setToggleCheckBox(newValue)}
+                        />
                     </View>
                 </TouchableHighlight>
             </View>
