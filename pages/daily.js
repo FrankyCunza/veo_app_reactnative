@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, ActivityIndicator, TouchableHighlight, TouchableOpacity, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CheckBox from '@react-native-community/checkbox';
+import DailyTraffic from '../components/daily_traffic';
 
 const Daily = ({navigation}) => {
     const [cards, setCards] = useState([])
     const [isLoading, setLoading] = useState(true);
-    const [checked, setChecked] = React.useState({});
     const [collectData, setCollectData] = useState([])
+    const [resultTraffic, setResultTraffic] = useState('green')
+    const [range, setRange] = useState([]);
     useEffect(() => {
         getData()
     }, [])
@@ -34,6 +36,7 @@ const Daily = ({navigation}) => {
                     }
                     setCollectData(pruebita)
                     setCards(json.data)
+                    setResultTraffic('red')
                     // alert(JSON.stringify(pruebita))
                     // for (const item of json.data) {
                     //     setBoxes((s) => [...s, {"code": item.code, "id": item.id, "response": false, "image": item.image, "type": item.type, "title": item.text}])
@@ -71,7 +74,7 @@ const Daily = ({navigation}) => {
                 ...object,
                 "form": {
                     "code": "DT2005",
-                    "traffic": 'green',
+                    "traffic": resultTraffic,
                     "status": true,
                     "version": 4.00,
                     "answers": []
@@ -126,6 +129,7 @@ const Daily = ({navigation}) => {
 
     return (
         <ScrollView>
+            <DailyTraffic name={resultTraffic} />
             <>
                 {isLoading ? <ActivityIndicator size="small" color="#0000ff" /> :
                     (<FlatList data={cards} numColumns={2} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14}} keyExtractor={((item, i) => item.id)} />)
