@@ -60,38 +60,47 @@ const Daily = ({navigation}) => {
 
     const senData =  async () => {
         // alert(JSON.stringify(collectData))
-        const keys = await AsyncStorage.getAllKeys()
-        const itemsArray = await AsyncStorage.multiGet(keys)
-        let object = {}
-        itemsArray.map(item => {
-          object[`${item[0]}`] = item[1]
-        })
-        alert(JSON.stringify(object))
-        // for (const [key, value] of Object.entries(await AsyncStorage.getAllKeys())) {
-        //     alert(key)
-        // }
-        // try {
-        //     const token = await AsyncStorage.getItem('token')
-        //     const id = await AsyncStorage.getItem('id')
-        //     fetch('https://gateway.vim365.com/saveform/saveform', {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //             'security-header': 'Vim365Aputek/2020.04',
-        //             Authorization: token,
-        //             id: id
-        //         }
-        //         })
-        //         .then((response) => response.json())
-        //         .then((json) => {
-        //             JSON.stringify(json)
-        //         })
-        //         .catch((error) => {
-        //             alert(error)
-        //     });
-        //   } catch(e) {
-        //     alert(e)
-        // }
+        try {
+            const keys = await AsyncStorage.getAllKeys()
+            const itemsArray = await AsyncStorage.multiGet(keys)
+            let object = {}
+            itemsArray.map(item => {
+            object[`${item[0]}`] = item[1]
+            })
+            let data = {
+                ...object,
+                "form": {
+                    "code": "DT2005",
+                    "traffic": 'green',
+                    "status": true,
+                    "version": 4.00,
+                    "answers": []
+                },
+                "date": '06-07-2021',
+                "hour": '00:00:00',
+            }
+            const token = await AsyncStorage.getItem('token')
+            const id = await AsyncStorage.getItem('id')
+            fetch('https://gateway.vim365.com/saveform/saveform', {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'security-header': 'Vim365Aputek/2020.04',
+                    Authorization: token,
+                    id: id
+                }
+                })
+                .then((response) => response.json())
+                .then((json) => {
+                    alert(JSON.stringify(json))
+                })
+                .catch((error) => {
+                    alert(error)
+            });
+          } catch(e) {
+            alert(e)
+        }
     }
     
 
