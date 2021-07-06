@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, ActivityIndicator, TouchableHighlight } from 'react-native';
+import { View, Text, StyleSheet, FlatList, ActivityIndicator, TouchableHighlight, TouchableOpacity, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CheckBox from '@react-native-community/checkbox';
 
 const Daily = ({navigation}) => {
     const [cards, setCards] = useState([])
     const [isLoading, setLoading] = useState(true);
-    const [toggleCheckBox, setToggleCheckBox] = useState(false)
+    const [checked, setChecked] = React.useState({});
 
     useEffect(() => {
         getData()
@@ -28,6 +28,9 @@ const Daily = ({navigation}) => {
                     setCards(json.data)
                     setLoading(false)
                     // alert(JSON.stringify(json))
+                    // for (const item of json.data) {
+                    //     setBoxes((s) => [...s, {"code": item.code, "id": item.id, "response": false, "image": item.image, "type": item.type, "title": item.text}])
+                    // }
                 })
                 .catch((error) => {
                     alert(error)
@@ -37,32 +40,34 @@ const Daily = ({navigation}) => {
         }
     }
 
-    const goPage = (name) => {
-        // routerLink
-        navigation.navigate(name, {
-            term: name
+    const changeCheck = (id, value) => {
+        const NewArray = cards.map(item => {
+            if (item.id == id){
+                item.selected = value
+            }
+            return item
         })
+        alert(JSON.stringify(NewArray))
+        setCards(NewArray)
     }
+
+    const senData = () => {
+        alert(JSON.stringify(checked))
+    }
+    
 
     const renderItem = ({item}) => {
         return (
             <View style={styles.card}>
-                <TouchableHighlight onPress={() => {goPage(item.routerLink)}}>
+                <TouchableHighlight>
                     <View>
-                    {/* <Image
-                    source={{
-                    uri: getImage(item.icon),
-                    width: '100%',
-                    height: 120
-                    }}
-                    /> */}
                         <View style={{ paddingVertical: 14, paddingHorizontal: 10}}>
                             <Text style={{height: 32, fontSize: 12}}>{item.title}</Text>
                         </View>
                         <CheckBox
                             disabled={false}
-                            value={toggleCheckBox}
-                            onValueChange={(newValue) => setToggleCheckBox(newValue)}
+                            value={checked[item.id]}
+                            onValueChange={(newValue) => { setChecked({...checked, [item.id]: newValue} ) }}
                         />
                     </View>
                 </TouchableHighlight>
@@ -71,13 +76,18 @@ const Daily = ({navigation}) => {
     }
 
     return (
-        <View>
-            <>
-                {isLoading ? <ActivityIndicator size="small" color="#0000ff" /> :
-                    (<FlatList data={cards} numColumns={2} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14}} keyExtractor={((item, i) => i)} />)
-                }
-            </>
-        </View>
+        <ScrollView>
+            <View>
+                <>
+                    {isLoading ? <ActivityIndicator size="small" color="#0000ff" /> :
+                        (<FlatList data={cards} numColumns={2} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14}} keyExtractor={((item, i) => i)} />)
+                    }
+                </>
+                <TouchableOpacity onPress={senData} style={styles.appButtonContainer}>
+                    <Text style={styles.appButtonText}>Enviar</Text>
+                </TouchableOpacity>
+            </View>
+        </ScrollView>
     )
 }
 
@@ -101,6 +111,21 @@ const styles = StyleSheet.create({
         shadowOpacity: 1, 
         shadowRadius: 2
     },
+    appButtonContainer: {
+        elevation: 8,
+        backgroundColor: "#009688",
+        marginTop: 20,
+        borderRadius: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 12
+      },
+      appButtonText: {
+        fontSize: 18,
+        color: "#fff",
+        fontWeight: "bold",
+        alignSelf: "center",
+        textTransform: "uppercase"
+    }, 
     input: {
         height: 40,
         margin: 12,
