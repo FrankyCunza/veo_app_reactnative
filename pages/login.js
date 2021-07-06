@@ -20,12 +20,12 @@ const Login = ({ navigation }) => {
     const onSubmit = async data => {
         setLoading(true)
         const param = {
-            user: 'franky.demo',
-            password: '123456',
+            user: data.user,
+            password: data.password,
             social: false
         }
         try {
-            fetch('https://gateway.vim365.com/users/checkuser?user=franky.demo&password=123456&social=false', {
+            fetch(`https://gateway.vim365.com/users/checkuser?user=${param.user}&password=${param.password}&social=false`, {
                 headers: {
                     'security-header': 'Vim365Aputek/2020.04'
                 }

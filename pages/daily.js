@@ -15,7 +15,9 @@ const Daily = ({navigation}) => {
         try {
             const token = await AsyncStorage.getItem('token')
             const id = await AsyncStorage.getItem('id')
-            fetch('https://gateway.vim365.com/checkcards/cards?company_id=1&end_point=demo&page=daily-test', {
+            const company_id = await AsyncStorage.getItem('company_id')
+            const end_point = await AsyncStorage.getItem('end_point')
+            fetch(`https://gateway.vim365.com/checkcards/cards?company_id=${company_id}&end_point=${end_point}&page=daily-test`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'security-header': 'Vim365Aputek/2020.04',
@@ -66,8 +68,8 @@ const Daily = ({navigation}) => {
                         </View>
                         <CheckBox
                             disabled={false}
-                            value={checked[item.id]}
-                            onValueChange={(newValue) => { setChecked({...checked, [item.id]: newValue} ) }}
+                            value={checked[item.code]}
+                            onValueChange={(newValue) => { setChecked({...checked, [item.code]: newValue} ) }}
                         />
                     </View>
                 </TouchableHighlight>
@@ -77,16 +79,14 @@ const Daily = ({navigation}) => {
 
     return (
         <ScrollView>
-            <View>
-                <>
-                    {isLoading ? <ActivityIndicator size="small" color="#0000ff" /> :
-                        (<FlatList data={cards} numColumns={2} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14}} keyExtractor={((item, i) => i)} />)
-                    }
-                </>
-                <TouchableOpacity onPress={senData} style={styles.appButtonContainer}>
-                    <Text style={styles.appButtonText}>Enviar</Text>
-                </TouchableOpacity>
-            </View>
+            <>
+                {isLoading ? <ActivityIndicator size="small" color="#0000ff" /> :
+                    (<FlatList data={cards} numColumns={2} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14}} keyExtractor={((item, i) => i)} />)
+                }
+            </>
+            <TouchableOpacity onPress={senData} style={styles.appButtonContainer}>
+                <Text style={styles.appButtonText}>Enviar</Text>
+            </TouchableOpacity>
         </ScrollView>
     )
 }
