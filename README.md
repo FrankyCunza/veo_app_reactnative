@@ -21,8 +21,11 @@ or
 # View devices
 `adb devices`
 
-# Async storage
-https://react-native-async-storage.github.io/async-storage/docs/usage
+# Dependencies
+  # Async storage
+  https://react-native-async-storage.github.io/async-storage/docs/usage
+  # Vector Image
+  https://github.com/oblador/react-native-vector-image
 
 # Type annotations can only be used in TypeScript files.ts(8010) on React-Native CLI Startup
 1. Set "javascript.validate.enable": false in your VS Code settings.

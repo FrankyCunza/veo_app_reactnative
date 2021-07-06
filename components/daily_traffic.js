@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, ActivityIndicator, TouchableHighlight, TouchableOpacity, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CheckBox from '@react-native-community/checkbox';
+import VectorImage from 'react-native-vector-image';
 
 const DailyTraffic = ({ name }) => {
     const [data, setData] = useState([])
@@ -57,10 +58,15 @@ const DailyTraffic = ({ name }) => {
 
     }
 
+    const test = () => {
+        return './../assets/svgs/td15.svg'
+    }
+
     const renderItem = ({item}) => {
         return (
             <View>
                 <View style={{ paddingVertical: 14, paddingHorizontal: 16}}>
+                    <VectorImage source={require('./../assets/svgs/td15.svg')} />
                     <Text style={{fontSize: 14, textAlign: 'center'}}>{item.name}</Text>
                 </View>
             </View>
