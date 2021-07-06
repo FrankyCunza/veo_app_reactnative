@@ -106,18 +106,19 @@ const Daily = ({navigation}) => {
 
     const renderItem = ({item}) => {
         return (
-            <View style={styles.card}>
-                <TouchableHighlight>
-                    <View>
-                        <View style={{ paddingVertical: 14, paddingHorizontal: 10}}>
-                            <Text style={{height: 32, fontSize: 12}}>{item.title}</Text>
-                        </View>
-                        <CheckBox
+            <View style={[styles.card, collectData[item.code].selected ? styles.checked : '']}>
+                <TouchableHighlight style={{minHeight: 110}}>
+                    <>
+                    <View style={{ paddingVertical: 14, paddingHorizontal: 16}}>
+                        <Text style={{fontSize: 14, textAlign: 'center'}}>{item.title}</Text>
+                    </View>
+                    <CheckBox
                             disabled={false}
+                            style={styles.checkbox}
                             value={collectData[item.code].selected}
                             onValueChange={(newValue) => { setCollectData({...collectData, [item.code]: {...item, selected: newValue}} ) }}
                         />
-                    </View>
+                    </>
                 </TouchableHighlight>
             </View>
         )
@@ -127,7 +128,7 @@ const Daily = ({navigation}) => {
         <ScrollView>
             <>
                 {isLoading ? <ActivityIndicator size="small" color="#0000ff" /> :
-                    (<FlatList data={cards} numColumns={2} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14}} keyExtractor={((item, i) => i)} />)
+                    (<FlatList data={cards} numColumns={2} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14}} keyExtractor={((item, i) => item.id)} />)
                 }
             </>
             <TouchableOpacity onPress={senData} style={styles.appButtonContainer}>
@@ -138,7 +139,20 @@ const Daily = ({navigation}) => {
 }
 
 const styles = StyleSheet.create({
+    checked: {
+        backgroundColor: 'red'
+    },
+    checkbox: {
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        top: 0,
+        left: 0,
+        backgroundColor: 'red',
+        opacity: 0
+    },
     card: {
+        backgroundColor: 'red',
         shadowColor: "#000",
         shadowOffset: {
             width: 2,
@@ -155,7 +169,8 @@ const styles = StyleSheet.create({
         shadowColor: '#000', 
         shadowOffset: {width: 0, height: 2}, 
         shadowOpacity: 1, 
-        shadowRadius: 2
+        shadowRadius: 2,
+        position: 'relative',
     },
     appButtonContainer: {
         elevation: 8,
