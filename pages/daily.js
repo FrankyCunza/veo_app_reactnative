@@ -9,6 +9,7 @@ const Daily = ({navigation}) => {
     const [isLoading, setLoading] = useState(true);
     const [collectData, setCollectData] = useState([])
     const [resultTraffic, setResultTraffic] = useState('green')
+    const [values, setValues] = useState(0)
     const [range, setRange] = useState([]);
     useEffect(() => {
         getData()
@@ -29,15 +30,14 @@ const Daily = ({navigation}) => {
                 })
                 .then((response) => response.json())
                 .then((json) => {
+                    setRange(json.range)
                     setLoading(false)
-                    let pruebita = {}
+                    let res = {}
                     for (let item of json.data) {
-                        pruebita[item.code] = item
+                        res[item.code] = item
                     }
-                    setCollectData(pruebita)
+                    setCollectData(res)
                     setCards(json.data)
-                    setResultTraffic('red')
-                    // alert(JSON.stringify(pruebita))
                     // for (const item of json.data) {
                     //     setBoxes((s) => [...s, {"code": item.code, "id": item.id, "response": false, "image": item.image, "type": item.type, "title": item.text}])
                     // }
@@ -50,31 +50,43 @@ const Daily = ({navigation}) => {
         }
     }
 
-    const changeCheck = (id, value) => {
-        const NewArray = cards.map(item => {
-            if (item.id == id){
-                item.selected = value
-            }
-            return item
-        })
-        alert(JSON.stringify(NewArray))
-        setCards(NewArray)
+    const changeCheck = (check, id, value) => {
+        alert(JSON.stringify(range))
+        if (check == true) {
+            setValues(values+value)
+        } else {
+            setValues(values-value)
+        }
     }
 
     const senData =  async () => {
         // alert(JSON.stringify(collectData))
         try {
+            // Data Storage
             const keys = await AsyncStorage.getAllKeys()
             const itemsArray = await AsyncStorage.multiGet(keys)
             let object = {}
             itemsArray.map(item => {
-            object[`${item[0]}`] = item[1]
+                object[`${item[0]}`] = item[1]
             })
+            
+            // Traffic
+            let traffic = ''
+            if (values === range['min_low_range'] || values <= range['max_low_range']) {
+                traffic = 'green'
+            } else if (values === range['min_med_range'] || values <= range['max_med_range']) {
+                traffic = 'yellow'
+            } else if (values === range['min_hig_range'] || values <= range['max_hig_range']) {
+                traffic = 'red'
+            } else {}
+            setResultTraffic(traffic)
+            
+            // Collect Data
             let data = {
                 ...object,
                 "form": {
                     "code": "DT2005",
-                    "traffic": resultTraffic,
+                    "traffic": traffic,
                     "status": true,
                     "version": 4.00,
                     "answers": []
@@ -119,7 +131,7 @@ const Daily = ({navigation}) => {
                             disabled={false}
                             style={styles.checkbox}
                             value={collectData[item.code].selected}
-                            onValueChange={(newValue) => { setCollectData({...collectData, [item.code]: {...item, selected: newValue}} ) }}
+                            onValueChange={(newValue) => { setCollectData({...collectData, [item.code]: {...item, selected: newValue}}, changeCheck(newValue, item.id, item.value) ) }}
                         />
                     </>
                 </TouchableHighlight>
