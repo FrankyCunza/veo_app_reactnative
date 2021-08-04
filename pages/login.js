@@ -8,9 +8,15 @@ const Login = ({ navigation }) => {
     const [isLoading, setLoading] = useState(false)
 
     const storeData = async (value) => {
+        // alert(JSON.stringify(value))
         try {
             for (const [key, val] of Object.entries(value)) {
-                await AsyncStorage.setItem(key, val ? val : 'false')
+                // alert(JSON.stringify(val))
+                if (typeof val == 'number') {
+                    await AsyncStorage.setItem(key, val ? JSON.stringify(val) : 'false')
+                } else {
+                    await AsyncStorage.setItem(key, val ? val : 'false')
+                }
             }
         } catch (e) {
             console.log(e)
@@ -34,13 +40,14 @@ const Login = ({ navigation }) => {
             .then((json) => {
                 storeData(json)
                 setLoading(false)
+                // alert(JSON.stringify(json))
                 navigation.navigate('Home', {})
             })
             .catch((error) => {
-              console.error(error);
+                alert(error)
             });
         } catch(e) {
-            console.log(e)
+            alert(e)
         }
         
     };

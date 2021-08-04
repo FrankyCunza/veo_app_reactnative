@@ -6,6 +6,7 @@
 
 # RUN ANDROID
 `npx react-native run-android`
+`npx react-native run-android --port 5005`
 or
 `react-native start`
 
