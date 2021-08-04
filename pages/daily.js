@@ -30,6 +30,7 @@ const Daily = ({navigation}) => {
                 })
                 .then((response) => response.json())
                 .then((json) => {
+                    // alert(JSON.stringify(json))
                     setRange(json.range)
                     setLoading(false)
                     let res = {}
@@ -149,17 +150,17 @@ const Daily = ({navigation}) => {
     }
 
     return (
-        <ScrollView>
+        <View>
             <DailyTraffic name={resultTraffic} />
-            <>
+            <View>
                 {isLoading ? <ActivityIndicator size="small" color="#0000ff" /> :
-                    (<FlatList data={cards} numColumns={2} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14}} keyExtractor={((item, i) => item.id)} />)
+                    (<FlatList data={cards} numColumns={2} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14}} keyExtractor={((item, i) => item.title)} />)
                 }
-            </>
+            </View>
             <TouchableOpacity onPress={senData} style={styles.appButtonContainer}>
                 <Text style={styles.appButtonText}>Enviar</Text>
             </TouchableOpacity>
-        </ScrollView>
+        </View>
     )
 }
 

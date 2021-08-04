@@ -23,6 +23,7 @@ const Home = ({navigation}) => {
             })
             .then((response) => response.json())
             .then((json) => {
+                // alert(JSON.stringify(json.data))
                 setCards(json.data)
                 setLoading(false)
             })
@@ -80,7 +81,7 @@ const Home = ({navigation}) => {
             /> */}
             <>
                 {isLoading ? <ActivityIndicator size="small" color="#0000ff" /> :
-                    (<FlatList data={cards} numColumns={2} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14}} keyExtractor={((item, i) => i)} />)
+                    (<FlatList data={cards} numColumns={2} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14}} keyExtractor={((item, i) => item.title)} />)
                 }
             </>
         </View>
