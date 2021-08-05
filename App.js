@@ -21,38 +21,39 @@ const App = () => {
     //     <Stack.Screen name="Jitsi" component={Jitsi} options={{ title: 'Jitsi' }} />
     //   </Stack.Navigator>
     // </NavigationContainer>
-    <NativeRouter>
-      <View style={styles.container}>
-        <View style={styles.nav}>
-          <Link to="/" underlayColor="#f0f4f7" style={styles.navItem}>
-            <Text>Login</Text>
-          </Link>
-          <Link
-            to="/Daily"
-            underlayColor="#f0f4f7"
-            style={styles.navItem}>
-            <Text>Daily</Text>
-          </Link>
-          <Link
-            to="/Jitsi"
-            underlayColor="#f0f4f7"
-            style={styles.navItem}>
-            <Text>Jitsi</Text>
-          </Link>
-        </View>
+    // <NativeRouter>
+    //   <View style={styles.container}>
+    //     <View style={styles.nav}>
+    //       <Link to="/" underlayColor="#f0f4f7" style={styles.navItem}>
+    //         <Text>Login</Text>
+    //       </Link>
+    //       <Link
+    //         to="/Daily"
+    //         underlayColor="#f0f4f7"
+    //         style={styles.navItem}>
+    //         <Text>Daily</Text>
+    //       </Link>
+    //       <Link
+    //         to="/Jitsi"
+    //         underlayColor="#f0f4f7"
+    //         style={styles.navItem}>
+    //         <Text>Jitsi</Text>
+    //       </Link>
+    //     </View>
 
-        <Route exact path="/" component={Login} />
-        <Route path="/Daily" component={Daily} />
-        <Route path="/Jitsi" component={Jitsi} />
-      </View>
-    </NativeRouter>
-    // <NavigationContainer>
-    //   <Tab.Navigator>
-    //     <Tab.Screen name="Login" component={Login} />
-    //     <Tab.Screen name="Home" component={Home} />
-    //     <Tab.Screen name="Daily" component={Daily} />
-    //   </Tab.Navigator>
-    // </NavigationContainer>
+    //     <Route exact path="/" component={Login} />
+    //     <Route path="/Daily" component={Daily} />
+    //     <Route path="/Jitsi" component={Jitsi} />
+    //   </View>
+    // </NativeRouter>
+    <NavigationContainer>
+      <Tab.Navigator>
+        <Tab.Screen name="Login" component={Login} />
+        <Tab.Screen name="Home" component={Home} />
+        <Tab.Screen name="/testdiario" component={Daily} />
+        <Tab.Screen name="Jitsi" component={Jitsi} />
+      </Tab.Navigator>
+    </NavigationContainer>
   )
 }
 

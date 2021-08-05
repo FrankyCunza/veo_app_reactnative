@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
+import { View, StyleSheet } from 'react-native';
 import JitsiMeet, { JitsiMeetView } from 'react-native-jitsi-meet';
-import { View, Text } from 'react-native';
 
 function Jitsi() {
 
@@ -39,34 +39,20 @@ function Jitsi() {
     console.log(nativeEvent)
   }
   return (
-    <JitsiMeetView
-        onConferenceTerminated={e => onConferenceTerminated(e)}
-        onConferenceJoined={e => onConferenceJoined(e)}
-        onConferenceWillJoin={e => onConferenceWillJoin(e)}
-        // style={{
-        //     flex: 1,
-        //     height: '100%',
-        //     width: '100%',
-        // }}
-    />
-  )
-}
-export default Jitsi;
-
-{/* <>
-    <View>
-        <Text>Jitsi</Text>
-    </View>
-    <View>
-        <JitsiMeetView
+      <View style={StyleSheet.absoluteFillObject}>
+          <JitsiMeetView
             onConferenceTerminated={e => onConferenceTerminated(e)}
             onConferenceJoined={e => onConferenceJoined(e)}
             onConferenceWillJoin={e => onConferenceWillJoin(e)}
+            style={StyleSheet.absoluteFillObject}
             // style={{
-            //     flex: 1,
-            //     height: '100%',
-            //     width: '100%',
+            //   flex: 1,
+            //   height: '100%',
+            //   width: '100%',
             // }}
-        />
-    </View>
-</> */}
+          />
+          <View style={{ position: 'absolute', top: 100, left: 50 }}/>
+      </View>
+  )
+}
+export default Jitsi;
