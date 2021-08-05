@@ -54,7 +54,7 @@ const Login = ({ navigation }) => {
 
     return (
         <View style={{paddingHorizontal: 12}}>
-            <Text style={styles.title}>Iniciar sesión</Text>
+            <Text style={styles.title}>Iniciar sesión 3</Text>
             
             <View>
                 {isLoading ? <ActivityIndicator size="small" color="#0000ff" /> : (

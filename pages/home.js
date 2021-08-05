@@ -49,6 +49,12 @@ const Home = ({navigation}) => {
         })
     }
 
+    const goJitsi = () => {
+        navigation.navigate('Jitsi', {
+            term: 'name'
+        })
+    }
+
     const renderItem = ({item}) => {
         return (
             <View style={styles.card}>
@@ -80,6 +86,13 @@ const Home = ({navigation}) => {
                     }}
             /> */}
             <>
+                <View style={styles.card}>
+                    <TouchableHighlight onPress={() => {goJitsi()}}>
+                        <View style={{ paddingVertical: 14, paddingHorizontal: 10}}>
+                            <Text style={{height: 32, fontSize: 12}}>Jitsi</Text>
+                        </View>
+                    </TouchableHighlight>
+                </View>
                 {isLoading ? <ActivityIndicator size="small" color="#0000ff" /> :
                     (<FlatList data={cards} numColumns={2} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14}} keyExtractor={((item, i) => item.title)} />)
                 }

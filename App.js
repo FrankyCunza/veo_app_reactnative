@@ -7,16 +7,18 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Home from './pages/home';
 import Daily from './pages/daily';
 import Login from './pages/login';
+import Jitsi from './pages/jitsi';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName="Jitsi">
         <Stack.Screen name="Login" component={Login} options={{ title: 'Iniciar Sesión' }} />
         <Stack.Screen name="/testdiario" component={Daily} options={{ title: 'Declaración diaria' }} />
         <Stack.Screen name="Home" component={Home} options={{ title: 'Home' }} />
+        <Stack.Screen name="Jitsi" component={Jitsi} options={{ title: 'Jitsi' }} />
       </Stack.Navigator>
     </NavigationContainer>
     // <NativeRouter>
