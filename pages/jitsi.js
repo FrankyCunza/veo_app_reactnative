@@ -5,23 +5,23 @@ import { View, Text } from 'react-native';
 function Jitsi() {
 
   useEffect(() => {
-    // setTimeout(() => {
-    //   const url = 'https://meet.jit.si/exemple';
-    //   const userInfo = {
-    //     displayName: 'User',
-    //     email: 'user@example.com',
-    //     avatar: 'https:/gravatar.com/avatar/abc123',
-    //   };
-    //   JitsiMeet.call(url, userInfo);
-    //   /* Você também pode usar o JitsiMeet.audioCall (url) para chamadas apenas de áudio */
-    //   /* Você pode terminar programaticamente a chamada com JitsiMeet.endCall () */
-    // }, 1000);
+    setTimeout(() => {
+      const url = 'https://meet.jit.si/exemple';
+      const userInfo = {
+        displayName: 'User',
+        email: 'user@example.com',
+        avatar: 'https:/gravatar.com/avatar/abc123',
+      };
+      JitsiMeet.call(url, userInfo);
+      /* Você também pode usar o JitsiMeet.audioCall (url) para chamadas apenas de áudio */
+      /* Você pode terminar programaticamente a chamada com JitsiMeet.endCall () */
+    }, 1000);
   }, [])
 
   useEffect(() => {
-    // return () => {
-    //   JitsiMeet.endCall();
-    // };
+    return () => {
+      JitsiMeet.endCall();
+    };
   });
 
   function onConferenceTerminated(nativeEvent) {
@@ -39,21 +39,34 @@ function Jitsi() {
     console.log(nativeEvent)
   }
   return (
-      <>
-      <View>
-          <Text>Jitsi</Text>
-      </View>
-        {/* <JitsiMeetView
+    <JitsiMeetView
         onConferenceTerminated={e => onConferenceTerminated(e)}
         onConferenceJoined={e => onConferenceJoined(e)}
         onConferenceWillJoin={e => onConferenceWillJoin(e)}
-        style={{
-            flex: 1,
-            height: '100%',
-            width: '100%',
-        }}
-        /> */}
-      </>
+        // style={{
+        //     flex: 1,
+        //     height: '100%',
+        //     width: '100%',
+        // }}
+    />
   )
 }
 export default Jitsi;
+
+{/* <>
+    <View>
+        <Text>Jitsi</Text>
+    </View>
+    <View>
+        <JitsiMeetView
+            onConferenceTerminated={e => onConferenceTerminated(e)}
+            onConferenceJoined={e => onConferenceJoined(e)}
+            onConferenceWillJoin={e => onConferenceWillJoin(e)}
+            // style={{
+            //     flex: 1,
+            //     height: '100%',
+            //     width: '100%',
+            // }}
+        />
+    </View>
+</> */}
