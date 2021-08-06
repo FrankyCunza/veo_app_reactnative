@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, ScrollView, SafeAreaView } from 'react-native';
 import JitsiMeet, { JitsiMeetView } from 'react-native-jitsi-meet';
 
 function Jitsi() {
-
+  const [loading, isLoading] = useState(false)
   useEffect(() => {
     setTimeout(() => {
       const url = 'https://meet.jit.si/exemple';
@@ -13,16 +13,17 @@ function Jitsi() {
         avatar: 'https:/gravatar.com/avatar/abc123',
       };
       JitsiMeet.call(url, userInfo);
+      isLoading(true)
       /* Você também pode usar o JitsiMeet.audioCall (url) para chamadas apenas de áudio */
       /* Você pode terminar programaticamente a chamada com JitsiMeet.endCall () */
-    }, 1000);
+    }, 4000);
   }, [])
 
-  useEffect(() => {
-    return () => {
-      JitsiMeet.endCall();
-    };
-  });
+  // useEffect(() => {
+  //   return () => {
+  //     JitsiMeet.endCall();
+  //   };
+  // });
 
   function onConferenceTerminated(nativeEvent) {
     /* Conference terminated event */
@@ -39,20 +40,19 @@ function Jitsi() {
     console.log(nativeEvent)
   }
   return (
-      <View style={StyleSheet.absoluteFillObject}>
-          <JitsiMeetView
-            onConferenceTerminated={e => onConferenceTerminated(e)}
-            onConferenceJoined={e => onConferenceJoined(e)}
-            onConferenceWillJoin={e => onConferenceWillJoin(e)}
-            style={StyleSheet.absoluteFillObject}
-            // style={{
-            //   flex: 1,
-            //   height: '100%',
-            //   width: '100%',
-            // }}
-          />
-          <View style={{ position: 'absolute', top: 100, left: 50 }}/>
-      </View>
+    <SafeAreaView>
+    {loading && <JitsiMeetView
+      onConferenceTerminated={e => onConferenceTerminated(e)}
+      onConferenceJoined={e => onConferenceJoined(e)}
+      onConferenceWillJoin={e => onConferenceWillJoin(e)}
+      // style={StyleSheet.absoluteFillObject}
+      style={{
+        flex: 1,
+        height: '100%',
+        width: '100%',
+      }}
+    />}
+    </SafeAreaView>
   )
 }
 export default Jitsi;

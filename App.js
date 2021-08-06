@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, AppRegistry } from 'react-native';
+import { View, Text, StyleSheet, AppRegistry, ScrollView } from 'react-native';
 import { NativeRouter, Route, Link } from "react-router-native";
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -13,6 +13,12 @@ const Stack = createStackNavigator();
 
 const App = () => {
   return (
+    <View>
+      <Text>Hello</Text>
+      <ScrollView>
+        <Jitsi />
+      </ScrollView>
+    </View>
     // <NavigationContainer>
     //   <Stack.Navigator initialRouteName="Jitsi">
     //     <Stack.Screen name="Login" component={Login} options={{ title: 'Iniciar Sesión' }} />
@@ -46,14 +52,14 @@ const App = () => {
     //     <Route path="/Jitsi" component={Jitsi} />
     //   </View>
     // </NativeRouter>
-    <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Login" component={Login} />
-        <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="/testdiario" component={Daily} />
-        <Tab.Screen name="Jitsi" component={Jitsi} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    // <NavigationContainer>
+    //   <Tab.Navigator>
+    //     <Tab.Screen name="Login" component={Login} />
+    //     <Tab.Screen name="Home" component={Home} />
+    //     <Tab.Screen name="/testdiario" component={Daily} />
+    //     <Tab.Screen name="Jitsi" component={Jitsi} />
+    //   </Tab.Navigator>
+    // </NavigationContainer>
   )
 }
 
