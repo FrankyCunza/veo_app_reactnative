@@ -132,7 +132,9 @@ const Daily = ({navigation}) => {
                     <View style={{ paddingVertical: 14, paddingHorizontal: 16}}>
                         <Image
                             style={styles.tinyLogo}
-                            source={require('../assets/svgs/logo-veo365.png')}
+                            // source={{ uri: 'https:/gravatar.com/avatar/abc123' }}
+                            source={{ uri: 'https://mobile.vim365.com/assets/svgs/td1.svg' }}
+                            // source={require('./../assets/svgs/logo-veo365.png')}
                         />
                         {/* <Image source={'../assets/svgs/logo-veo365.png'}></Image> */}
                         <Text style={{fontSize: 14, textAlign: 'center'}}>{item.title}</Text>

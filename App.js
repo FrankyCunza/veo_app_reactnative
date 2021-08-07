@@ -7,15 +7,16 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Home from './pages/home';
 import Login from './pages/login';
 import Video from './pages/jitsi';
+import Daily from './pages/daily';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Video">
+      <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login" component={Login} options={{ title: 'Overview' }} />
-        {/* <Stack.Screen name="/testdiario" component={Daily} options={{ title: 'Declaración diaria' }} /> */}
+        <Stack.Screen name="/testdiario" component={Daily} options={{ title: 'Declaración diaria' }} />
         <Stack.Screen name="Home" component={Home} options={{ title: 'Home' }} />
         <Stack.Screen name="Video" component={Video} options={{ title: 'Video' }} />
       </Stack.Navigator>
