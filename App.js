@@ -22,10 +22,6 @@ const App = () => {
     //     <Stack.Screen name="Video" component={Video} options={{ title: 'Video' }} />
     //   </Stack.Navigator>
     // </NavigationContainer>
-    // <NativeRouter>
-    //   <Route exact path="/" component={Login} />
-    //   <Route path="/Daily" component={Daily} />
-    // </NativeRouter>
     // <NavigationContainer>
     //   <Tab.Navigator>
     //     <Tab.Screen name="Login" component={Login} />
@@ -35,32 +31,6 @@ const App = () => {
     // </NavigationContainer>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#f2f2f2"
-  },
-  header: {
-    fontSize: 20
-  },
-  nav: {
-    flexDirection: "row",
-    justifyContent: "space-around"
-  },
-  navItem: {
-    flex: 1,
-    alignItems: "center",
-    padding: 10
-  },
-  subNavItem: {
-    padding: 5
-  },
-  topic: {
-    textAlign: "center",
-    fontSize: 15
-  }
-});
-
 
 // AppRegistry.registerComponent("MyApp", () => App);
 export default App;
