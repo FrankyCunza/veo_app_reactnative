@@ -26,7 +26,8 @@
     "react-router-native": "^5.2.0",
     "react": "16.11.0",
     "react-native": "0.62.2",
-    "react-native-jitsi-meet": "^2.1.1"
+    "react-native-jitsi-meet": "^2.1.1",
+    "@react-native-community/masked-view": "^0.1.11"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
