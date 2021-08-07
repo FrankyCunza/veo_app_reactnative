@@ -3,9 +3,10 @@ import JitsiMeet, { JitsiMeetView } from 'react-native-jitsi-meet';
 
 function Video() {
   // https://51.161.83.41/ForeignSleepsPerceiveThereby
+  // https://meet.jit.si/exemple
   useEffect(() => {
     setTimeout(() => {
-      const url = 'https://meet.jit.si/exemple';
+      const url = 'https://51.161.83.41/ForeignSleepsPerceiveThereby';
       const userInfo = {
         displayName: 'User',
         email: 'user@example.com',

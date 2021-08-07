@@ -50,7 +50,7 @@ const Home = ({navigation}) => {
     }
 
     const goJitsi = () => {
-        navigation.navigate('Jitsi', {
+        navigation.navigate('Video', {
             term: 'name'
         })
     }
@@ -78,25 +78,16 @@ const Home = ({navigation}) => {
 
     return (
         <View>
-            {/* <Image
-                    source={{
-                    uri: require('./../assets/img/logo-veo365.png'),
-                    width: 200,
-                    height: 120
-                    }}
-            /> */}
-            <>
-                <View style={styles.card}>
-                    <TouchableHighlight onPress={() => {goJitsi()}}>
-                        <View style={{ paddingVertical: 14, paddingHorizontal: 10}}>
-                            <Text style={{height: 32, fontSize: 12}}>Jitsi</Text>
-                        </View>
-                    </TouchableHighlight>
-                </View>
-                {isLoading ? <ActivityIndicator size="small" color="#0000ff" /> :
-                    (<FlatList data={cards} numColumns={2} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14}} keyExtractor={((item, i) => item.title)} />)
-                }
-            </>
+            <View style={styles.card}>
+                <TouchableHighlight onPress={() => {goJitsi()}}>
+                    <View style={{ paddingVertical: 14, paddingHorizontal: 10}}>
+                        <Text style={{height: 32, fontSize: 12}}>Jitsi</Text>
+                    </View>
+                </TouchableHighlight>
+            </View>
+            {isLoading ? <ActivityIndicator size="small" color="#0000ff" /> :
+                (<FlatList data={cards} numColumns={2} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14}} keyExtractor={((item, i) => item.title)} />)
+            }
         </View>
     )
 }

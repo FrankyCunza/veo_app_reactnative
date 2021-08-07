@@ -13,14 +13,15 @@ const Stack = createStackNavigator();
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen name="Login" component={Login} options={{ title: 'Overview' }} />
-        <Stack.Screen name="/testdiario" component={Daily} options={{ title: 'Declaración diaria' }} />
-        <Stack.Screen name="Home" component={Home} options={{ title: 'Home' }} />
-        <Stack.Screen name="Video" component={Video} options={{ title: 'Video' }} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Video />
+    // <NavigationContainer>
+    //   <Stack.Navigator initialRouteName="Video">
+    //     <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+    //     <Stack.Screen name="/testdiario" component={Daily} options={{ title: 'Declaración diaria' }} />
+    //     <Stack.Screen name="Home" component={Home} options={{ title: 'Home' }} />
+    //     <Stack.Screen name="Video" component={Video} options={{ title: 'Video' }} />
+    //   </Stack.Navigator>
+    // </NavigationContainer>
     // <NativeRouter>
     //   <Route exact path="/" component={Login} />
     //   <Route path="/Daily" component={Daily} />
