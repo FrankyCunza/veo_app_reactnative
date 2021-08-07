@@ -53,9 +53,8 @@ const Login = ({ navigation }) => {
     };
 
     return (
-        <View style={{paddingHorizontal: 12}}>
+        <View style={styles.container}>
             <Text style={styles.title}>Iniciar sesión 3</Text>
-            
             <View>
                 {isLoading ? <ActivityIndicator size="small" color="#0000ff" /> : (
                     <>
@@ -109,6 +108,12 @@ const Login = ({ navigation }) => {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        // justifyContent: 'center',
+        paddingHorizontal: 20
+        // alignItems: 'center'
+    },
     label: {
         fontSize: 16,
         marginBottom: 6
@@ -122,16 +127,15 @@ const styles = StyleSheet.create({
     },
     appButtonContainer: {
         elevation: 8,
-        backgroundColor: "#009688",
-        marginTop: 20,
-        borderRadius: 10,
+        backgroundColor: "blue",
+        marginTop: 25,
+        borderRadius: 6,
         paddingVertical: 10,
         paddingHorizontal: 12
       },
       appButtonText: {
-        fontSize: 18,
+        fontSize: 16,
         color: "#fff",
-        fontWeight: "bold",
         alignSelf: "center",
         textTransform: "uppercase"
     },    
@@ -144,7 +148,7 @@ const styles = StyleSheet.create({
         fontSize: 32,
         textAlign: 'center',
         fontWeight: "bold",
-        marginVertical: 14
+        marginVertical: 45
     },
     header: {
       fontSize: 20

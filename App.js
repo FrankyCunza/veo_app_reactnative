@@ -22,23 +22,8 @@ const App = () => {
       </Stack.Navigator>
     </NavigationContainer>
     // <NativeRouter>
-    //   <View style={styles.container}>
-    //     <View style={styles.nav}>
-    //       <Link to="/" underlayColor="#f0f4f7" style={styles.navItem}>
-    //         <Text>Login</Text>
-    //       </Link>
-    //       <Link
-    //         to="/Daily"
-    //         underlayColor="#f0f4f7"
-    //         style={styles.navItem}
-    //       >
-    //         <Text>Daily</Text>
-    //       </Link>
-    //     </View>
-
-    //     <Route exact path="/" component={Login} />
-    //     <Route path="/Daily" component={Daily} />
-    //   </View>
+    //   <Route exact path="/" component={Login} />
+    //   <Route path="/Daily" component={Daily} />
     // </NativeRouter>
     // <NavigationContainer>
     //   <Tab.Navigator>
