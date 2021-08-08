@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet, Image, TouchableHighlight, ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import tw from 'tailwind-react-native-classnames';
 
 const Home = ({navigation}) => {
     const [cards, setCards] = useState([]);
@@ -57,19 +58,18 @@ const Home = ({navigation}) => {
 
     const renderItem = ({item}) => {
         return (
-            <View style={styles.card}>
-                <TouchableHighlight onPress={() => {goPage(item.routerLink)}}>
-                    <View>
-                    {/* <Image
-                    source={{
-                    uri: getImage(item.icon),
-                    width: '100%',
-                    height: 120
-                    }}
-                    /> */}
-                    <View style={{ paddingVertical: 14, paddingHorizontal: 10}}>
-                        <Text style={{height: 32, fontSize: 12}}>{item.title}</Text>
-                    </View>
+            <View style={[tw`bg-white w-5/12 rounded mt-4 h-28 shadow`, {width: '48%'}]}>
+                <TouchableHighlight onPress={() => {goPage(item.routerLink)}} style={[tw``, {}]}>
+                    <View style={tw`h-full justify-center items-center`}>
+                        {/* <Image
+                        source={{
+                        uri: getImage(item.icon),
+                        width: '100%',
+                        height: 120
+                        }}
+                        /> */}
+                        <Image style={{width: 45, height: 45, resizeMode: 'contain'}} source={{uri: "https://image.flaticon.com/icons/png/512/1021/1021606.png"}} />
+                        <Text style={tw`text-gray-800 text-center px-2 text-sm leading-4 mt-2`}>{item.title}</Text>
                     </View>
                 </TouchableHighlight>
             </View>
@@ -77,11 +77,12 @@ const Home = ({navigation}) => {
     }
 
     return (
-        <View>
-            <View style={styles.card}>
-                <TouchableHighlight onPress={() => {goJitsi()}}>
-                    <View style={{ paddingVertical: 14, paddingHorizontal: 10}}>
-                        <Text style={{height: 32, fontSize: 12}}>Jitsi</Text>
+        <View style={tw`bg-gray-200 h-full`}>
+            <View style={[tw`bg-white w-5/12 rounded mt-4 h-28 shadow`, {width: '48%'}]}>
+                <TouchableHighlight onPress={() => {goJitsi()}} style={[tw``, {}]}>
+                    <View style={tw`h-full justify-center items-center`}>
+                        <Image style={{width: 45, height: 45, resizeMode: 'contain'}} source={{uri: "https://image.flaticon.com/icons/png/512/1021/1021606.png"}} />
+                        <Text style={tw`text-gray-800 text-center px-2 text-sm leading-4 mt-2`}>Jitsi</Text>
                     </View>
                 </TouchableHighlight>
             </View>

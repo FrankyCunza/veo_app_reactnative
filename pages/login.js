@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Alert, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useForm, Controller, set } from "react-hook-form";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import tw from 'tailwind-react-native-classnames';
 
 const Login = ({ navigation }) => {
     const { control, handleSubmit, formState: { errors } } = useForm();
@@ -53,13 +54,13 @@ const Login = ({ navigation }) => {
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Iniciar sesión 3</Text>
+        <View style={tw`flex h-full px-6 bg-gray-200 justify-center`}>
+            <Text style={tw`text-gray-800 text-3xl font-bold text-center mb-4`}>Iniciar sesión</Text>
             <View>
                 {isLoading ? <ActivityIndicator size="small" color="#0000ff" /> : (
                     <>
-                    <View style={styles.item}>
-                        <Text style={styles.label}>Usuario:</Text>
+                    <View style={tw``}>
+                        <Text style={tw`text-gray-900 mb-1`}>Usuario:</Text>
                         <Controller
                             control={control}
                             rules={{
@@ -67,7 +68,7 @@ const Login = ({ navigation }) => {
                             }}
                             render={({ field: { onChange, onBlur, value } }) => (
                             <TextInput
-                                style={styles.input}
+                                style={tw`bg-white py-2 rounded px-4`}
                                 onBlur={onBlur}
                                 onChangeText={onChange}
                                 value={value}
@@ -78,8 +79,8 @@ const Login = ({ navigation }) => {
                         />
                         {errors.user && <Text>This is required. </Text>}
                     </View>
-                    <View style={styles.item, {marginTop: 14}}>
-                        <Text style={styles.label}>Contraseña:</Text>
+                    <View style={tw`mt-4`}>
+                        <Text style={tw`text-gray-900 mb-1`}>Contraseña:</Text>
                         <Controller
                             control={control}
                             rules={{
@@ -87,7 +88,7 @@ const Login = ({ navigation }) => {
                             }}
                             render={({ field: { onChange, onBlur, value } }) => (
                             <TextInput
-                                style={styles.input}
+                                style={tw`bg-white py-2 rounded px-4`}
                                 onBlur={onBlur}
                                 onChangeText={onChange}
                                 value={value}
@@ -100,8 +101,8 @@ const Login = ({ navigation }) => {
                     </>
                 )}
             </View>
-            <TouchableOpacity onPress={handleSubmit(onSubmit)} style={styles.appButtonContainer}>
-                <Text style={styles.appButtonText}>Enviar</Text>
+            <TouchableOpacity onPress={handleSubmit(onSubmit)} style={tw`bg-blue-600 rounded py-2 mt-6 shadow`}>
+                <Text style={tw`text-white text-base text-center`}>Enviar</Text>
             </TouchableOpacity>
         </View>
     )

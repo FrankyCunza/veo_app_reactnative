@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, FlatList, ActivityIndicator, TouchableHi
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CheckBox from '@react-native-community/checkbox';
 import DailyTraffic from '../components/daily_traffic';
+import tw from 'tailwind-react-native-classnames';
 
 const Daily = ({navigation}) => {
     const [cards, setCards] = useState([])
@@ -120,49 +121,37 @@ const Daily = ({navigation}) => {
         }
     }
 
-    // const test = () =>
-    // ../assets/svgs/td7.svg
-    
-
     const renderItem = ({item}) => {
         return (
-            <View style={[styles.card, collectData[item.code].selected ? styles.checked : '']}>
-                <TouchableHighlight style={{minHeight: 110}}>
-                    <>
-                    <View style={{ paddingVertical: 14, paddingHorizontal: 16}}>
-                        <Image
-                            style={styles.tinyLogo}
-                            // source={{ uri: 'https:/gravatar.com/avatar/abc123' }}
-                            source={{ uri: 'https://mobile.vim365.com/assets/svgs/td1.svg' }}
-                            // source={require('./../assets/svgs/logo-veo365.png')}
-                        />
-                        {/* <Image source={'../assets/svgs/logo-veo365.png'}></Image> */}
-                        <Text style={{fontSize: 14, textAlign: 'center'}}>{item.title}</Text>
-                    </View>
-                    <CheckBox
+            <View style={[tw`bg-white w-5/12 rounded mt-4 h-28 shadow`, { width: '48%' }, collectData[item.code].selected ? tw`bg-blue-600` : '']}>
+                <TouchableHighlight style={[tw``, {}]}>
+                    <View style={tw`h-full justify-center items-center`}>
+                        <Image style={{width: 45, height: 45, resizeMode: 'contain'}} source={{uri: "https://image.flaticon.com/icons/png/512/1021/1021606.png"}} />
+                        <Text style={[tw`text-center px-2 text-sm leading-4 mt-2`, collectData[item.code].selected ? tw`text-white` : tw`text-gray-800`]}>{item.title}</Text>
+                        <CheckBox
                             disabled={false}
                             style={styles.checkbox}
                             value={collectData[item.code].selected}
                             onValueChange={(newValue) => { setCollectData({...collectData, [item.code]: {...item, selected: newValue}}, changeCheck(newValue, item.id, item.value, item.image) ) }}
                         />
-                    </>
+                    </View>
                 </TouchableHighlight>
             </View>
         )
     }
 
     return (
-        <View>
-            <DailyTraffic name={resultTraffic} />
-            <View>
-                {isLoading ? <ActivityIndicator size="small" color="#0000ff" /> :
-                    (<FlatList data={cards} numColumns={2} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14}} keyExtractor={((item, i) => item.title)} />)
-                }
+        <ScrollView style={tw`bg-gray-200 h-full`}>
+            {/* <DailyTraffic name={resultTraffic} /> */}
+            {isLoading ? <ActivityIndicator size="small" color="#0000ff" /> :
+                (<FlatList data={cards} numColumns={2} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14}} keyExtractor={((item, i) => item.title)} />)
+            }
+            <View style={tw`px-4 mt-4 pb-4`}>
+                <TouchableOpacity onPress={senData} style={tw`bg-blue-600 py-2 rounded-full`}>
+                    <Text style={tw`text-center text-white text-xl`}>Enviar</Text>
+                </TouchableOpacity>
             </View>
-            <TouchableOpacity onPress={senData} style={styles.appButtonContainer}>
-                <Text style={styles.appButtonText}>Enviar</Text>
-            </TouchableOpacity>
-        </View>
+        </ScrollView>
     )
 }
 

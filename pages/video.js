@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import JitsiMeet, { JitsiMeetView } from 'react-native-jitsi-meet';
 
-function Video() {
+function Video( { navigation } ) {
   // https://51.161.83.41/ForeignSleepsPerceiveThereby
   // https://meet.jit.si/exemple
   useEffect(() => {
@@ -27,6 +27,9 @@ function Video() {
   function onConferenceTerminated(nativeEvent) {
     /* Conference terminated event */
     console.log(nativeEvent)
+    navigation.navigate('Login', {
+      term: ''
+    })
   }
 
   function onConferenceJoined(nativeEvent) {
