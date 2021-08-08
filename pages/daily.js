@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, FlatList, ActivityIndicator, TouchableHighlight, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Image, FlatList, ActivityIndicator, TouchableHighlight, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CheckBox from '@react-native-community/checkbox';
 import DailyTraffic from '../components/daily_traffic';
 import tw from 'tailwind-react-native-classnames';
-
 const Daily = ({navigation}) => {
     const [cards, setCards] = useState([])
     const [isLoading, setLoading] = useState(true);
@@ -144,21 +143,19 @@ const Daily = ({navigation}) => {
     }
 
     return (
-        <ScrollView style={tw`bg-gray-100 h-full`}>
-            {isLoading  ? isLoadingTraffic==false ? <></> : <ActivityIndicator size="small" color="#0000ff" /> :
+        <SafeAreaView style={[tw`bg-gray-100`, {flex: 1}]}>
+            {isLoading  ? isLoadingTraffic==false ? <></> : <ActivityIndicator style={tw`py-12`} size="small" color="#0000ff" /> :
                 (
-                <>
-                    <FlatList data={cards} numColumns={2} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14}} keyExtractor={((item, i) => item.title)} />
-                    <View style={tw`px-4 mt-4 pb-4`}>
-                        <TouchableOpacity onPress={senData} style={tw`bg-blue-600 py-2 rounded-full`}>
-                            <Text style={tw`text-center text-white text-xl`}>Enviar</Text>
-                        </TouchableOpacity>
-                    </View>
-                </>
+                <FlatList data={cards} numColumns={2} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14}} keyExtractor={((item, i) => item.title)} 
+                ListFooterComponent={<View style={tw`px-4 mt-4 pb-4`}>
+                    <TouchableOpacity onPress={senData} style={tw`bg-blue-600 py-2 rounded-full`}>
+                        <Text style={tw`text-center text-white text-xl`}>Enviar</Text>
+                    </TouchableOpacity>
+                </View>} />
                 )
             }
             {isLoadingTraffic ? <></> : (<DailyTraffic name={resultTraffic} />)}
-        </ScrollView>
+        </SafeAreaView>
     )
 }
 
