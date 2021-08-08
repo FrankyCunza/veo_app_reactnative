@@ -41,8 +41,10 @@ const Login = ({ navigation }) => {
             .then((json) => {
                 storeData(json)
                 setLoading(false)
-                // alert(JSON.stringify(json))
-                navigation.navigate('Home', {})
+                navigation.navigate('Home', {
+                    token: json.token,
+                    id: json.id
+                })
             })
             .catch((error) => {
                 alert(error)

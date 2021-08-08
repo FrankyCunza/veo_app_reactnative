@@ -3,18 +3,20 @@ import { View, Text, FlatList, StyleSheet, Image, TouchableHighlight, ActivityIn
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import tw from 'tailwind-react-native-classnames';
 
-const Home = ({navigation}) => {
+const Home = ( { route, navigation} ) => {
     const [cards, setCards] = useState([]);
     const [isLoading, setLoading] = useState(true);
-
+    const { id, token } = route.params;
     useEffect(() => {
-        getData()
+        if (id && token) {
+            getData()
+        }
     }, [])
 
     const getData = async () => {
         try {
-          const token = await AsyncStorage.getItem('token')
-          const id = await AsyncStorage.getItem('id')
+        //   const token = await AsyncStorage.getItem('token')
+        //   const id = await AsyncStorage.getItem('id')
           fetch('https://gateway.vim365.com/first-menu/menu', {
                 headers: {
                     'security-header': 'Vim365Aputek/2020.04',
