@@ -18,11 +18,11 @@ const App = () => {
     // <Video />
     <NavigationContainer>
       <SafeAreaProvider>
-        <Stack.Navigator initialRouteName="/testdiario" screenOptions={{headerShown: false}}>
+        <Stack.Navigator initialRouteName="Login" screenOptions={{headerShown: false}}>
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="/testdiario" component={Daily} />
           <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="Video" component={Video} />
+          <Stack.Screen name="/consulta" component={Video} />
           <Stack.Screen name="/profile" component={Profile} />
         </Stack.Navigator>
       </SafeAreaProvider>

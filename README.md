@@ -38,4 +38,6 @@ https://github.com/facebook/watchman/releases/tag/v2020.08.17.00
 
 
 ./gradlew bundleRelease
+
+## Build APK
 ./gradlew assembleRelease

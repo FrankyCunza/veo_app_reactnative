@@ -6,7 +6,7 @@ function Video( { navigation } ) {
   // https://meet.jit.si/exemple
   useEffect(() => {
     setTimeout(() => {
-      const url = 'https://meet.jit.si/exemple';
+      const url = 'https://51.161.83.41/ForeignSleepsPerceiveThereby';
       const userInfo = {
         displayName: 'User',
         email: 'user@example.com',

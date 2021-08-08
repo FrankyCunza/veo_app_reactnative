@@ -58,7 +58,7 @@ const Login = ({ navigation }) => {
             <View style={tw`py-8 items-center mb-4`}>
                 <Image source={{uri: "https://veo365.com/assets/images/logo-veo-color-8.png"}} style={[tw`w-20 h-20`, { resizeMode: 'contain' }]} />
             </View>
-            <Text style={tw`text-gray-800 text-3xl font-bold text-left mb-4 px-6`}>Iniciar sesión</Text>
+            <Text style={tw`text-gray-800 text-3xl font-bold text-left mb-4 px-6`}>Iniciar sesiónn</Text>
             <View style={tw`px-6`}>
                 {isLoading ? <ActivityIndicator size="small" color="#0000ff" /> : (
                     <>
