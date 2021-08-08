@@ -8,6 +8,7 @@ import tw from 'tailwind-react-native-classnames';
 const Daily = ({navigation}) => {
     const [cards, setCards] = useState([])
     const [isLoading, setLoading] = useState(true);
+    const [isLoadingTraffic, setLoadingTraffic] = useState(true);
     const [collectData, setCollectData] = useState([])
     const [resultTraffic, setResultTraffic] = useState('')
     const [values, setValues] = useState(0)
@@ -64,7 +65,7 @@ const Daily = ({navigation}) => {
 
     const senData =  async () => {
         // alert(JSON.stringify(collectData))
-        // setLoading(true)
+        setLoading(true)
         try {
             // Data Storage
             const keys = await AsyncStorage.getAllKeys()
@@ -112,6 +113,7 @@ const Daily = ({navigation}) => {
                 .then((response) => response.json())
                 .then((json) => {
                     setResultTraffic(traffic)
+                    setLoadingTraffic(false)
                     // alert(JSON.stringify(traffic))
                 })
                 .catch((error) => {
@@ -143,8 +145,7 @@ const Daily = ({navigation}) => {
 
     return (
         <ScrollView style={tw`bg-gray-100 h-full`}>
-            <DailyTraffic name={resultTraffic} />
-            {isLoading ? <ActivityIndicator size="small" color="#0000ff" /> :
+            {isLoading  ? isLoadingTraffic==false ? <></> : <ActivityIndicator size="small" color="#0000ff" /> :
                 (
                 <>
                     <FlatList data={cards} numColumns={2} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14}} keyExtractor={((item, i) => item.title)} />
@@ -156,6 +157,7 @@ const Daily = ({navigation}) => {
                 </>
                 )
             }
+            {isLoadingTraffic ? <></> : (<DailyTraffic name={resultTraffic} />)}
         </ScrollView>
     )
 }
