@@ -9,6 +9,7 @@ import Home from './pages/home';
 import Login from './pages/login';
 import Video from './pages/jitsi';
 import Daily from './pages/daily';
+import Profile from './pages/profile';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -17,11 +18,12 @@ const App = () => {
     // <Video />
     <NavigationContainer>
       <SafeAreaProvider>
-        <Stack.Navigator initialRouteName="Video" screenOptions={{headerShown: false}}>
+        <Stack.Navigator initialRouteName="/testdiario" screenOptions={{headerShown: false}}>
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="/testdiario" component={Daily} />
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Video" component={Video} />
+          <Stack.Screen name="/profile" component={Profile} />
         </Stack.Navigator>
       </SafeAreaProvider>
     </NavigationContainer>

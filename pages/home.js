@@ -29,10 +29,10 @@ const Home = ({navigation}) => {
                 setLoading(false)
             })
             .catch((error) => {
-                alert(error)
+                alert("Error: 1", error)
             });
         } catch(e) {
-            alert(e)
+            alert("Error: 2", e)
         }
     }
 

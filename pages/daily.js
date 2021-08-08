@@ -112,6 +112,7 @@ const Daily = ({navigation}) => {
                 .then((response) => response.json())
                 .then((json) => {
                     setResultTraffic(traffic)
+                    // alert(JSON.stringify(traffic))
                 })
                 .catch((error) => {
                     alert(error)
@@ -142,7 +143,7 @@ const Daily = ({navigation}) => {
 
     return (
         <ScrollView style={tw`bg-gray-200 h-full`}>
-            {/* <DailyTraffic name={resultTraffic} /> */}
+            <DailyTraffic name={resultTraffic} />
             {isLoading ? <ActivityIndicator size="small" color="#0000ff" /> :
                 (<FlatList data={cards} numColumns={2} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14}} keyExtractor={((item, i) => item.title)} />)
             }

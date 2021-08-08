@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Alert, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, Button, Alert, StyleSheet, TouchableOpacity, ActivityIndicator, Image } from 'react-native';
 import { useForm, Controller, set } from "react-hook-form";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import tw from 'tailwind-react-native-classnames';
@@ -54,13 +54,16 @@ const Login = ({ navigation }) => {
     };
 
     return (
-        <View style={tw`flex h-full px-6 bg-gray-200 justify-center`}>
-            <Text style={tw`text-gray-800 text-3xl font-bold text-center mb-4`}>Iniciar sesión</Text>
-            <View>
+        <View style={tw`flex h-full bg-gray-100`}>
+            <View style={tw`py-8 items-center mb-4`}>
+                <Image source={{uri: "https://veo365.com/assets/images/logo-veo-color-8.png"}} style={[tw`w-20 h-20`, { resizeMode: 'contain' }]} />
+            </View>
+            <Text style={tw`text-gray-800 text-3xl font-bold text-left mb-4 px-6`}>Iniciar sesión</Text>
+            <View style={tw`px-6`}>
                 {isLoading ? <ActivityIndicator size="small" color="#0000ff" /> : (
                     <>
                     <View style={tw``}>
-                        <Text style={tw`text-gray-900 mb-1`}>Usuario:</Text>
+                        <Text style={tw`text-gray-800 mb-1`}>Usuario:</Text>
                         <Controller
                             control={control}
                             rules={{
@@ -68,7 +71,7 @@ const Login = ({ navigation }) => {
                             }}
                             render={({ field: { onChange, onBlur, value } }) => (
                             <TextInput
-                                style={tw`bg-white py-2 rounded px-4`}
+                                style={tw`bg-white py-2 rounded px-4 shadow-sm`}
                                 onBlur={onBlur}
                                 onChangeText={onChange}
                                 value={value}
@@ -80,7 +83,7 @@ const Login = ({ navigation }) => {
                         {errors.user && <Text>This is required. </Text>}
                     </View>
                     <View style={tw`mt-4`}>
-                        <Text style={tw`text-gray-900 mb-1`}>Contraseña:</Text>
+                        <Text style={tw`text-gray-800 mb-1`}>Contraseña:</Text>
                         <Controller
                             control={control}
                             rules={{
@@ -88,8 +91,10 @@ const Login = ({ navigation }) => {
                             }}
                             render={({ field: { onChange, onBlur, value } }) => (
                             <TextInput
-                                style={tw`bg-white py-2 rounded px-4`}
+                                style={tw`bg-white py-2 rounded px-4 shadow-sm`}
                                 onBlur={onBlur}
+                                keyboardType="default"
+                                textContentType="password"
                                 onChangeText={onChange}
                                 value={value}
                             />
@@ -100,10 +105,10 @@ const Login = ({ navigation }) => {
                     </View>
                     </>
                 )}
+                <TouchableOpacity onPress={handleSubmit(onSubmit)} style={tw`bg-blue-600 rounded-full py-3 mt-6 shadow-xl`}>
+                    <Text style={tw`text-white text-base text-center`}>Enviar</Text>
+                </TouchableOpacity>
             </View>
-            <TouchableOpacity onPress={handleSubmit(onSubmit)} style={tw`bg-blue-600 rounded py-2 mt-6 shadow`}>
-                <Text style={tw`text-white text-base text-center`}>Enviar</Text>
-            </TouchableOpacity>
         </View>
     )
 }
