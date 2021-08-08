@@ -5,15 +5,48 @@ import CheckBox from '@react-native-community/checkbox';
 import tw from 'tailwind-react-native-classnames';
 
 const DailyTraffic = ({ name }) => {
-    const [data, setData] = useState([])
-
+    const [data, setData] = useState({})
+    const [isLoading, setLoading] = useState(true);
+    
     useEffect(() => {
-        // alert(name.length)
-        setData(traffic["data"][0]["traffic_green"])
+        setLoading(false)
         if (name) {
             getData()
         }
-    }, [])
+    }, [name])
+
+    const getData = async () => {
+        try {
+            const token = await AsyncStorage.getItem('token')
+            const id = await AsyncStorage.getItem('id')
+            const company_id = await AsyncStorage.getItem('company_id')
+            const end_point = await AsyncStorage.getItem('end_point')
+            fetch(`https://gateway.vim365.com/checkcards/cards?company_id=${company_id}&end_point=${end_point}&page=traffic-daily-test`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'security-header': 'Vim365Aputek/2020.04',
+                    Authorization: token,
+                    id: id
+                }
+                })
+                .then((response) => response.json())
+                .then((json) => {
+                    if (name == 'green') {
+                        setData(json.data[0]['traffic_green'])
+                    } else if (name == 'yellow') {
+                        setData(json.data[0]['traffic_yellow'])
+                    } else {
+                        setData(json.data[0]['traffic_red'])
+                    }
+                    setLoading(false)
+                })
+                .catch((error) => {
+                    alert(error)
+            });
+          } catch(e) {
+            alert(e)
+        }
+    }
 
     const traffic = {
         "error":false,
@@ -116,40 +149,6 @@ const DailyTraffic = ({ name }) => {
         "code":null
     }
 
-
-    const getData = async () => {
-        try {
-            const token = await AsyncStorage.getItem('token')
-            const id = await AsyncStorage.getItem('id')
-            const company_id = await AsyncStorage.getItem('company_id')
-            const end_point = await AsyncStorage.getItem('end_point')
-            fetch(`https://gateway.vim365.com/checkcards/cards?company_id=${company_id}&end_point=${end_point}&page=traffic-daily-test`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'security-header': 'Vim365Aputek/2020.04',
-                    Authorization: token,
-                    id: id
-                }
-                })
-                .then((response) => response.json())
-                .then((json) => {
-                    // alert(JSON.stringify(json))
-                    if (name == 'green') {
-                        setData(json.data[0]['traffic_green'])
-                    } else if (name == 'yellow') {
-                        setData(json.data['traffic_yellow'])
-                    } else {
-                        setData(json.data[0]['traffic_red'])
-                    }
-                })
-                .catch((error) => {
-                    alert(error)
-            });
-          } catch(e) {
-            alert(e)
-        }
-    }
-
     const renderItem = ( { item } ) => {
         return (
             <View style={[tw`rounded py-6`, { width: '100%' }]}>
@@ -159,20 +158,19 @@ const DailyTraffic = ({ name }) => {
     }
 
     return (
-        <View>
-            
-            {name.length > 0 ? 
-                (<>
-                    <View style={tw`px-6`}>
-                        <Text style={tw`text-4xl py-4 font-bold text-gray-800 mt-4`}>{ data.title }</Text>
-                        <Text style={tw`text-gray-800 text-lg leading-5`}>{ data.description }</Text>
-                        {/* <FlatList data={cards} numColumns={2} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14}} keyExtractor={((item, i) => item.title)} /> */}
-                    </View>
-                    <FlatList style={tw`pb-6 bg-white px-6 mt-6`} data={data.recomendations} renderItem={renderItem} keyExtractor={((item, i) => item.title)} />
-                </>)
+        <>
+            {name.length > 0 ? isLoading ? <ActivityIndicator style={tw`py-12`} size="small" color="#0000ff" /> :
+                <FlatList style={tw`pb-6 bg-white px-6`} data={data?.recomendations} renderItem={renderItem} keyExtractor={((item, i) => i+'traffic')} 
+                ListHeaderComponent={
+                <View style={tw``}>
+                    <Text style={tw`text-4xl py-4 font-bold text-gray-800 mt-4`}>{data?.title}</Text>
+                    <Text style={tw`text-gray-800 text-lg leading-5`}>{data?.description}</Text>
+                </View>} />
             : (<></>)}
-        </View>
+        </>
     )
 }
 
 export default DailyTraffic
+
+{/* <FlatList data={cards} numColumns={2} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14}} keyExtractor={((item, i) => item.title)} /> */}
