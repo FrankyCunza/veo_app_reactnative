@@ -64,7 +64,7 @@ const Daily = ({navigation}) => {
 
     const senData =  async () => {
         // alert(JSON.stringify(collectData))
-        setLoading(true)
+        // setLoading(true)
         try {
             // Data Storage
             const keys = await AsyncStorage.getAllKeys()
@@ -122,7 +122,7 @@ const Daily = ({navigation}) => {
         }
     }
 
-    const renderItem = ({item}) => {
+    const renderItem = ( { item } ) => {
         return (
             <View style={[tw`bg-white w-5/12 rounded mt-4 h-28 shadow`, { width: '48%' }, collectData[item.code].selected ? tw`bg-blue-600` : '']}>
                 <TouchableHighlight style={[tw``, {}]}>
@@ -142,16 +142,20 @@ const Daily = ({navigation}) => {
     }
 
     return (
-        <ScrollView style={tw`bg-gray-200 h-full`}>
+        <ScrollView style={tw`bg-gray-100 h-full`}>
             <DailyTraffic name={resultTraffic} />
             {isLoading ? <ActivityIndicator size="small" color="#0000ff" /> :
-                (<FlatList data={cards} numColumns={2} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14}} keyExtractor={((item, i) => item.title)} />)
+                (
+                <>
+                    <FlatList data={cards} numColumns={2} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14}} keyExtractor={((item, i) => item.title)} />
+                    <View style={tw`px-4 mt-4 pb-4`}>
+                        <TouchableOpacity onPress={senData} style={tw`bg-blue-600 py-2 rounded-full`}>
+                            <Text style={tw`text-center text-white text-xl`}>Enviar</Text>
+                        </TouchableOpacity>
+                    </View>
+                </>
+                )
             }
-            <View style={tw`px-4 mt-4 pb-4`}>
-                <TouchableOpacity onPress={senData} style={tw`bg-blue-600 py-2 rounded-full`}>
-                    <Text style={tw`text-center text-white text-xl`}>Enviar</Text>
-                </TouchableOpacity>
-            </View>
         </ScrollView>
     )
 }

@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, ActivityIndicator, TouchableHighlight, TouchableOpacity, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CheckBox from '@react-native-community/checkbox';
+import tw from 'tailwind-react-native-classnames';
 
 const DailyTraffic = ({ name }) => {
     const [data, setData] = useState([])
 
     useEffect(() => {
         // alert(name.length)
-        setData(traffic)
+        setData(traffic["data"][0]["traffic_green"])
         if (name) {
             getData()
         }
@@ -149,14 +150,28 @@ const DailyTraffic = ({ name }) => {
         }
     }
 
+    const renderItem = ( { item } ) => {
+        return (
+            <View style={[tw`rounded py-6`, { width: '100%' }]}>
+                <Text style={tw`text-base leading-5 text-gray-800`}>{ item.name }</Text>
+            </View>
+        )
+    }
+
     return (
-        <>
+        <View>
+            
             {name.length > 0 ? 
-                (<View>
-                    <Text>{ name }</Text>
-                </View>)
+                (<>
+                    <View style={tw`px-6`}>
+                        <Text style={tw`text-4xl py-4 font-bold text-gray-800 mt-4`}>{ data.title }</Text>
+                        <Text style={tw`text-gray-800 text-lg leading-5`}>{ data.description }</Text>
+                        {/* <FlatList data={cards} numColumns={2} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14}} keyExtractor={((item, i) => item.title)} /> */}
+                    </View>
+                    <FlatList style={tw`pb-6 bg-white px-6 mt-6`} data={data.recomendations} renderItem={renderItem} keyExtractor={((item, i) => item.title)} />
+                </>)
             : (<></>)}
-        </>
+        </View>
     )
 }
 
