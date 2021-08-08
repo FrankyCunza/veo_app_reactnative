@@ -35,3 +35,7 @@ https://react-native-async-storage.github.io/async-storage/docs/usage
 
 # Watchman
 https://github.com/facebook/watchman/releases/tag/v2020.08.17.00
+
+
+./gradlew bundleRelease
+./gradlew assembleRelease
