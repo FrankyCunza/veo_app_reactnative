@@ -2,10 +2,11 @@ import React, { useEffect } from 'react';
 import JitsiMeet, { JitsiMeetView } from 'react-native-jitsi-meet';
 
 function Video() {
-
+  // https://probandojitsi.duckdns.org/test
+  // https://meet.jit.si/exemple
   useEffect(() => {
     setTimeout(() => {
-      const url = 'https://meet.jit.si/exemple';
+      const url = 'https://probandojitsi.duckdns.org/test';
       const userInfo = {
         displayName: 'User',
         email: 'user@example.com',
