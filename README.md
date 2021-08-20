@@ -41,3 +41,6 @@ https://github.com/facebook/watchman/releases/tag/v2020.08.17.00
 
 ## Build APK
 ./gradlew assembleRelease
+
+## Build to Production
+https://medium.com/geekculture/react-native-generate-apk-debug-and-release-apk-4e9981a2ea51
