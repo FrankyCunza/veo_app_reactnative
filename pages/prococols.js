@@ -8,7 +8,7 @@ import Title from '../components/title';
 const Protocols = ( { navigation } ) => {
     const [data, setData] = useState([])
     const [isLoading, setLoading] = useState(true)
-    
+
     useEffect(() => {
         getData()
     }, [])
@@ -54,8 +54,8 @@ const Protocols = ( { navigation } ) => {
             <View style={[tw`mt-3 px-4 relative`]}>
                 <TouchableHighlight style={[tw`relative`, {}]} onPress={() => {goPage(item)}}>
                     <View style={tw`bg-white px-4 py-6 shadow rounded`}>
-                        <Text>{item.name}</Text>
-                        <View style={tw`absolute top-3 right-2 w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center`}>
+                        <Text style={tw`text-lg`}>{item.name}</Text>
+                        <View style={tw`absolute top-5 right-2 w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center`}>
                             <Icon style={tw``} name="arrowright" color="black" type="antdesign" />
                         </View>
                     </View>
