@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, ActivityIndicator, TouchableHighlight, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
 import tw from 'tailwind-react-native-classnames';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Icon } from 'react-native-elements'
 
 const Protocols = () => {
     const [data, setData] = useState([])
@@ -43,6 +44,7 @@ const Protocols = () => {
                 <TouchableHighlight style={[tw``, {}]} onPress={() => {alert("Hello")}}>
                     <View style={tw`bg-white p-4 shadow rounded`}>
                         <Text>{item.name}</Text>
+                        <Icon style={tw`p-2 bg-black rounded-full w-10 h-10 mt-4`} name="arrowright" color="white" type="antdesign" />
                     </View>
                 </TouchableHighlight>
             </View>
