@@ -11,6 +11,7 @@ import Video from './pages/jitsi';
 import Daily from './pages/daily';
 import Profile from './pages/profile';
 import Protocols from './pages/prococols';
+import SliderProtocols from './pages/sliderProtocols';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -26,6 +27,7 @@ const App = () => {
           <Stack.Screen name="/consulta" component={Video} />
           <Stack.Screen name="/profile" component={Profile} />
           <Stack.Screen name="/protocols" component={Protocols} />
+          <Stack.Screen name="/sliderprotocols" component={SliderProtocols} />
         </Stack.Navigator>
       </SafeAreaProvider>
     </NavigationContainer>

@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Icon } from 'react-native-elements'
 import Title from '../components/title';
 
-const Protocols = () => {
+const Protocols = ( { navigation } ) => {
     const [data, setData] = useState([])
     const [isLoading, setLoading] = useState(true)
     useEffect(() => {
@@ -39,10 +39,19 @@ const Protocols = () => {
             alert(e)
         }
     }
+
+    const goPage = (item) => {
+        // routerLink
+        navigation.navigate('/sliderprotocols', {
+            title: item.name,
+            data: item
+        })
+    }
+    
     const renderItem = ( { item } ) => {
         return (
             <View style={[tw`mt-3 px-4 relative`]}>
-                <TouchableHighlight style={[tw`relative`, {}]} onPress={() => {alert("Hello")}}>
+                <TouchableHighlight style={[tw`relative`, {}]} onPress={() => {goPage(item)}}>
                     <View style={tw`bg-white px-4 py-6 shadow rounded`}>
                         <Text>{item.name}</Text>
                         <View style={tw`absolute top-3 right-2 w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center`}>
