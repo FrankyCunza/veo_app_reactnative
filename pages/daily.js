@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import CheckBox from '@react-native-community/checkbox';
 import DailyTraffic from '../components/daily_traffic';
 import tw from 'tailwind-react-native-classnames';
-const Daily = ({navigation}) => {
+const Daily = ( { navigation } ) => {
     const [cards, setCards] = useState([])
     const [isLoading, setLoading] = useState(true);
     const [isLoadingTraffic, setLoadingTraffic] = useState(true);
@@ -126,7 +126,7 @@ const Daily = ({navigation}) => {
     const renderItem = ( { item } ) => {
         return (
             <View style={[tw`bg-white w-5/12 rounded mt-4 h-28 shadow`, { width: '48%' }, collectData[item.code].selected ? tw`bg-blue-600` : '']}>
-                <TouchableHighlight style={[tw``, {}]}>
+                <TouchableHighlight style={[tw``, {}]} onPress={() => {alert("Hello")}}>
                     <View style={tw`h-full justify-center items-center`}>
                         <Image style={{width: 45, height: 45, resizeMode: 'contain'}} source={{uri: "https://image.flaticon.com/icons/png/512/1021/1021606.png"}} />
                         <Text style={[tw`text-center px-2 text-sm leading-4 mt-2`, collectData[item.code].selected ? tw`text-white` : tw`text-gray-800`]}>{item.title}</Text>
