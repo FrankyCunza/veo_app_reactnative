@@ -32,7 +32,7 @@ const Profile = () => {
                 .then((json) => {
                     setData(json)
                     setLoading(false)
-                    // alert(JSON.stringify(json))
+                    alert(JSON.stringify(json))
                 })
                 .catch((error) => {
                     alert(error)
@@ -46,6 +46,13 @@ const Profile = () => {
         <View>
             <Title title="Perfil Personal" />
             <View style={tw`px-4`}>
+                {data.data ? data.data.map((item, index) => {
+                    return (
+                        <View key={'form'+index}>
+                            <Text>{item.title}</Text>
+                        </View>
+                    )
+                }) : <></>}
                 <View style={tw``}>
                     <Text style={tw`text-gray-800 mb-1 text-lg`}>Usuario:</Text>
                     <Controller
