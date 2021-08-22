@@ -8,6 +8,7 @@ import Title from '../components/title';
 const Protocols = ( { navigation } ) => {
     const [data, setData] = useState([])
     const [isLoading, setLoading] = useState(true)
+    
     useEffect(() => {
         getData()
     }, [])
@@ -62,6 +63,7 @@ const Protocols = ( { navigation } ) => {
             </View>
         )
     }
+
     return (
         <View>
             <Title title="Protocolos" />
