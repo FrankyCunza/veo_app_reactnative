@@ -4,6 +4,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import CheckBox from '@react-native-community/checkbox';
 import DailyTraffic from '../components/daily_traffic';
 import tw from 'tailwind-react-native-classnames';
+import Title from '../components/title';
+
 const Daily = ( { navigation } ) => {
     const [cards, setCards] = useState([])
     const [isLoading, setLoading] = useState(true);
@@ -144,9 +146,10 @@ const Daily = ( { navigation } ) => {
 
     return (
         <SafeAreaView style={[tw`bg-gray-100`, {flex: 1}]}>
+            <Title title="Declaración diaria" />
             {isLoading  ? isLoadingTraffic==false ? <></> : <ActivityIndicator style={tw`py-12`} size="small" color="#0000ff" /> :
                 (
-                <FlatList data={cards} numColumns={2} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14}} keyExtractor={((item, i) => item.title)} 
+                <FlatList data={cards} numColumns={2} style={tw`-mt-4`} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14}} keyExtractor={((item, i) => item.title)} 
                 ListFooterComponent={<View style={tw`px-4 mt-4 pb-4`}>
                     <TouchableOpacity onPress={senData} style={tw`bg-blue-600 py-2 rounded-full`}>
                         <Text style={tw`text-center text-white text-xl`}>Enviar</Text>

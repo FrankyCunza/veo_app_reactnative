@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, FlatList, ActivityIndicator, TouchableHi
 import tw from 'tailwind-react-native-classnames';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Icon } from 'react-native-elements'
+import Title from '../components/title';
 
 const Protocols = () => {
     const [data, setData] = useState([])
@@ -40,11 +41,13 @@ const Protocols = () => {
     }
     const renderItem = ( { item } ) => {
         return (
-            <View style={tw`mt-2 px-4`}>
-                <TouchableHighlight style={[tw``, {}]} onPress={() => {alert("Hello")}}>
-                    <View style={tw`bg-white p-4 shadow rounded`}>
+            <View style={[tw`mt-3 px-4 relative`]}>
+                <TouchableHighlight style={[tw`relative`, {}]} onPress={() => {alert("Hello")}}>
+                    <View style={tw`bg-white px-4 py-6 shadow rounded`}>
                         <Text>{item.name}</Text>
-                        <Icon style={tw`p-2 bg-black rounded-full w-10 h-10 mt-4`} name="arrowright" color="white" type="antdesign" />
+                        <View style={tw`absolute top-3 right-2 w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center`}>
+                            <Icon style={tw``} name="arrowright" color="black" type="antdesign" />
+                        </View>
                     </View>
                 </TouchableHighlight>
             </View>
@@ -52,7 +55,7 @@ const Protocols = () => {
     }
     return (
         <View>
-            <Text>Protocols</Text>
+            <Title title="Protocolos" />
             {/* {data.data ? (data.data.map((el, index) => {
                 return (
                     <View>
@@ -62,7 +65,7 @@ const Protocols = () => {
             })) : (<></>)} */}
             {isLoading  ? <ActivityIndicator style={tw`py-12`} size="small" color="#0000ff" /> :
                 (
-                    <FlatList data={data.data} style={tw`pb-4`} renderItem={renderItem} keyExtractor={((item, i) => item.name)} />
+                    <FlatList data={data.data} style={tw`pb-4 -mt-4`} renderItem={renderItem} keyExtractor={((item, i) => item.name)} />
                 )
             }
         </View>
