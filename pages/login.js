@@ -4,7 +4,7 @@ import { useForm, Controller, set } from "react-hook-form";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import tw from 'tailwind-react-native-classnames';
 
-const Login = ({ navigation }) => {
+const Login = ( { navigation } ) => {
     const { control, handleSubmit, formState: { errors } } = useForm();
     const [isLoading, setLoading] = useState(false)
 

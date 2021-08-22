@@ -10,6 +10,7 @@ import Login from './pages/login';
 import Video from './pages/jitsi';
 import Daily from './pages/daily';
 import Profile from './pages/profile';
+import Protocols from './pages/prococols';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -24,6 +25,7 @@ const App = () => {
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="/consulta" component={Video} />
           <Stack.Screen name="/profile" component={Profile} />
+          <Stack.Screen name="/protocols" component={Protocols} />
         </Stack.Navigator>
       </SafeAreaProvider>
     </NavigationContainer>
