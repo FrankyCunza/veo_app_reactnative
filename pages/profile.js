@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text, TextInput, View } from 'react-native'
+import { StyleSheet, Text, TextInput, View, ScrollView } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Title from '../components/title'
 import { useForm, Controller, set } from "react-hook-form"
@@ -32,7 +32,7 @@ const Profile = () => {
                 .then((json) => {
                     setData(json)
                     setLoading(false)
-                    alert(JSON.stringify(json))
+                    // alert(JSON.stringify(json))
                 })
                 .catch((error) => {
                     alert(error)
@@ -43,37 +43,62 @@ const Profile = () => {
     }
 
     return (
-        <View>
+        <ScrollView>
             <Title title="Perfil Personal" />
             <View style={tw`px-4`}>
                 {data.data ? data.data.map((item, index) => {
-                    return (
-                        <View key={'form'+index}>
-                            <Text>{item.title}</Text>
-                        </View>
-                    )
+                    if (item.form_type == 'text' 
+                    || item.form_type == 'title' 
+                    || item.form_type == 'work_job' 
+                    || item.form_type == 'work_area' 
+                    || item.form_type == 'work_name' 
+                    || item.form_type == 'work_address' 
+                    || item.form_type == 'work_area' 
+                    || item.form_type == 'full_name' 
+                    || item.form_type == 'paternal_surname' 
+                    || item.form_type == 'maternal_surname' 
+                    || item.form_type == 'birth_day' 
+                    || item.form_type == 'cell_phone' 
+                    || item.form_type == 'email' 
+                    || item.form_type == 'address' 
+                    || item.type == 'address' 
+                    || item.type == 'title' 
+                    || item.form_type == 'work_job' 
+                    || item.form_type == 'work_area' 
+                    || item.form_type == 'work_name' 
+                    || item.form_type == 'work_address' 
+                    ) {
+                        return (
+                            <View style={tw`mt-2`} key={'form'+index}>
+                                <Text style={tw`text-gray-800 mb-1 text-lg`}>{item.title}</Text>
+                                <Controller
+                                    control={control}
+                                    rules={{
+                                    required: true,
+                                    }}
+                                    render={({ field: { onChange, onBlur, value } }) => (
+                                    <TextInput
+                                        style={tw`bg-white py-3 rounded px-4 shadow-sm`}
+                                        onBlur={onBlur}
+                                        onChangeText={onChange}
+                                        value={value}
+                                    />
+                                    )}
+                                    name="user"
+                                    defaultValue=""
+                                />
+                            </View>
+                        )
+                    } else {
+                        return (
+                            <View key={'form'+index}>
+                                <Text>{item.title}</Text>
+                            </View>
+                        )
+                    }
                 }) : <></>}
-                <View style={tw``}>
-                    <Text style={tw`text-gray-800 mb-1 text-lg`}>Usuario:</Text>
-                    <Controller
-                        control={control}
-                        rules={{
-                        required: true,
-                        }}
-                        render={({ field: { onChange, onBlur, value } }) => (
-                        <TextInput
-                            style={tw`bg-white py-3 rounded px-4 shadow-sm`}
-                            onBlur={onBlur}
-                            onChangeText={onChange}
-                            value={value}
-                        />
-                        )}
-                        name="user"
-                        defaultValue=""
-                    />
-                </View>
             </View>
-        </View>
+        </ScrollView>
     )
 }
 
