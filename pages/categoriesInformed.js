@@ -35,7 +35,7 @@ const categoriesInformed = ( { route, navigation } ) => {
         // routerLink
         navigation.navigate('/contentInformed', {
             title: item.name,
-            data: item
+            content: item
         })
     }
 

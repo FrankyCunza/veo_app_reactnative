@@ -5,11 +5,13 @@ import tw from 'tailwind-react-native-classnames';
 
 const Home = ( { route, navigation} ) => {
     const [cards, setCards] = useState([]);
+    const [brand, setBrand] = useState("")
     const [isLoading, setLoading] = useState(true);
     const { id, token } = route.params;
     useEffect(() => {
         if (id && token) {
             getData()
+            getBrand()
         }
     }, [])
 
@@ -29,6 +31,27 @@ const Home = ( { route, navigation} ) => {
                 // alert(JSON.stringify(json.data))
                 setCards(json.data)
                 setLoading(false)
+            })
+            .catch((error) => {
+                alert("Error: 1", error)
+            });
+        } catch(e) {
+            alert("Error: 2", e)
+        }
+    }
+
+    const getBrand = async () => {
+        try {
+          fetch('https://gateway.vim365.com/first-menu/logo', {
+                headers: {
+                    'security-header': 'Vim365Aputek/2020.04',
+                    Authorization: token,
+                    id: id
+                }
+            })
+            .then((response) => response.json())
+            .then((json) => {
+                setBrand(json.image)
             })
             .catch((error) => {
                 alert("Error: 1", error)
@@ -60,7 +83,7 @@ const Home = ( { route, navigation} ) => {
 
     const renderItem = ({item}) => {
         return (
-            <View style={[tw`bg-white w-5/12 rounded mt-4 h-28 shadow`, {width: '48%'}]}>
+            <View style={[tw`bg-white w-5/12 rounded mt-4 h-28 shadow-sm`, {width: '48%'}]}>
                 <TouchableHighlight onPress={() => {goPage(item.routerLink)}} style={[tw``, {}]}>
                     <View style={tw`h-full justify-center items-center`}>
                         {/* <Image
@@ -79,9 +102,19 @@ const Home = ( { route, navigation} ) => {
     }
 
     return (
-        <View style={tw`bg-gray-200 h-full`}>
+        <View style={tw`bg-gray-100 h-full`}>
+            <View style={[tw`py-3 items-center mt-4 mb-1 bg-transparent`, {display: 'flex', flexDirection: 'row', justifyContent: 'center'}]}>
+                <View>
+                    <Image source={{uri: "https://veo365.com/assets/images/logo-veo-color-8.png"}} style={[tw`w-16 h-16`, { resizeMode: 'contain' }]} />
+                </View>
+                {brand ? (
+                    <View style={tw`ml-6`}>
+                        <Image source={{uri: brand}} style={[tw`w-24 h-16`, { resizeMode: 'contain' }]} />
+                    </View>
+                ) : <></>}
+            </View>
             {isLoading ? <ActivityIndicator size="small" color="#0000ff" style={tw`py-8`} /> :
-                (<FlatList data={cards} numColumns={2} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14}} keyExtractor={((item, i) => item.title)} />)
+                (<FlatList data={cards} numColumns={2} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14, flex: 2}} keyExtractor={((item, i) => item.title)} />)
             }
         </View>
     )
