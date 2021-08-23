@@ -123,6 +123,27 @@ const Profile = () => {
                                 <Text style={tw`text-gray-800 text-2xl font-bold`}>{item.title}</Text>
                             </View>
                         )
+                    } else if (item.form_type == 'number') {
+                        return (
+                            <View style={tw`mt-2`} key={'form'+index}>
+                                <Text style={tw`text-gray-800 mb-1 text-base`}>{item.title}</Text>
+                                <Controller
+                                    control={control}
+                                    rules={{
+                                    required: true,
+                                    }}
+                                    render={({ field: { onChange, onBlur, value } }) => (
+                                    <TextInput
+                                        style={tw`bg-white py-3 rounded px-4 shadow-sm`}
+                                        onBlur={onBlur}
+                                        onChangeText={onChange}
+                                        defaultValue={values.data ? values['data']['data'][item.name] : ''}
+                                        value={value}
+                                    />
+                                    )}
+                                />
+                            </View>
+                        )
                     } else {
                         return (
                             <View key={'form'+index}>
