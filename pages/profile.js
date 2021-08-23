@@ -8,6 +8,7 @@ import tw from 'tailwind-react-native-classnames'
 const Profile = () => {
     const { control, handleSubmit, formState: { errors } } = useForm();
     const [data, setData] = useState([])
+    const [values, setValues] = useState({})
     const [isLoading, setLoading] = useState(true)
 
     useEffect(() => {
@@ -32,6 +33,33 @@ const Profile = () => {
                 .then((json) => {
                     setData(json)
                     setLoading(false)
+                    getValues()
+                    // alert(JSON.stringify(json))
+                })
+                .catch((error) => {
+                    alert(error)
+            });
+          } catch(e) {
+            alert(e)
+        }
+    }
+
+    const getValues = async () => {
+        try {
+            const token = await AsyncStorage.getItem('token')
+            const id = await AsyncStorage.getItem('id')
+            fetch(`https://gateway.vim365.com/users/getprofile`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'security-header': 'Vim365Aputek/2020.04',
+                    Authorization: token,
+                    id: id
+                }
+                })
+                .then((response) => response.json())
+                .then((json) => {
+                    setValues(json)
+                    // setLoading(false)
                     // alert(JSON.stringify(json))
                 })
                 .catch((error) => {
@@ -81,11 +109,12 @@ const Profile = () => {
                                         style={tw`bg-white py-3 rounded px-4 shadow-sm`}
                                         onBlur={onBlur}
                                         onChangeText={onChange}
+                                        // defaultValue={values.data ? values.data.data.province : ''}
                                         value={value}
                                     />
                                     )}
-                                    name="user"
-                                    defaultValue=""
+                                    // name="user"
+                                    // defaultValue="String"
                                 />
                             </View>
                         )
