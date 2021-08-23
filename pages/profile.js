@@ -89,8 +89,7 @@ const Profile = () => {
                     || item.form_type == 'cell_phone' 
                     || item.form_type == 'email' 
                     || item.form_type == 'address' 
-                    || item.type == 'address' 
-                    || item.type == 'title' 
+                    || item.type == 'address'  
                     || item.form_type == 'work_job' 
                     || item.form_type == 'work_area' 
                     || item.form_type == 'work_name' 
@@ -98,7 +97,7 @@ const Profile = () => {
                     ) {
                         return (
                             <View style={tw`mt-2`} key={'form'+index}>
-                                <Text style={tw`text-gray-800 mb-1 text-lg`}>{item.title}</Text>
+                                <Text style={tw`text-gray-800 mb-1 text-base`}>{item.title}</Text>
                                 <Controller
                                     control={control}
                                     rules={{
@@ -109,13 +108,19 @@ const Profile = () => {
                                         style={tw`bg-white py-3 rounded px-4 shadow-sm`}
                                         onBlur={onBlur}
                                         onChangeText={onChange}
-                                        // defaultValue={values.data ? values.data.data.province : ''}
+                                        defaultValue={values.data ? values['data']['data'][item.name] : ''}
                                         value={value}
                                     />
                                     )}
                                     // name="user"
                                     // defaultValue="String"
                                 />
+                            </View>
+                        )
+                    } else if (item.type == 'title') {
+                        return (
+                            <View style={tw`mt-2`} key={'form'+index}>
+                                <Text style={tw`text-gray-800 text-2xl font-bold`}>{item.title}</Text>
                             </View>
                         )
                     } else {
