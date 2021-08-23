@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Icon } from 'react-native-elements'
 import Title from '../components/title';
 
-const Informed = () => {
+const Informed = ( { route, navigation } ) => {
     const [data, setData] = useState([])
     const [isLoading, setLoading] = useState(true)
 
@@ -42,10 +42,10 @@ const Informed = () => {
     }
 
     const goPage = (item) => {
-        // routerLink
-        navigation.navigate('/sliderprotocols', {
+        // routerLink 
+        navigation.navigate('/categoriesgetinformed', {
             title: item.name,
-            data: item
+            articles: item
         })
     }
 

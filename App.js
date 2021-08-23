@@ -13,6 +13,8 @@ import Profile from './pages/profile';
 import Protocols from './pages/prococols';
 import SliderProtocols from './pages/sliderProtocols';
 import Informed from './pages/informed';
+import categoriesInformed from './pages/categoriesInformed';
+import contentInformed from './pages/contentInformed';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -30,6 +32,8 @@ const App = () => {
           <Stack.Screen name="/protocols" component={Protocols} />
           <Stack.Screen name="/sliderprotocols" component={SliderProtocols} />
           <Stack.Screen name="/getinformed" component={Informed} />
+          <Stack.Screen name="/categoriesgetinformed" component={categoriesInformed} />
+          <Stack.Screen name="/contentInformed" component={contentInformed} />
         </Stack.Navigator>
       </SafeAreaProvider>
     </NavigationContainer>
