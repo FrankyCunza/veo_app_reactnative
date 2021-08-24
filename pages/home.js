@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet, Image, TouchableHighlight, ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Carousel from 'react-native-snap-carousel';
 import tw from 'tailwind-react-native-classnames';
 
 const Home = ( { route, navigation} ) => {
@@ -8,12 +9,37 @@ const Home = ( { route, navigation} ) => {
     const [brand, setBrand] = useState("")
     const [isLoading, setLoading] = useState(true);
     const { id, token } = route.params;
+    const [activeIndex, setActiveIndex] = useState(0);
+    const carouselItems = [
+        {
+            title:"Item 1",
+            text: "Text 1",
+        },
+        {
+            title:"Item 2",
+            text: "Text 2",
+        },
+        {
+            title:"Item 3",
+            text: "Text 3",
+        },
+        {
+            title:"Item 4",
+            text: "Text 4",
+        },
+        {
+            title:"Item 5",
+            text: "Text 5",
+        },
+    ]
+
     useEffect(() => {
         if (id && token) {
             getData()
             getBrand()
         }
     }, [])
+    
 
     const getData = async () => {
         try {
@@ -100,9 +126,47 @@ const Home = ( { route, navigation} ) => {
             </View>
         )
     }
+    const _renderItem = ({item,index}) => {
+        return (
+          <View style={{
+              backgroundColor:'floralwhite',
+              borderRadius: 5,
+              height: 250,
+              padding: 50,
+              marginLeft: 25,
+              marginRight: 25, }}>
+            <Text style={{fontSize: 30}}>{item.title}</Text>
+            <Text>{item.text}</Text>
+          </View>
+
+        )
+    }
+
+    const next = () => {
+        setActiveIndex(2)
+        // alert("Hello")
+    }
 
     return (
         <View style={tw`bg-gray-100 h-full`}>
+            <Carousel
+                layout={"default"}
+                //   Carousel.snapToNext()
+                // ref={ref => Carousel = ref}
+                data={carouselItems}
+                sliderWidth={300}
+                itemWidth={300}
+                renderItem={_renderItem}
+                onSnapToItem = { index => setActiveIndex(index) } />
+
+            <View style={[tw`bg-white w-5/12 rounded mt-4 h-10 shadow-sm`, {width: '48%'}]}>
+                <TouchableHighlight onPress={() => {next()}} style={[tw``, {}]}>
+                    <View style={tw`h-full justify-center items-center`}>
+                        <Text style={tw`text-gray-800 text-center px-2 text-sm leading-4 mt-2`}>Press</Text>
+                    </View>
+                </TouchableHighlight>
+            </View>
+
             <View style={[tw`py-3 items-center mt-4 mb-1 bg-transparent`, {display: 'flex', flexDirection: 'row', justifyContent: 'center'}]}>
                 <View>
                     <Image source={{uri: "https://veo365.com/assets/images/logo-veo-color-8.png"}} style={[tw`w-16 h-16`, { resizeMode: 'contain' }]} />

@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import Title from '../components/title'
 import { useForm, Controller, set } from "react-hook-form"
 import tw from 'tailwind-react-native-classnames'
+import RNPickerSelect from 'react-native-picker-select'
 
 const Profile = () => {
     const { control, handleSubmit, formState: { errors } } = useForm();
@@ -142,6 +143,19 @@ const Profile = () => {
                                     />
                                     )}
                                 />
+                            </View>
+                        )
+                    } else if (item.form_type == 'select') {
+                        return (
+                            <View key={item.name} style={tw`mt-2`}>
+                                <Text style={tw`text-gray-800 mb-1 text-base`}>{item.title}</Text>
+                                <View style={tw`bg-white`}>
+                                    <RNPickerSelect
+                                        style={tw`bg-white`}
+                                        onValueChange={(value) => console.log(value)}
+                                        items={item.data}
+                                    />
+                                </View>
                             </View>
                         )
                     } else {
