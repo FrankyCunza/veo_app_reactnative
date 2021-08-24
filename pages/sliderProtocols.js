@@ -63,6 +63,8 @@ const SliderProtocols = ( { route } ) => {
                 ref={ref => setCarousel(ref)}
                 data={data.steps}
                 sliderWidth={width}
+                // enableSnap={false}
+                scrollEnabled={false}
                 itemWidth={300}
                 renderItem={_renderItem}
                 onSnapToItem = { index => setActiveIndex(index) } />
