@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Carousel from 'react-native-snap-carousel';
 import tw from 'tailwind-react-native-classnames';
 import CheckBox from '@react-native-community/checkbox';
+import { HHMMSS, dateYYYYMMDD } from '../utils/utils';
 
 const SliderProtocols = ( { route } ) => {
     const { title, data } = route.params;
@@ -20,12 +21,94 @@ const SliderProtocols = ( { route } ) => {
             steps[item.id] = {...item, "selected": undefined}
         }
         setLoading(false)
-        // alert(JSON.stringify(steps))
-        // alert(data.steps.length)
     }, []) 
 
     const next = () => {
         carousel.snapToNext()
+    }
+
+    const senData =  async () => {
+        let answers = []
+        for (const [key, val] of Object.entries(steps)) {
+            answers.push({
+              "code": parseInt(key),
+              "response": steps[key]['selected']  
+            })
+        }
+        
+        try {
+            // Data Storage
+            const keys = await AsyncStorage.getAllKeys()
+            const itemsArray = await AsyncStorage.multiGet(keys)
+            let object = {}
+            itemsArray.map(item => {
+                if (item[0] == 'area_id' 
+                    || item[0] == 'branch_id' 
+                    || item[0] == 'company_id' 
+                    || item[0] == 'document' 
+                    || item[0] == 'end_point' 
+                    || item[0] == 'full_name' 
+                    || item[0] == 'job_id' 
+                    || item[0] == 'worker_id' 
+                ) {
+                    object[`${item[0]}`] = item[1]
+                }
+            })
+            
+            // Traffic
+            const total = Object.values(steps).reduce((t, {value, selected}) => {
+                if (selected) {
+                  return t + parseFloat(value)
+              } else {
+                  return t
+              }
+            }, 0)
+            let traffic = ''
+            let green = data.steps.length / 3
+            let yellow = green * 2
+            if (total < green) {
+                traffic = 'green'
+            } else if (total < yellow) {
+                traffic = 'yellow'
+            } else {
+                traffic = 'red'
+            }
+
+            // Collect Data
+            let dataSend = {
+                ...object,
+                "form": {
+                    "code": data.id,
+                    "traffic": traffic,
+                    "is_protocol": true,
+                    "version": 4.00,
+                    "answers": answers
+                },
+                "date": dateYYYYMMDD(),
+                "hour": HHMMSS(),
+            }
+            const token = await AsyncStorage.getItem('token')
+            const id = await AsyncStorage.getItem('id')
+            fetch('https://gateway.vim365.com/saveform/saveform', {
+                method: 'POST',
+                body: JSON.stringify(dataSend),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'security-header': 'Vim365Aputek/2020.04',
+                    Authorization: token,
+                    id: id
+                }
+                })
+                .then((response) => response.json())
+                .then((json) => {
+                    // alert(JSON.stringify(json))
+                })
+                .catch((error) => {
+                    alert('Error Save Form1', error)
+            });
+          } catch(e) {
+            alert('Error Save Form', e)
+        }
     }
 
     const _renderItem = ({item,index}) => {
@@ -37,12 +120,6 @@ const SliderProtocols = ( { route } ) => {
               padding: 14,
               marginLeft: 0,}}>
             <Text style={{fontSize: 16}}>{item.instructions}</Text>
-            {/* <CheckBox
-                disabled={false}
-                // style={styles.checkbox}
-                value={steps[item.id].selected}
-                onValueChange={(newValue) => { setSteps({...steps, [item.id]: {...item, selected: newValue}} ) }}
-            /> */}
             <View style={[tw`bg-white rounded-full mt-4 h-10 shadow`, { width: '30%' }, steps[item.id].selected == undefined ? tw`opacity-20` : 'opacity-100', steps[item.id].selected ? tw`bg-blue-600` : '']}>
                 <TouchableHighlight style={[tw``, {}]} onPress={() => {}}>
                     <View style={tw`h-full justify-center items-center`}> 
@@ -92,7 +169,7 @@ const SliderProtocols = ( { route } ) => {
                     Object.keys(data.steps).length-1==activeIndex ? 
                     <View style={[tw`px-4 items-center`, steps[Object.keys(steps)[activeIndex]].selected == undefined ? tw`opacity-30` : tw`opacity-100`, {}]}>
                         <View style={[tw`bg-white w-5/12 rounded-full mt-4 h-10 shadow-sm`, {width: '48%'}]}>
-                            <TouchableHighlight onPress={() => {next()}} style={[tw``, {}]}>
+                            <TouchableHighlight onPress={() => {senData()}} style={[tw``, {}]}>
                                 <View style={tw`h-full justify-center items-center`}>
                                     <Text style={tw`text-gray-800 text-center px-2 text-sm leading-4`}>Finalizar</Text>
                                 </View>

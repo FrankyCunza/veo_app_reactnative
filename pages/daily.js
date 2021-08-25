@@ -119,8 +119,8 @@ const Daily = ( { navigation } ) => {
                 "date": dateYYYYMMDD(),
                 "hour": HHMMSS(),
             }
-            // alert(JSON.stringify(data))
-            // return false
+            alert(JSON.stringify(data))
+            return false
             const token = await AsyncStorage.getItem('token')
             const id = await AsyncStorage.getItem('id')
             fetch('https://gateway.vim365.com/saveform/saveform', {
