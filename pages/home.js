@@ -116,6 +116,14 @@ const Home = ( { route, navigation} ) => {
             {isLoading ? <ActivityIndicator size="small" color="#0000ff" style={tw`py-8`} /> :
                 (<FlatList data={cards} numColumns={2} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14, flex: 2}} keyExtractor={((item, i) => item.title)} />)
             }
+            <View style={[tw`bg-white w-5/12 rounded mt-4 h-28 shadow-sm`, {width: '48%'}]}>
+                <TouchableHighlight onPress={() => {goPage('/prueba')}} style={[tw``, {}]}>
+                    <View style={tw`h-full justify-center items-center`}>
+                        <Image style={{width: 45, height: 45, resizeMode: 'contain'}} source={{uri: "https://image.flaticon.com/icons/png/512/1021/1021606.png"}} />
+                        <Text style={tw`text-gray-800 text-center px-2 text-sm leading-4 mt-2`}>Prueba</Text>
+                    </View>
+                </TouchableHighlight>
+            </View>
         </View>
     )
 }
