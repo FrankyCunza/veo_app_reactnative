@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text, TextInput, View, ScrollView } from 'react-native'
+import { StyleSheet, Text, TextInput, View, ScrollView, ActivityIndicator } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Title from '../components/title'
 import { useForm, Controller, set } from "react-hook-form"
@@ -60,7 +60,7 @@ const Profile = () => {
                 .then((response) => response.json())
                 .then((json) => {
                     setValues(json)
-                    // setLoading(false)
+                    setLoading(false)
                     // alert(JSON.stringify(json))
                 })
                 .catch((error) => {
@@ -74,99 +74,102 @@ const Profile = () => {
     return (
         <ScrollView>
             <Title title="Perfil Personal" />
-            <View style={tw`px-4`}>
-                {data.data ? data.data.map((item, index) => {
-                    if (item.form_type == 'text' 
-                    || item.form_type == 'title' 
-                    || item.form_type == 'work_job' 
-                    || item.form_type == 'work_area' 
-                    || item.form_type == 'work_name' 
-                    || item.form_type == 'work_address' 
-                    || item.form_type == 'work_area' 
-                    || item.form_type == 'full_name' 
-                    || item.form_type == 'paternal_surname' 
-                    || item.form_type == 'maternal_surname' 
-                    || item.form_type == 'birth_day' 
-                    || item.form_type == 'cell_phone' 
-                    || item.form_type == 'email' 
-                    || item.form_type == 'address' 
-                    || item.type == 'address'  
-                    || item.form_type == 'work_job' 
-                    || item.form_type == 'work_area' 
-                    || item.form_type == 'work_name' 
-                    || item.form_type == 'work_address' 
-                    ) {
-                        return (
-                            <View style={tw`mt-2`} key={'form'+index}>
-                                <Text style={tw`text-gray-800 mb-1 text-base`}>{item.title}</Text>
-                                <Controller
-                                    control={control}
-                                    rules={{
-                                    required: true,
-                                    }}
-                                    render={({ field: { onChange, onBlur, value } }) => (
-                                    <TextInput
-                                        style={tw`bg-white py-3 rounded px-4 shadow-sm`}
-                                        onBlur={onBlur}
-                                        onChangeText={onChange}
-                                        defaultValue={values.data ? values['data']['data'][item.name] : ''}
-                                        value={value}
-                                    />
-                                    )}
-                                    // name="user"
-                                    // defaultValue="String"
-                                />
-                            </View>
-                        )
-                    } else if (item.type == 'title') {
-                        return (
-                            <View style={tw`mt-2`} key={'form'+index}>
-                                <Text style={tw`text-gray-800 text-2xl font-bold`}>{item.title}</Text>
-                            </View>
-                        )
-                    } else if (item.form_type == 'number') {
-                        return (
-                            <View style={tw`mt-2`} key={'form'+index}>
-                                <Text style={tw`text-gray-800 mb-1 text-base`}>{item.title}</Text>
-                                <Controller
-                                    control={control}
-                                    rules={{
-                                    required: true,
-                                    }}
-                                    render={({ field: { onChange, onBlur, value } }) => (
-                                    <TextInput
-                                        style={tw`bg-white py-3 rounded px-4 shadow-sm`}
-                                        onBlur={onBlur}
-                                        onChangeText={onChange}
-                                        defaultValue={values.data ? values['data']['data'][item.name] : ''}
-                                        value={value}
-                                    />
-                                    )}
-                                />
-                            </View>
-                        )
-                    } else if (item.form_type == 'select') {
-                        return (
-                            <View key={item.name} style={tw`mt-2`}>
-                                <Text style={tw`text-gray-800 mb-1 text-base`}>{item.title}</Text>
-                                <View style={tw`bg-white`}>
-                                    <RNPickerSelect
-                                        style={tw`bg-white`}
-                                        onValueChange={(value) => console.log(value)}
-                                        items={item.data}
+            {isLoading ? <ActivityIndicator size="small" color="#0000ff" style={tw`py-8`} /> :
+            (
+                <View style={tw`px-4`}>
+                    {data.data ? data.data.map((item, index) => {
+                        if (item.form_type == 'text' 
+                        || item.form_type == 'title' 
+                        || item.form_type == 'work_job' 
+                        || item.form_type == 'work_area' 
+                        || item.form_type == 'work_name' 
+                        || item.form_type == 'work_address' 
+                        || item.form_type == 'work_area' 
+                        || item.form_type == 'full_name' 
+                        || item.form_type == 'paternal_surname' 
+                        || item.form_type == 'maternal_surname' 
+                        || item.form_type == 'birth_day' 
+                        || item.form_type == 'cell_phone' 
+                        || item.form_type == 'email' 
+                        || item.form_type == 'address' 
+                        || item.type == 'address'  
+                        || item.form_type == 'work_job' 
+                        || item.form_type == 'work_area' 
+                        || item.form_type == 'work_name' 
+                        || item.form_type == 'work_address' 
+                        ) {
+                            return (
+                                <View style={tw`mt-2`} key={'form'+index}>
+                                    <Text style={tw`text-gray-800 mb-1 text-base`}>{item.title}</Text>
+                                    <Controller
+                                        control={control}
+                                        rules={{
+                                        required: true,
+                                        }}
+                                        render={({ field: { onChange, onBlur, value } }) => (
+                                        <TextInput
+                                            style={tw`bg-white py-3 rounded px-4 shadow-sm`}
+                                            onBlur={onBlur}
+                                            onChangeText={onChange}
+                                            defaultValue={values.data ? values['data']['data'][item.name] : ''}
+                                            value={value}
+                                        />
+                                        )}
+                                        // name="user"
+                                        // defaultValue="String"
                                     />
                                 </View>
-                            </View>
-                        )
-                    } else {
-                        return (
-                            <View key={'form'+index}>
-                                <Text>{item.title}</Text>
-                            </View>
-                        )
-                    }
-                }) : <></>}
-            </View>
+                            )
+                        } else if (item.type == 'title') {
+                            return (
+                                <View style={tw`mt-2`} key={'form'+index}>
+                                    <Text style={tw`text-gray-800 text-2xl font-bold`}>{item.title}</Text>
+                                </View>
+                            )
+                        } else if (item.form_type == 'number') {
+                            return (
+                                <View style={tw`mt-2`} key={'form'+index}>
+                                    <Text style={tw`text-gray-800 mb-1 text-base`}>{item.title}</Text>
+                                    <Controller
+                                        control={control}
+                                        rules={{
+                                        required: true,
+                                        }}
+                                        render={({ field: { onChange, onBlur, value } }) => (
+                                        <TextInput
+                                            style={tw`bg-white py-3 rounded px-4 shadow-sm`}
+                                            onBlur={onBlur}
+                                            onChangeText={onChange}
+                                            defaultValue={values.data ? values['data']['data'][item.name] : ''}
+                                            value={value}
+                                        />
+                                        )}
+                                    />
+                                </View>
+                            )
+                        } else if (item.form_type == 'select') {
+                            return (
+                                <View key={item.name} style={tw`mt-2`}>
+                                    <Text style={tw`text-gray-800 mb-1 text-base`}>{item.title}</Text>
+                                    <View style={tw`bg-white`}>
+                                        <RNPickerSelect
+                                            style={tw`bg-white`}
+                                            onValueChange={(value) => console.log(value)}
+                                            items={item.data}
+                                        />
+                                    </View>
+                                </View>
+                            )
+                        } else {
+                            return (
+                                <View key={'form'+index}>
+                                    <Text>{item.title}</Text>
+                                </View>
+                            )
+                        }
+                    }) : <></>}
+                </View>
+            )}
         </ScrollView>
     )
 }

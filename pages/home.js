@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet, Image, TouchableHighlight, ActivityIndicator } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import Carousel from 'react-native-snap-carousel';
 import tw from 'tailwind-react-native-classnames';
 
 const Home = ( { route, navigation} ) => {
@@ -9,29 +7,6 @@ const Home = ( { route, navigation} ) => {
     const [brand, setBrand] = useState("")
     const [isLoading, setLoading] = useState(true);
     const { id, token } = route.params;
-    const [activeIndex, setActiveIndex] = useState(0);
-    const carouselItems = [
-        {
-            title:"Item 1",
-            text: "Text 1",
-        },
-        {
-            title:"Item 2",
-            text: "Text 2",
-        },
-        {
-            title:"Item 3",
-            text: "Text 3",
-        },
-        {
-            title:"Item 4",
-            text: "Text 4",
-        },
-        {
-            title:"Item 5",
-            text: "Text 5",
-        },
-    ]
 
     useEffect(() => {
         if (id && token) {
@@ -119,66 +94,36 @@ const Home = ( { route, navigation} ) => {
                         height: 120
                         }}
                         /> */}
-                        <Image style={{width: 45, height: 45, resizeMode: 'contain'}} source={{uri: "https://image.flaticon.com/icons/png/512/1021/1021606.png"}} />
+                        <Image style={{width: 45, height: 45, resizeMode: 'contain'}} source={{uri: "https://mobile.vim365.com/assets/svgs/declaration-diary-icon.svg"}} />
+                        {/* <Image style={{width: 45, height: 45, resizeMode: 'contain'}} source={{uri: "https://image.flaticon.com/icons/png/512/1021/1021606.png"}} /> */}
                         <Text style={tw`text-gray-800 text-center px-2 text-sm leading-4 mt-2`}>{item.title}</Text>
                     </View>
                 </TouchableHighlight>
             </View>
         )
     }
-    const _renderItem = ({item,index}) => {
-        return (
-          <View style={{
-              backgroundColor:'floralwhite',
-              borderRadius: 5,
-              height: 250,
-              padding: 50,
-              marginLeft: 25,
-              marginRight: 25, }}>
-            <Text style={{fontSize: 30}}>{item.title}</Text>
-            <Text>{item.text}</Text>
-          </View>
-
-        )
-    }
-
-    const next = () => {
-        setActiveIndex(2)
-        // alert("Hello")
-    }
 
     return (
         <View style={tw`bg-gray-100 h-full`}>
-            <Carousel
-                layout={"default"}
-                //   Carousel.snapToNext()
-                // ref={ref => Carousel = ref}
-                data={carouselItems}
-                sliderWidth={300}
-                itemWidth={300}
-                renderItem={_renderItem}
-                onSnapToItem = { index => setActiveIndex(index) } />
-
-            <View style={[tw`bg-white w-5/12 rounded mt-4 h-10 shadow-sm`, {width: '48%'}]}>
-                <TouchableHighlight onPress={() => {next()}} style={[tw``, {}]}>
-                    <View style={tw`h-full justify-center items-center`}>
-                        <Text style={tw`text-gray-800 text-center px-2 text-sm leading-4 mt-2`}>Press</Text>
-                    </View>
-                </TouchableHighlight>
-            </View>
-
-            <View style={[tw`py-3 items-center mt-4 mb-1 bg-transparent`, {display: 'flex', flexDirection: 'row', justifyContent: 'center'}]}>
-                <View>
-                    <Image source={{uri: "https://veo365.com/assets/images/logo-veo-color-8.png"}} style={[tw`w-16 h-16`, { resizeMode: 'contain' }]} />
-                </View>
-                {brand ? (
-                    <View style={tw`ml-6`}>
-                        <Image source={{uri: brand}} style={[tw`w-24 h-16`, { resizeMode: 'contain' }]} />
-                    </View>
-                ) : <></>}
-            </View>
             {isLoading ? <ActivityIndicator size="small" color="#0000ff" style={tw`py-8`} /> :
-                (<FlatList data={cards} numColumns={2} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14, flex: 2}} keyExtractor={((item, i) => item.title)} />)
+                (<FlatList data={cards} numColumns={2} 
+                    renderItem={renderItem} 
+                    ListHeaderComponent={
+                        <View style={[tw`py-3 items-center mt-4 mb-1 bg-transparent`, {display: 'flex', flexDirection: 'row', justifyContent: 'center'}]}>
+                            <View>
+                                <Image source={{uri: "https://veo365.com/assets/images/logo-veo-color-8.png"}} style={[tw`w-16 h-16`, { resizeMode: 'contain' }]} />
+                            </View>
+                            {brand ? (
+                                <View style={tw`ml-6`}>
+                                    <Image source={{uri: brand}} style={[tw`w-24 h-16`, { resizeMode: 'contain' }]} />
+                                </View>
+                            ) : <></>}
+                        </View>
+                    }
+                    ListFooterComponent={
+                        <View style={tw`pb-4`}></View>
+                    }
+                    columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14, flex: 2}} keyExtractor={((item, i) => item.title)} />)
             }
         </View>
     )

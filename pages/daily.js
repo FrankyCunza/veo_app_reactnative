@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, FlatList, ActivityIndicator, TouchableHighlight, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, Image, FlatList, ActivityIndicator, useWindowDimensions, TouchableHighlight, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CheckBox from '@react-native-community/checkbox';
 import DailyTraffic from '../components/daily_traffic';
 import tw from 'tailwind-react-native-classnames';
 import Title from '../components/title';
+import { HHMMSS, dateYYYYMMDD } from '../utils/utils';
 
 const Daily = ( { navigation } ) => {
     const [cards, setCards] = useState([])
@@ -14,6 +15,8 @@ const Daily = ( { navigation } ) => {
     const [resultTraffic, setResultTraffic] = useState('')
     const [values, setValues] = useState(0)
     const [range, setRange] = useState([]);
+    const { width } = useWindowDimensions();
+
     useEffect(() => {
         getData()
     }, [])
@@ -66,6 +69,15 @@ const Daily = ( { navigation } ) => {
 
     const senData =  async () => {
         // alert(JSON.stringify(collectData))
+        let answers = []
+        for (const [key, val] of Object.entries(collectData)) {
+            answers.push({
+              "code": parseInt(key),
+              "response": collectData[key]['selected']  
+            })
+        }
+        // alert(JSON.stringify(answers))
+        // return false
         setLoading(true)
         try {
             // Data Storage
@@ -73,7 +85,17 @@ const Daily = ( { navigation } ) => {
             const itemsArray = await AsyncStorage.multiGet(keys)
             let object = {}
             itemsArray.map(item => {
-                object[`${item[0]}`] = item[1]
+                if (item[0] == 'area_id' 
+                    || item[0] == 'branch_id' 
+                    || item[0] == 'company_id' 
+                    || item[0] == 'document' 
+                    || item[0] == 'end_point' 
+                    || item[0] == 'full_name' 
+                    || item[0] == 'job_id' 
+                    || item[0] == 'worker_id' 
+                ) {
+                    object[`${item[0]}`] = item[1]
+                }
             })
             
             // Traffic
@@ -94,11 +116,13 @@ const Daily = ( { navigation } ) => {
                     "traffic": traffic,
                     "status": true,
                     "version": 4.00,
-                    "answers": []
+                    "answers": answers
                 },
-                "date": '06-07-2021',
-                "hour": '00:00:00',
+                "date": dateYYYYMMDD(),
+                "hour": HHMMSS(),
             }
+            // alert(JSON.stringify(data))
+            // return false
             const token = await AsyncStorage.getItem('token')
             const id = await AsyncStorage.getItem('id')
             fetch('https://gateway.vim365.com/saveform/saveform', {
@@ -118,46 +142,134 @@ const Daily = ( { navigation } ) => {
                     // alert(JSON.stringify(traffic))
                 })
                 .catch((error) => {
-                    alert(error)
+                    alert('Error Save Form', error)
             });
           } catch(e) {
-            alert(e)
+            alert('Error Save Form', e)
         }
     }
 
     const renderItem = ( { item } ) => {
-        return (
-            <View style={[tw`bg-white w-5/12 rounded mt-4 h-28 shadow`, { width: '48%' }, collectData[item.code].selected ? tw`bg-blue-600` : '']}>
-                <TouchableHighlight style={[tw``, {}]} onPress={() => {alert("Hello")}}>
-                    <View style={tw`h-full justify-center items-center`}>
-                        <Image style={{width: 45, height: 45, resizeMode: 'contain'}} source={{uri: "https://image.flaticon.com/icons/png/512/1021/1021606.png"}} />
-                        <Text style={[tw`text-center px-2 text-sm leading-4 mt-2`, collectData[item.code].selected ? tw`text-white` : tw`text-gray-800`]}>{item.title}</Text>
-                        <CheckBox
-                            disabled={false}
-                            style={styles.checkbox}
-                            value={collectData[item.code].selected}
-                            onValueChange={(newValue) => { setCollectData({...collectData, [item.code]: {...item, selected: newValue}}, changeCheck(newValue, item.id, item.value, item.image) ) }}
-                        />
-                    </View>
-                </TouchableHighlight>
-            </View>
-        )
+        if (item.type == 'check') {
+            return (
+                <View style={[tw`bg-white w-5/12 rounded mt-4 h-28 shadow`, { width: '48%' }, collectData[item.code].selected ? tw`bg-blue-600` : '']}>
+                    <TouchableHighlight style={[tw``, {}]} onPress={() => {alert("Hello")}}>
+                        <View style={tw`h-full justify-center items-center`}>
+                            <Image style={{width: 45, height: 45, resizeMode: 'contain'}} source={{uri: "https://image.flaticon.com/icons/png/512/1021/1021606.png"}} />
+                            <Text style={[tw`text-center px-2 text-sm leading-4 mt-2`, collectData[item.code].selected ? tw`text-white` : tw`text-gray-800`]}>{item.title}</Text>
+                            <CheckBox
+                                disabled={false}
+                                style={styles.checkbox}
+                                value={collectData[item.code].selected}
+                                onValueChange={(newValue) => { setCollectData({...collectData, [item.code]: {...item, selected: newValue}}, changeCheck(newValue, item.id, item.value, item.image) ) }}
+                            />
+                        </View>
+                    </TouchableHighlight>
+                </View>
+            )
+        } else if (item.type == 'question') {
+            return (
+                <View style={[tw`bg-white w-full rounded mt-4 h-28 shadow`, { width: '48%' }, collectData[item.code].selected ? tw`bg-blue-600` : '']}>
+                    <TouchableHighlight style={[tw``, {}]} onPress={() => {alert("Hello")}}>
+                        <View style={tw`h-full justify-center items-center`}>
+                            <Image style={{width: 45, height: 45, resizeMode: 'contain'}} source={{uri: "https://image.flaticon.com/icons/png/512/1021/1021606.png"}} />
+                            <Text style={[tw`text-center px-2 text-sm leading-4 mt-2`, collectData[item.code].selected ? tw`text-white` : tw`text-gray-800`]}>{item.title}</Text>
+                            <CheckBox
+                                disabled={false}
+                                style={styles.checkbox}
+                                value={collectData[item.code].selected}
+                                onValueChange={(newValue) => { setCollectData({...collectData, [item.code]: {...item, selected: newValue}}, changeCheck(newValue, item.id, item.value, item.image) ) }}
+                            />
+                        </View>
+                    </TouchableHighlight>
+                </View>
+            )
+        } else {}
     }
 
     return (
         <SafeAreaView style={[tw`bg-gray-100`, {flex: 1}]}>
-            <Title title="Declaración diaria" />
-            {isLoading  ? isLoadingTraffic==false ? <></> : <ActivityIndicator style={tw`py-12`} size="small" color="#0000ff" /> :
-                (
-                <FlatList data={cards} numColumns={2} style={tw`-mt-4`} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14}} keyExtractor={((item, i) => item.title)} 
-                ListFooterComponent={<View style={tw`px-4 mt-4 pb-4`}>
-                    <TouchableOpacity onPress={senData} style={tw`bg-blue-600 py-2 rounded-full`}>
-                        <Text style={tw`text-center text-white text-xl`}>Enviar</Text>
-                    </TouchableOpacity>
-                </View>} />
-                )
-            }
-            {isLoadingTraffic ? <></> : (<DailyTraffic name={resultTraffic} />)}
+            <ScrollView>
+                <Title title="Declaración diaria" />
+                {/* {isLoading  ? isLoadingTraffic==false ? <></> : <ActivityIndicator style={tw`py-12`} size="small" color="#0000ff" /> :
+                    (
+                    <FlatList data={cards} numColumns={2} style={tw`-mt-4`} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14}} keyExtractor={((item, i) => item.title)} 
+                    ListFooterComponent={<View style={tw`px-4 mt-4 pb-4`}>
+                        <TouchableOpacity onPress={senData} style={tw`bg-blue-600 py-2 rounded-full`}>
+                            <Text style={tw`text-center text-white text-xl`}>Enviar</Text>
+                        </TouchableOpacity>
+                    </View>} />
+                    )
+                } */}
+                <View style={{flex: 1, flexDirection: 'row', flexWrap:'wrap' ,width: width, backgroundColor: 'transparent', marginTop: -14, justifyContent: 'space-between', paddingHorizontal: 14}}>
+                    {isLoading  ? isLoadingTraffic==false ? <></> : <ActivityIndicator style={tw`py-12`} size="small" color="#0000ff" /> :
+                        (
+                            <>
+                            {cards.map((item, index) => {
+                                if (item.type == 'check') {
+                                    return (
+                                        <View style={[tw`bg-white rounded mt-4 h-28 shadow`, { width: width/2-21}, collectData[item.code].selected ? tw`bg-blue-600` : '']} key={item.code}>
+                                            <TouchableHighlight style={[tw``, {}]} onPress={() => {}}>
+                                                <View style={tw`h-full justify-center items-center`}>
+                                                    <Image style={{width: 45, height: 45, resizeMode: 'contain'}} source={{uri: "https://image.flaticon.com/icons/png/512/1021/1021606.png"}} />
+                                                    <Text style={[tw`text-center px-2 text-sm leading-4 mt-2`, collectData[item.code].selected ? tw`text-white` : tw`text-gray-800`]}>{item.title}</Text>
+                                                    <CheckBox
+                                                        disabled={false}
+                                                        style={styles.checkbox}
+                                                        value={collectData[item.code].selected}
+                                                        onValueChange={(newValue) => { setCollectData({...collectData, [item.code]: {...item, selected: newValue}}, changeCheck(newValue, item.id, item.value, item.image) ) }}
+                                                    />
+                                                </View>
+                                            </TouchableHighlight>
+                                        </View>
+                                    )
+                                } else if (item.type == 'question') {
+                                    return (
+                                        <View style={[tw`bg-white rounded mt-4 shadow pb-4`, { width: width, height: 'auto'}]} key={item.code}>
+                                            <Text style={[tw`text-left p-4 text-sm leading-4 text-gray-800`]}>{item.text}</Text>
+                                            <View style={tw`px-4 flex-row items-center justify-center`}>
+                                                <View style={[tw`rounded-full p-1 w-4/12`, collectData[item.code].selected==false ? tw`bg-blue-600` : tw`bg-gray-100`]}>
+                                                    <TouchableHighlight style={[tw``, {}]} onPress={() => {}}>
+                                                        <View style={[tw`justify-center items-center`, {flexWrap: 'wrap', flexDirection: 'row'}]}>
+                                                            {/* <Image style={{width: 45, height: 45, resizeMode: 'contain'}} source={{uri: "https://image.flaticon.com/icons/png/512/1021/1021606.png"}} /> */}
+                                                            <Text style={[tw`text-center px-2 text-sm leading-4`, collectData[item.code].selected ? tw`text-white` : tw`text-gray-800`]}>No</Text>
+                                                            <CheckBox
+                                                                disabled={false}
+                                                                value={collectData[item.code].selected==false}
+                                                                onValueChange={(newValue) => { setCollectData({...collectData, [item.code]: {...item, selected: false}}, changeCheck(newValue, item.id, item.value, item.image) ) }}
+                                                            />
+                                                        </View>
+                                                    </TouchableHighlight>
+                                                </View>
+                                                <View style={[tw`rounded-full p-1 w-4/12 ml-4`, collectData[item.code].selected==true ? tw`bg-blue-600` : tw`bg-gray-100`]}>
+                                                    <TouchableHighlight style={[tw``, {}]} onPress={() => {}}>
+                                                        <View style={[tw`justify-center items-center`, {flexWrap: 'wrap', flexDirection: 'row'}]}>
+                                                            {/* <Image style={{width: 45, height: 45, resizeMode: 'contain'}} source={{uri: "https://image.flaticon.com/icons/png/512/1021/1021606.png"}} /> */}
+                                                            <Text style={[tw`text-center px-2 text-sm leading-4`, collectData[item.code].selected ? tw`text-white` : tw`text-gray-800`]}>Si</Text>
+                                                            <CheckBox
+                                                                disabled={false}
+                                                                value={collectData[item.code].selected==true}
+                                                                onValueChange={(newValue) => { setCollectData({...collectData, [item.code]: {...item, selected: true}}, changeCheck(newValue, item.id, item.value, item.image) ) }}
+                                                            />
+                                                        </View>
+                                                    </TouchableHighlight>
+                                                </View>
+                                            </View>
+                                        </View>
+                                    )
+                                } else {}
+                            })}
+                            <View style={tw`w-full mt-4`}>
+                                <TouchableOpacity onPress={senData} style={tw`bg-blue-600 py-2 rounded-full`}>
+                                    <Text style={tw`text-center text-white text-xl`}>Enviar</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </>
+                        )
+                    }
+                </View>
+                {isLoadingTraffic ? <></> : (<DailyTraffic name={resultTraffic} />)}
+            </ScrollView>
         </SafeAreaView>
     )
 }
