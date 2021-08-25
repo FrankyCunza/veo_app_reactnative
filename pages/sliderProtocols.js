@@ -12,6 +12,7 @@ const SliderProtocols = ( { route } ) => {
     const [carousel, setCarousel] = useState()
     const { width } = useWindowDimensions();
     const [steps, setSteps] = useState({})
+    const [keySteps, setKeySteps] = useState([])
 
     useEffect(() => {
         // alert(JSON.stringify(data))
@@ -84,7 +85,7 @@ const SliderProtocols = ( { route } ) => {
                 itemWidth={300}
                 renderItem={_renderItem}
                 onSnapToItem = { index => setActiveIndex(index) } />
-            <View style={[tw`px-4 items-center`, {}]}>
+            <View style={[tw`px-4 items-center`, steps[Object.keys(steps)[activeIndex]].selected == undefined ? tw`opacity-30` : tw`opacity-100`, {}]}>
                 <View style={[tw`bg-white w-5/12 rounded-full mt-4 h-10 shadow-sm`, {width: '48%'}]}>
                     <TouchableHighlight onPress={() => {next()}} style={[tw``, {}]}>
                         <View style={tw`h-full justify-center items-center`}>
