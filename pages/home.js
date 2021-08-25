@@ -94,7 +94,8 @@ const Home = ( { route, navigation} ) => {
                         height: 120
                         }}
                         /> */}
-                        <Image style={{width: 45, height: 45, resizeMode: 'contain'}} source={{uri: "https://image.flaticon.com/icons/png/512/1021/1021606.png"}} />
+                        <Image style={{width: 45, height: 45, resizeMode: 'contain'}} source={{uri: "https://mobile.vim365.com/assets/svgs/declaration-diary-icon.svg"}} />
+                        {/* <Image style={{width: 45, height: 45, resizeMode: 'contain'}} source={{uri: "https://image.flaticon.com/icons/png/512/1021/1021606.png"}} /> */}
                         <Text style={tw`text-gray-800 text-center px-2 text-sm leading-4 mt-2`}>{item.title}</Text>
                     </View>
                 </TouchableHighlight>
@@ -104,18 +105,25 @@ const Home = ( { route, navigation} ) => {
 
     return (
         <View style={tw`bg-gray-100 h-full`}>
-            <View style={[tw`py-3 items-center mt-4 mb-1 bg-transparent`, {display: 'flex', flexDirection: 'row', justifyContent: 'center'}]}>
-                <View>
-                    <Image source={{uri: "https://veo365.com/assets/images/logo-veo-color-8.png"}} style={[tw`w-16 h-16`, { resizeMode: 'contain' }]} />
-                </View>
-                {brand ? (
-                    <View style={tw`ml-6`}>
-                        <Image source={{uri: brand}} style={[tw`w-24 h-16`, { resizeMode: 'contain' }]} />
-                    </View>
-                ) : <></>}
-            </View>
             {isLoading ? <ActivityIndicator size="small" color="#0000ff" style={tw`py-8`} /> :
-                (<FlatList data={cards} numColumns={2} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14, flex: 2}} keyExtractor={((item, i) => item.title)} />)
+                (<FlatList data={cards} numColumns={2} 
+                    renderItem={renderItem} 
+                    ListHeaderComponent={
+                        <View style={[tw`py-3 items-center mt-4 mb-1 bg-transparent`, {display: 'flex', flexDirection: 'row', justifyContent: 'center'}]}>
+                            <View>
+                                <Image source={{uri: "https://veo365.com/assets/images/logo-veo-color-8.png"}} style={[tw`w-16 h-16`, { resizeMode: 'contain' }]} />
+                            </View>
+                            {brand ? (
+                                <View style={tw`ml-6`}>
+                                    <Image source={{uri: brand}} style={[tw`w-24 h-16`, { resizeMode: 'contain' }]} />
+                                </View>
+                            ) : <></>}
+                        </View>
+                    }
+                    ListFooterComponent={
+                        <View style={tw`pb-4`}></View>
+                    }
+                    columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14, flex: 2}} keyExtractor={((item, i) => item.title)} />)
             }
         </View>
     )
