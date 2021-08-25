@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet, Image, TouchableHighlight, ActivityIndicator } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import tw from 'tailwind-react-native-classnames';
 
 const Home = ( { route, navigation} ) => {
@@ -8,12 +7,14 @@ const Home = ( { route, navigation} ) => {
     const [brand, setBrand] = useState("")
     const [isLoading, setLoading] = useState(true);
     const { id, token } = route.params;
+
     useEffect(() => {
         if (id && token) {
             getData()
             getBrand()
         }
     }, [])
+    
 
     const getData = async () => {
         try {

@@ -5,6 +5,7 @@ import CheckBox from '@react-native-community/checkbox';
 import DailyTraffic from '../components/daily_traffic';
 import tw from 'tailwind-react-native-classnames';
 import Title from '../components/title';
+import { HHMMSS, dateYYYYMMDD } from '../utils/utils';
 
 const Daily = ( { navigation } ) => {
     const [cards, setCards] = useState([])
@@ -66,6 +67,15 @@ const Daily = ( { navigation } ) => {
 
     const senData =  async () => {
         // alert(JSON.stringify(collectData))
+        let answers = []
+        for (const [key, val] of Object.entries(collectData)) {
+            answers.push({
+              "code": parseInt(key),
+              "response": collectData[key]['selected']  
+            })
+        }
+        // alert(JSON.stringify(answers))
+        // return false
         setLoading(true)
         try {
             // Data Storage
@@ -73,7 +83,17 @@ const Daily = ( { navigation } ) => {
             const itemsArray = await AsyncStorage.multiGet(keys)
             let object = {}
             itemsArray.map(item => {
-                object[`${item[0]}`] = item[1]
+                if (item[0] == 'area_id' 
+                    || item[0] == 'branch_id' 
+                    || item[0] == 'company_id' 
+                    || item[0] == 'document' 
+                    || item[0] == 'end_point' 
+                    || item[0] == 'full_name' 
+                    || item[0] == 'job_id' 
+                    || item[0] == 'worker_id' 
+                ) {
+                    object[`${item[0]}`] = item[1]
+                }
             })
             
             // Traffic
@@ -94,11 +114,13 @@ const Daily = ( { navigation } ) => {
                     "traffic": traffic,
                     "status": true,
                     "version": 4.00,
-                    "answers": []
+                    "answers": answers
                 },
-                "date": '06-07-2021',
-                "hour": '00:00:00',
+                "date": dateYYYYMMDD(),
+                "hour": HHMMSS(),
             }
+            // alert(JSON.stringify(data))
+            // return false
             const token = await AsyncStorage.getItem('token')
             const id = await AsyncStorage.getItem('id')
             fetch('https://gateway.vim365.com/saveform/saveform', {
@@ -118,10 +140,10 @@ const Daily = ( { navigation } ) => {
                     // alert(JSON.stringify(traffic))
                 })
                 .catch((error) => {
-                    alert(error)
+                    alert('Error Save Form', error)
             });
           } catch(e) {
-            alert(e)
+            alert('Error Save Form', e)
         }
     }
 
