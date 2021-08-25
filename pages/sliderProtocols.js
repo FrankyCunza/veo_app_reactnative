@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, ScrollView, TouchableHighlight, useWindowDimensions, StyleSheet } from 'react-native'
+import { View, Text, ScrollView, TouchableHighlight, useWindowDimensions, StyleSheet, ActivityIndicator } from 'react-native'
 import Title from '../components/title';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Carousel from 'react-native-snap-carousel';
@@ -12,14 +12,16 @@ const SliderProtocols = ( { route } ) => {
     const [carousel, setCarousel] = useState()
     const { width } = useWindowDimensions();
     const [steps, setSteps] = useState({})
-    const [keySteps, setKeySteps] = useState([])
+    const [isLoading, setLoading] = useState(true)
 
     useEffect(() => {
         // alert(JSON.stringify(data))
         for (let item of data.steps) {
             steps[item.id] = {...item, "selected": undefined}
         }
+        setLoading(false)
         // alert(JSON.stringify(steps))
+        // alert(data.steps.length)
     }, []) 
 
     const next = () => {
@@ -85,15 +87,30 @@ const SliderProtocols = ( { route } ) => {
                 itemWidth={300}
                 renderItem={_renderItem}
                 onSnapToItem = { index => setActiveIndex(index) } />
-            <View style={[tw`px-4 items-center`, steps[Object.keys(steps)[activeIndex]].selected == undefined ? tw`opacity-30` : tw`opacity-100`, {}]}>
-                <View style={[tw`bg-white w-5/12 rounded-full mt-4 h-10 shadow-sm`, {width: '48%'}]}>
-                    <TouchableHighlight onPress={() => {next()}} style={[tw``, {}]}>
-                        <View style={tw`h-full justify-center items-center`}>
-                            <Text style={tw`text-gray-800 text-center px-2 text-sm leading-4`}>Next</Text>
+            {isLoading ? <ActivityIndicator size="small" color="#0000ff" style={tw`py-8`} /> : 
+                (
+                    Object.keys(data.steps).length-1==activeIndex ? 
+                    <View style={[tw`px-4 items-center`, steps[Object.keys(steps)[activeIndex]].selected == undefined ? tw`opacity-30` : tw`opacity-100`, {}]}>
+                        <View style={[tw`bg-white w-5/12 rounded-full mt-4 h-10 shadow-sm`, {width: '48%'}]}>
+                            <TouchableHighlight onPress={() => {next()}} style={[tw``, {}]}>
+                                <View style={tw`h-full justify-center items-center`}>
+                                    <Text style={tw`text-gray-800 text-center px-2 text-sm leading-4`}>Finalizar</Text>
+                                </View>
+                            </TouchableHighlight>
                         </View>
-                    </TouchableHighlight>
-                </View>
-            </View>
+                    </View> : 
+                    <View style={[tw`px-4 items-center`, steps[Object.keys(steps)[activeIndex]].selected == undefined ? tw`opacity-30` : tw`opacity-100`, {}]}>
+                        <View style={[tw`bg-white w-5/12 rounded-full mt-4 h-10 shadow-sm`, {width: '48%'}]}>
+                            <TouchableHighlight onPress={() => {next()}} style={[tw``, {}]}>
+                                <View style={tw`h-full justify-center items-center`}>
+                                    <Text style={tw`text-gray-800 text-center px-2 text-sm leading-4`}>Next</Text>
+                                </View>
+                            </TouchableHighlight>
+                        </View>
+                    </View>
+                )
+            }
+            
             {/* <View style={tw`px-4 -mt-4`}>
                 {data.steps ? (
                     data.steps.map((item, index) => {
