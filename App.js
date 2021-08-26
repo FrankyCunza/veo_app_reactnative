@@ -15,6 +15,10 @@ import SliderProtocols from './pages/sliderProtocols';
 import Informed from './pages/informed';
 import categoriesInformed from './pages/categoriesInformed';
 import contentInformed from './pages/contentInformed';
+import prueba from './pages/prueba';
+import othermenus from './pages/othermenus';
+import othermenuint from './pages/othermenuint';
+import othermenuform from './pages/othermenuform';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -34,6 +38,10 @@ const App = () => {
           <Stack.Screen name="/getinformed" component={Informed} />
           <Stack.Screen name="/categoriesgetinformed" component={categoriesInformed} />
           <Stack.Screen name="/contentInformed" component={contentInformed} />
+          <Stack.Screen name="/prueba" component={prueba} />
+          <Stack.Screen name="/other-menus" component={othermenus} />
+          <Stack.Screen name="/other-menus-int" component={othermenuint} />
+          <Stack.Screen name="/other-menus-form" component={othermenuform} />
         </Stack.Navigator>
       </SafeAreaProvider>
     </NavigationContainer>
