@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text, TextInput, View, ScrollView, ActivityIndicator } from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { StyleSheet, Text, TextInput, View, ScrollView, ActivityIndicator, TouchableOpacity } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Title from '../components/title'
 import { useForm, Controller, set } from "react-hook-form"
 import tw from 'tailwind-react-native-classnames'
 import RNPickerSelect from 'react-native-picker-select'
 
 const Profile = () => {
-    const { control, handleSubmit, formState: { errors } } = useForm();
+    const { control, register, handleSubmit, setValue,formState: { errors } } = useForm();
     const [data, setData] = useState([])
     const [values, setValues] = useState({})
     const [isLoading, setLoading] = useState(true)
@@ -32,7 +32,7 @@ const Profile = () => {
                 })
                 .then((response) => response.json())
                 .then((json) => {
-                    setData(json)
+                    setData(json.data)
                     setLoading(false)
                     getValues()
                     // alert(JSON.stringify(json))
@@ -59,9 +59,17 @@ const Profile = () => {
                 })
                 .then((response) => response.json())
                 .then((json) => {
-                    setValues(json)
+                    setValues(json.data.data)
                     setLoading(false)
-                    // alert(JSON.stringify(json))
+                    for (const [key, value] of Object.entries(json.data.data)) {
+                        // console.log(key, value);
+                        if (JSON.stringify(value).startsWith("{") && JSON.stringify(value).endsWith("}")) {
+                            // alert
+                        } else {
+                            setValue(key, value||'');
+                        }
+                    }
+                    // alert(JSON.stringify(json.data.data))
                 })
                 .catch((error) => {
                     alert(error)
@@ -71,13 +79,57 @@ const Profile = () => {
         }
     }
 
+    const onSubmit = async(form) => {
+        form['document'] = {
+            "type_document": "Dni",
+            "document": "99999716"
+        }
+        try {
+            // Collect Data
+            let data = {
+                "data":{
+                    "title": "Perfil",
+                    "code": "SD2005",
+                    "version": "4.00",
+                    "health_staff": false,
+                    "data": form
+                }
+            }
+
+            // alert(JSON.stringify(data))
+            // return false
+            
+            const token = await AsyncStorage.getItem('token')
+            const id = await AsyncStorage.getItem('id')
+            fetch('https://gateway.vim365.com/users/saveprofile', {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'security-header': 'Vim365Aputek/2020.04',
+                    Authorization: token,
+                    id: id
+                }
+                })
+                .then((response) => response.json())
+                .then((json) => {
+                    alert(JSON.stringify(json))
+                })
+                .catch((error) => {
+                    alert('Error Save Form', error)
+            });
+          } catch(e) {
+            alert('Error Save Form', e)
+        }
+    }
+
     return (
         <ScrollView>
             <Title title="Perfil Personal" />
             {isLoading ? <ActivityIndicator size="small" color="#0000ff" style={tw`py-8`} /> :
-            (
+            
                 <View style={tw`px-4`}>
-                    {data.data ? data.data.map((item, index) => {
+                    {data.map((item, index) => {
                         if (item.form_type == 'text' 
                         || item.form_type == 'title' 
                         || item.form_type == 'work_job' 
@@ -104,19 +156,19 @@ const Profile = () => {
                                     <Controller
                                         control={control}
                                         rules={{
-                                        required: true,
+                                            required: false,
                                         }}
                                         render={({ field: { onChange, onBlur, value } }) => (
                                         <TextInput
                                             style={tw`bg-white py-3 rounded px-4 shadow-sm`}
                                             onBlur={onBlur}
                                             onChangeText={onChange}
-                                            defaultValue={values.data ? values['data']['data'][item.name] : ''}
+                                            defaultValue={values ? values[item.name] : ''}
                                             value={value}
                                         />
                                         )}
-                                        // name="user"
-                                        // defaultValue="String"
+                                        name={item.name}
+                                        // defaultValue=""
                                     />
                                 </View>
                             )
@@ -133,17 +185,19 @@ const Profile = () => {
                                     <Controller
                                         control={control}
                                         rules={{
-                                        required: true,
+                                            required: false,
                                         }}
                                         render={({ field: { onChange, onBlur, value } }) => (
                                         <TextInput
                                             style={tw`bg-white py-3 rounded px-4 shadow-sm`}
                                             onBlur={onBlur}
                                             onChangeText={onChange}
-                                            defaultValue={values.data ? values['data']['data'][item.name] : ''}
+                                            defaultValue={values ? values[item.name] : ''}
                                             value={value}
                                         />
                                         )}
+                                        name={item.name}
+                                        // defaultValue=""
                                     />
                                 </View>
                             )
@@ -167,9 +221,12 @@ const Profile = () => {
                                 </View>
                             )
                         }
-                    }) : <></>}
+                    })}
                 </View>
-            )}
+            }
+            <TouchableOpacity onPress={handleSubmit(onSubmit)} style={tw`bg-blue-600 py-2 rounded-full`}>
+                <Text style={tw`text-center text-white text-xl`}>Enviar</Text>
+            </TouchableOpacity>    
         </ScrollView>
     )
 }
