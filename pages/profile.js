@@ -81,9 +81,11 @@ const Profile = () => {
 
     const onSubmit = async(form) => {
         form['document'] = {
-            "type_document": "Dni",
+            "type_document": "DNI",
             "document": "99999716"
         }
+        // alert(JSON.stringify(form))
+        // return false
         try {
             // Collect Data
             let data = {
@@ -208,7 +210,8 @@ const Profile = () => {
                                     <View style={tw`bg-white`}>
                                         <RNPickerSelect
                                             style={tw`bg-white`}
-                                            onValueChange={(value) => console.log(value)}
+                                            value={values ? values[item.name] : ''}
+                                            onValueChange={(value) => setValue(item.name, value)}
                                             items={item.data}
                                         />
                                     </View>
