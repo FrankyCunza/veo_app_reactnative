@@ -36,14 +36,14 @@ const othermenus = ( { route, navigation} ) => {
         }
     }
 
-    const goPage = (name) => {
+    const goPage = (name,item) => {
         // routerLink
         navigation.navigate(name, {
             term: name,
-            buttons: data.buttons,
-            form: data.form
+            buttons: item.template.buttons,
+            form: item.template.form
         })
-        alert(name)
+        // alert(JSON.stringify(item))
     }
 
     return (
@@ -52,7 +52,7 @@ const othermenus = ( { route, navigation} ) => {
             {isLoading?<></>:
                 data.data.map((item,index) => {
                     return (
-                        <TouchableHighlight key={"menu"+index} onPress={() => {goPage('/other-menus-int')}} style={[tw``, {}]}>
+                        <TouchableHighlight key={"menu"+index} onPress={() => {goPage('/other-menus-int',item)}} style={[tw``, {}]}>
                             <View>
                                 <Text>{item.name}</Text>
                             </View>

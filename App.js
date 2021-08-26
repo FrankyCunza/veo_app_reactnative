@@ -18,6 +18,7 @@ import contentInformed from './pages/contentInformed';
 import prueba from './pages/prueba';
 import othermenus from './pages/othermenus';
 import othermenuint from './pages/othermenuint';
+import othermenuform from './pages/othermenuform';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -40,6 +41,7 @@ const App = () => {
           <Stack.Screen name="/prueba" component={prueba} />
           <Stack.Screen name="/other-menus" component={othermenus} />
           <Stack.Screen name="/other-menus-int" component={othermenuint} />
+          <Stack.Screen name="/other-menus-form" component={othermenuform} />
         </Stack.Navigator>
       </SafeAreaProvider>
     </NavigationContainer>
