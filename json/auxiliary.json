@@ -1,0 +1,50 @@
+{
+  "name": "Temperatura y Transporte",
+  "menu_id": 1,
+  "icon": "termometro",
+  "template": {
+    "name": "/template-one",
+    "route": "/template-one-int",
+    "buttons": [
+      {
+        "name": "Entrada",
+        "icon": "ingreso"
+      },
+      {
+        "name": "Salida",
+        "icon": "salida"
+      }
+    ],
+    "form": [
+      {
+        "type": "number",
+        "text": "Temperatura:"
+      },
+      {
+        "type": "title",
+        "text": "Horario de entrada"
+      },
+      {
+        "type": "number",
+        "text": "Hora"
+      },
+      {
+        "type": "title",
+        "text": "A pie",
+        "icon": "https://xxxxxxxxxxx"
+      },
+      {
+        "type": "check",
+        "text": "A pie",
+        "icon": "https://xxxxxxxxxxx"
+      },
+      {
+        "type": "check",
+        "text": "Bicicleta",
+        "icon": "https://xxxxxxxxxxx"
+      }
+    ]
+  },
+  "end_point": "demo",
+  "company_id": 1
+}
