@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text, View, TouchableHighlight } from 'react-native'
+import { TextInput , StyleSheet, Text, View, TouchableHighlight } from 'react-native'
 
 const othermenuform = ({ route, navigation}) => {
     const {term, form}=route.params
@@ -17,6 +17,9 @@ const othermenuform = ({ route, navigation}) => {
                     <TouchableHighlight key={"menuform"+index}>  
                         <View>
                             <Text>{item.text}</Text>
+                            <TextInput 
+                            styke={styles.input}
+                            placeholder={item.text}/>
                         </View>
                     </TouchableHighlight>   
                 )
@@ -27,4 +30,12 @@ const othermenuform = ({ route, navigation}) => {
 
 export default othermenuform
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    input: {
+        height: 40,
+        margin: 12,
+        borderWidth: 1,
+        borderRadius: 4,
+        paddingLeft: 12
+    }
+})
