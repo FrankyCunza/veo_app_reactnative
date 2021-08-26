@@ -18,7 +18,7 @@ const othermenuform = ({ route, navigation}) => {
                         <View>
                             <Text>{item.text}</Text>
                             <TextInput 
-                            styke={styles.input}
+                            style={styles.input}
                             placeholder={item.text}/>
                         </View>
                     </TouchableHighlight>   
