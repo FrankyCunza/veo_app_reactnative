@@ -64,8 +64,8 @@ const Home = ( { route, navigation} ) => {
 
     getImage = (image) => {
         if (image.includes('../assets')) {
-            alert(JSON.stringify('https://mobile.vim365.com/assets/svgs/'+image.split('../assets/svgs/')[1]))
-            return 'https://mobile.vim365.com/assets/svgs/'+image.split('../assets/svgs/')[1]
+            // alert(JSON.stringify('https://scraprix.com/img/svgtopng/'+image.split('../assets/svgs/')[1]))
+            return 'https://scraprix.com/img/svgtopng/'+image.split('../assets/svgs/')[1].replace(".svg", ".png")
         }
     }
 
@@ -94,7 +94,7 @@ const Home = ( { route, navigation} ) => {
                         height: 120
                         }}
                         /> */}
-                        <Image style={{width: 45, height: 45, resizeMode: 'contain'}} source={{uri: "https://mobile.vim365.com/assets/svgs/declaration-diary-icon.svg"}} />
+                        <Image style={{width: 45, height: 45, resizeMode: 'contain'}} source={{uri: getImage(item.icon)}} />
                         {/* <Image style={{width: 45, height: 45, resizeMode: 'contain'}} source={{uri: "https://image.flaticon.com/icons/png/512/1021/1021606.png"}} /> */}
                         <Text style={tw`text-gray-800 text-center px-2 text-sm leading-4 mt-2`}>{item.title}</Text>
                     </View>
