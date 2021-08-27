@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet, Image, TouchableHighlight, ActivityIndicator, ScrollView, useWindowDimensions } from 'react-native';
 import tw from 'tailwind-react-native-classnames';
+import { Icon } from 'react-native-elements'
 
 const Home = ( { route, navigation} ) => {
     const [cards, setCards] = useState([]);
@@ -105,7 +106,7 @@ const Home = ( { route, navigation} ) => {
     }
 
     return (
-        <ScrollView style={tw`bg-gray-100 h-full px-4`}>
+        <ScrollView style={tw`bg-white px-4 pb-4`}>
             {/* {isLoading ? <ActivityIndicator size="small" color="#0000ff" style={tw`py-8`} /> :
                 (<FlatList data={cards} numColumns={2} 
                     renderItem={renderItem} 
@@ -136,17 +137,20 @@ const Home = ( { route, navigation} ) => {
                     </View>
                 ) : <></>}
             </View>
-            <View style={tw`-mt-4`}>
+            <View style={tw`-mt-4 pb-4`}>
                 {isLoading ? <ActivityIndicator size="small" color="#0000ff" style={tw`py-8`} /> :
                     cards.map((item, index) => {
                         return (
-                            <View style={[tw`bg-white rounded mt-4 h-16 shadow-sm p-2`, {width: '100%'}]} key={'menu'+index}>
-                                <TouchableHighlight onPress={() => {goPage(item.routerLink)}} style={[tw``, {}]}>
+                            <View style={[tw``, {width: '100%'}]} key={'menu'+index}>
+                                <TouchableHighlight onPress={() => {goPage(item.routerLink)}} style={[tw`bg-gray-100 rounded mt-4 h-16 p-2`, {}]}>
                                     <View style={[tw`h-full items-center`, {display: 'flex', flexWrap: 'nowrap', flexDirection: 'row'}]}>
-                                        <View style={tw`bg-gray-100 rounded p-2`}>
+                                        <View style={tw`bg-white rounded p-2`}>
                                             <Image style={{width: 30, height: 30, resizeMode: 'contain'}} source={{uri: getImage(item.icon)}} />
                                         </View>
                                         <Text style={tw`text-gray-800 text-center px-2 text-sm leading-4`}>{item.title}</Text>
+                                        <View style={tw`absolute top-2 right-1 w-8 h-8 bg-white rounded flex items-center justify-center`}>
+                                            <Icon style={tw``} name="arrowright" color="black" type="antdesign" size={14} />
+                                        </View>
                                     </View>
                                 </TouchableHighlight>
                             </View>
