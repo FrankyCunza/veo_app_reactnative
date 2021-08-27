@@ -30,6 +30,7 @@ const SliderProtocols = ( { route, navigation } ) => {
     }
 
     const senData =  async () => {
+        setLoading(true)
         let answers = []
         for (const [key, val] of Object.entries(steps)) {
             answers.push({
@@ -103,8 +104,9 @@ const SliderProtocols = ( { route, navigation } ) => {
                 })
                 .then((response) => response.json())
                 .then((json) => {
-                    alert(JSON.stringify(json))
+                    // alert(JSON.stringify(json))
                     setResponse(json)
+                    setLoading(false)
                 })
                 .catch((error) => {
                     alert('Error Save Form1', error)
@@ -163,6 +165,11 @@ const SliderProtocols = ( { route, navigation } ) => {
     return (
         <ScrollView style={tw`pb-4`}>
             <Title title={title} navigation={navigation} />
+            {isLoading ? <></> : 
+            Object.keys(response).length>0 ?
+            <>
+            </>
+            :
             <Carousel
                 layout={"default"}
                 //   Carousel.snapToNext()
@@ -173,9 +180,14 @@ const SliderProtocols = ( { route, navigation } ) => {
                 scrollEnabled={false}
                 itemWidth={width-28}
                 renderItem={_renderItem}
-                onSnapToItem = { index => setActiveIndex(index) } />
+                onSnapToItem = { index => setActiveIndex(index) } 
+            />}
+            
             {isLoading ? <ActivityIndicator size="small" color="#0000ff" style={tw`py-8`} /> : 
-                (
+                (   
+                    Object.keys(response).length>0 ? <View>
+                        <Text>Hello</Text>
+                    </View> : 
                     Object.keys(data.steps).length-1==activeIndex ? 
                     <View style={[tw`px-4 items-center`, steps[Object.keys(steps)[activeIndex]].selected == undefined ? tw`opacity-30` : tw`opacity-100`, {}]}>
                         <View style={[tw`bg-white rounded-full mt-4 h-12 shadow-sm px-8`, {}]}>
