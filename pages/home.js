@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet, Image, TouchableHighlight, ActivityIndicator } from 'react-native';
+import { View, Text, FlatList, StyleSheet, Image, TouchableHighlight, ActivityIndicator, ScrollView, useWindowDimensions } from 'react-native';
 import tw from 'tailwind-react-native-classnames';
 
 const Home = ( { route, navigation} ) => {
@@ -7,6 +7,7 @@ const Home = ( { route, navigation} ) => {
     const [brand, setBrand] = useState("")
     const [isLoading, setLoading] = useState(true);
     const { id, token } = route.params;
+    const { width } = useWindowDimensions();
 
     useEffect(() => {
         if (id && token) {
@@ -84,7 +85,7 @@ const Home = ( { route, navigation} ) => {
 
     const renderItem = ({item}) => {
         return (
-            <View style={[tw`bg-white w-5/12 rounded mt-4 h-28 shadow-sm`, {width: '48%'}]}>
+            <View style={[tw`bg-white rounded mt-4 h-28 shadow-sm`, {width: '100%'}]}>
                 <TouchableHighlight onPress={() => {goPage(item.routerLink)}} style={[tw``, {}]}>
                     <View style={tw`h-full justify-center items-center`}>
                         {/* <Image
@@ -104,8 +105,8 @@ const Home = ( { route, navigation} ) => {
     }
 
     return (
-        <View style={tw`bg-gray-100 h-full`}>
-            {isLoading ? <ActivityIndicator size="small" color="#0000ff" style={tw`py-8`} /> :
+        <ScrollView style={tw`bg-gray-100 h-full px-4`}>
+            {/* {isLoading ? <ActivityIndicator size="small" color="#0000ff" style={tw`py-8`} /> :
                 (<FlatList data={cards} numColumns={2} 
                     renderItem={renderItem} 
                     ListHeaderComponent={
@@ -124,8 +125,36 @@ const Home = ( { route, navigation} ) => {
                         <View style={tw`pb-4`}></View>
                     }
                     columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14, flex: 2}} keyExtractor={((item, i) => item.title)} />)
-            }
-        </View>
+            } */}
+            <View style={[tw`py-4 items-center mb-1 bg-transparent`, {display: 'flex', flexDirection: 'row', justifyContent: 'center'}]}>
+                <View>
+                    <Image source={{uri: "https://veo365.com/assets/images/logo-veo-color-8.png"}} style={[tw`w-12 h-12`, { resizeMode: 'contain' }]} />
+                </View>
+                {brand ? (
+                    <View style={tw`ml-6`}>
+                        <Image source={{uri: brand}} style={[tw`w-20 h-16`, { resizeMode: 'contain' }]} />
+                    </View>
+                ) : <></>}
+            </View>
+            <View style={tw`-mt-4`}>
+                {isLoading ? <ActivityIndicator size="small" color="#0000ff" style={tw`py-8`} /> :
+                    cards.map((item, index) => {
+                        return (
+                            <View style={[tw`bg-white rounded mt-4 h-16 shadow-sm p-2`, {width: '100%'}]} key={'menu'+index}>
+                                <TouchableHighlight onPress={() => {goPage(item.routerLink)}} style={[tw``, {}]}>
+                                    <View style={[tw`h-full items-center`, {display: 'flex', flexWrap: 'nowrap', flexDirection: 'row'}]}>
+                                        <View style={tw`bg-gray-100 rounded p-2`}>
+                                            <Image style={{width: 30, height: 30, resizeMode: 'contain'}} source={{uri: getImage(item.icon)}} />
+                                        </View>
+                                        <Text style={tw`text-gray-800 text-center px-2 text-sm leading-4`}>{item.title}</Text>
+                                    </View>
+                                </TouchableHighlight>
+                            </View>
+                        )
+                    })
+                }
+            </View>
+        </ScrollView>
     )
 }
 
