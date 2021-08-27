@@ -149,6 +149,10 @@ const Daily = ( { navigation } ) => {
         }
     }
 
+    getImage = (image) => {
+        return 'https://scraprix.com/img/svgtopng/'+image+'.png'
+    }
+
     const renderItem = ( { item } ) => {
         if (item.type == 'check') {
             return (
@@ -188,9 +192,9 @@ const Daily = ( { navigation } ) => {
     }
 
     return (
-        <SafeAreaView style={[tw`bg-gray-100`, {flex: 1}]}>
+        <SafeAreaView style={[tw`bg-white`, {flex: 1}]}>
             <ScrollView>
-                <Title title="Declaración diaria" />
+                <Title title="Declaración diaria" navigation={navigation} />
                 {/* {isLoading  ? isLoadingTraffic==false ? <></> : <ActivityIndicator style={tw`py-12`} size="small" color="#0000ff" /> :
                     (
                     <FlatList data={cards} numColumns={2} style={tw`-mt-4`} renderItem={renderItem} columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14}} keyExtractor={((item, i) => item.title)} 
@@ -208,10 +212,10 @@ const Daily = ( { navigation } ) => {
                             {cards.map((item, index) => {
                                 if (item.type == 'check') {
                                     return (
-                                        <View style={[tw`bg-white rounded mt-4 h-28 shadow`, { width: width/2-21}, collectData[item.code].selected ? tw`bg-blue-600` : '']} key={item.code}>
+                                        <View style={[tw`bg-gray-100 rounded mt-4 h-28`, { width: width/2-21}, collectData[item.code].selected ? tw`bg-blue-600` : '']} key={item.code}>
                                             <TouchableHighlight style={[tw``, {}]} onPress={() => {}}>
                                                 <View style={tw`h-full justify-center items-center`}>
-                                                    <Image style={{width: 45, height: 45, resizeMode: 'contain'}} source={{uri: "https://image.flaticon.com/icons/png/512/1021/1021606.png"}} />
+                                                    <Image style={{width: 45, height: 45, resizeMode: 'contain'}} source={{uri: getImage(item.image)}} />
                                                     <Text style={[tw`text-center px-2 text-sm leading-4 mt-2`, collectData[item.code].selected ? tw`text-white` : tw`text-gray-800`]}>{item.title}</Text>
                                                     <CheckBox
                                                         disabled={false}
@@ -231,7 +235,6 @@ const Daily = ( { navigation } ) => {
                                                 <View style={[tw`rounded-full p-1 w-4/12`, collectData[item.code].selected==false ? tw`bg-blue-600` : tw`bg-gray-100`]}>
                                                     <TouchableHighlight style={[tw``, {}]} onPress={() => {}}>
                                                         <View style={[tw`justify-center items-center`, {flexWrap: 'wrap', flexDirection: 'row'}]}>
-                                                            {/* <Image style={{width: 45, height: 45, resizeMode: 'contain'}} source={{uri: "https://image.flaticon.com/icons/png/512/1021/1021606.png"}} /> */}
                                                             <Text style={[tw`text-center px-2 text-sm leading-4`, collectData[item.code].selected ? tw`text-white` : tw`text-gray-800`]}>No</Text>
                                                             <CheckBox
                                                                 disabled={false}
@@ -244,7 +247,6 @@ const Daily = ( { navigation } ) => {
                                                 <View style={[tw`rounded-full p-1 w-4/12 ml-4`, collectData[item.code].selected==true ? tw`bg-blue-600` : tw`bg-gray-100`]}>
                                                     <TouchableHighlight style={[tw``, {}]} onPress={() => {}}>
                                                         <View style={[tw`justify-center items-center`, {flexWrap: 'wrap', flexDirection: 'row'}]}>
-                                                            {/* <Image style={{width: 45, height: 45, resizeMode: 'contain'}} source={{uri: "https://image.flaticon.com/icons/png/512/1021/1021606.png"}} /> */}
                                                             <Text style={[tw`text-center px-2 text-sm leading-4`, collectData[item.code].selected ? tw`text-white` : tw`text-gray-800`]}>Si</Text>
                                                             <CheckBox
                                                                 disabled={false}

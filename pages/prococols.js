@@ -48,15 +48,25 @@ const Protocols = ( { navigation } ) => {
             data: item
         })
     }
+
+    const getImage = (image) => {
+        if (image.includes('/static/img')) {
+            // alert(JSON.stringify('https://scraprix.com/img/svgtopng/'+image.split('../assets/svgs/')[1]))
+            return 'https://scraprix.com/img/svgtopng/'+image.split('/static/img/protocols/')[1].replace(".svg", ".png")
+        }
+    }
     
     const renderItem = ( { item } ) => {
         return (
             <View style={[tw`mt-3 px-4 relative`]}>
                 <TouchableHighlight style={[tw`relative`, {}]} onPress={() => {goPage(item)}}>
-                    <View style={tw`bg-white px-4 py-6 shadow rounded`}>
-                        <Text style={tw`text-lg`}>{item.name}</Text>
-                        <View style={tw`absolute top-5 right-2 w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center`}>
-                            <Icon style={tw``} name="arrowright" color="black" type="antdesign" />
+                    <View style={[tw`bg-gray-50 px-4 py-5 rounded items-center`, {flexDirection: 'row'}]}>
+                        <View style={tw`mr-2`}>
+                            <Image style={{width: 30, height: 24, resizeMode: 'contain'}} source={{uri: getImage(item.icon)}} />
+                        </View>
+                        <Text style={tw`text-base text-gray-900`}>{item.name}</Text>
+                        <View style={tw`absolute top-3 right-2 w-10 h-10 bg-white rounded-full flex items-center justify-center`}>
+                            <Icon style={tw``} name="arrowright" color="black" type="antdesign" size={15} />
                         </View>
                     </View>
                 </TouchableHighlight>
@@ -65,8 +75,8 @@ const Protocols = ( { navigation } ) => {
     }
 
     return (
-        <View>
-            <Title title="Protocolos" />
+        <View style={tw`bg-white`}>
+            <Title title="Protocolos" navigation={navigation} />
             {/* {data.data ? (data.data.map((el, index) => {
                 return (
                     <View>

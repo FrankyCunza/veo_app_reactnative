@@ -7,7 +7,7 @@ import tw from 'tailwind-react-native-classnames';
 import CheckBox from '@react-native-community/checkbox';
 import { HHMMSS, dateYYYYMMDD } from '../utils/utils';
 
-const SliderProtocols = ( { route } ) => {
+const SliderProtocols = ( { route, navigation } ) => {
     const { title, data } = route.params;
     const [activeIndex, setActiveIndex] = useState(0);
     const [carousel, setCarousel] = useState()
@@ -152,7 +152,7 @@ const SliderProtocols = ( { route } ) => {
 
     return (
         <ScrollView>
-            <Title title={title} />
+            <Title title={title} navigation={navigation} />
             <Carousel
                 layout={"default"}
                 //   Carousel.snapToNext()
