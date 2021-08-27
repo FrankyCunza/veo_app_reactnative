@@ -58,15 +58,15 @@ const Protocols = ( { navigation } ) => {
     
     const renderItem = ( { item } ) => {
         return (
-            <View style={[tw`mt-3 px-4 relative`]}>
-                <TouchableHighlight style={[tw`relative`, {}]} onPress={() => {goPage(item)}}>
-                    <View style={[tw`bg-gray-50 px-4 py-5 rounded items-center`, {flexDirection: 'row'}]}>
-                        <View style={tw`mr-2`}>
-                            <Image style={{width: 30, height: 24, resizeMode: 'contain'}} source={{uri: getImage(item.icon)}} />
+            <View style={[tw``, {width: '100%'}]} key={item.name}>
+                <TouchableHighlight onPress={() => {goPage(item)}} style={[tw`bg-gray-100 rounded mt-4 h-16 p-2`, {}]}>
+                    <View style={[tw`h-full items-center`, {display: 'flex', flexWrap: 'nowrap', flexDirection: 'row'}]}>
+                        <View style={tw`bg-white rounded p-2`}>
+                            <Image style={{width: 30, height: 30, resizeMode: 'contain'}} source={{uri: getImage(item.icon)}} />
                         </View>
-                        <Text style={tw`text-base text-gray-900`}>{item.name}</Text>
-                        <View style={tw`absolute top-3 right-2 w-10 h-10 bg-white rounded-full flex items-center justify-center`}>
-                            <Icon style={tw``} name="arrowright" color="black" type="antdesign" size={15} />
+                        <Text style={tw`text-gray-800 text-center px-2 text-sm leading-4`}>{item.name}</Text>
+                        <View style={tw`absolute top-2 right-1 w-8 h-8 bg-white rounded flex items-center justify-center`}>
+                            <Icon style={tw``} name="arrowright" color="black" type="antdesign" size={14} />
                         </View>
                     </View>
                 </TouchableHighlight>
@@ -75,7 +75,7 @@ const Protocols = ( { navigation } ) => {
     }
 
     return (
-        <View style={tw`bg-white`}>
+        <View style={tw`bg-white h-full`}>
             <Title title="Protocolos" navigation={navigation} />
             {/* {data.data ? (data.data.map((el, index) => {
                 return (
@@ -86,7 +86,7 @@ const Protocols = ( { navigation } ) => {
             })) : (<></>)} */}
             {isLoading  ? <ActivityIndicator style={tw`py-12`} size="small" color="#0000ff" /> :
                 (
-                    <FlatList data={data.data} style={tw`pb-4 -mt-4`} renderItem={renderItem} keyExtractor={((item, i) => item.name)} />
+                    <FlatList data={data.data} style={tw`pb-4 -mt-4 px-4`} renderItem={renderItem} keyExtractor={((item, i) => item.name)} />
                 )
             }
         </View>

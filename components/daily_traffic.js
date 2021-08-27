@@ -48,34 +48,18 @@ const DailyTraffic = ({ name }) => {
         }
     }
 
-    const renderItem = ( { item } ) => {
-        return (
-            <View style={[tw`rounded py-6`, { width: '100%' }]}>
-                <Text style={tw`text-base leading-5 text-gray-800`}>{ item.name }</Text>
-            </View>
-        )
-    }
-
     return (
-        <>
-            {/* {name.length > 0 ? isLoading ? <ActivityIndicator style={tw`py-12`} size="small" color="#0000ff" /> :
-                <FlatList style={tw`pb-6 bg-white px-6`} data={data?.recomendations} renderItem={renderItem} keyExtractor={((item, i) => i+'traffic')} 
-                ListHeaderComponent={
-                <View style={tw``}>
-                    <Text style={tw`text-4xl py-4 font-bold text-gray-800 mt-4`}>{data?.title}</Text>
-                    <Text style={tw`text-gray-800 text-lg leading-5`}>{data?.description}</Text>
-                </View>} />
-            : (<></>)} */}
+        <View style={tw`px-4`}>
             {name.length > 0 ? isLoading ? <ActivityIndicator style={tw`py-12`} size="small" color="#0000ff" /> :
-               <View style={tw`px-4`}>
+               <View style={tw``}>
                   <View style={tw``}>
-                     <Text style={tw`text-4xl py-4 font-bold text-gray-800 mt-4`}>{data?.title}</Text>
+                     <Text style={tw`text-4xl py-4 font-bold text-gray-800 mt-6 mb-4 text-center`}>{data?.title}</Text>
                      <Text style={tw`text-gray-800 text-lg leading-5`}>{data?.description}</Text>
                   </View>
-                  <View style={tw`pb-6 bg-white px-6 mt-4 rounded`}>
+                  <View style={tw`pb-6 bg-white rounded`}>
                      {data.recomendations ? data?.recomendations.map((item, index) => {
                         return (
-                           <View style={[tw`rounded py-6`, { width: '100%' }]} key={'traffic'+index}>
+                           <View style={[tw`bg-gray-50 rounded p-4 mt-4`, { width: '100%' }]} key={'traffic'+index}>
                               <Text style={tw`text-base leading-5 text-gray-800`}>{ item.name }</Text>
                            </View>
                         )
@@ -83,7 +67,7 @@ const DailyTraffic = ({ name }) => {
                   </View>
                </View>
             : (<></>)}
-        </>
+        </View>
     )
 }
 

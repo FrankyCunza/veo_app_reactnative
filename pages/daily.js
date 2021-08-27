@@ -205,18 +205,18 @@ const Daily = ( { navigation } ) => {
                     </View>} />
                     )
                 } */}
-                <View style={{flex: 1, flexDirection: 'row', flexWrap:'wrap' ,width: width, backgroundColor: 'transparent', marginTop: -14, justifyContent: 'space-between', paddingHorizontal: 14}}>
+                <View style={[tw`pb-4`, {flex: 1, flexDirection: 'row', flexWrap:'wrap' ,width: width, backgroundColor: 'transparent', marginTop: -14, justifyContent: 'space-between', paddingHorizontal: 14}]}>
                     {isLoading  ? isLoadingTraffic==false ? <></> : <ActivityIndicator style={tw`py-12`} size="small" color="#0000ff" /> :
                         (
                             <>
                             {cards.map((item, index) => {
                                 if (item.type == 'check') {
                                     return (
-                                        <View style={[tw`bg-gray-100 rounded mt-4 h-28`, { width: width/2-21}, collectData[item.code].selected ? tw`bg-blue-600` : '']} key={item.code}>
+                                        <View style={[tw`bg-gray-100 rounded mt-4 h-36`, { width: width/2-21 }, collectData[item.code].selected ? tw`bg-blue-600` : '']} key={item.code}>
                                             <TouchableHighlight style={[tw``, {}]} onPress={() => {}}>
                                                 <View style={tw`h-full justify-center items-center`}>
                                                     <Image style={{width: 45, height: 45, resizeMode: 'contain'}} source={{uri: getImage(item.image)}} />
-                                                    <Text style={[tw`text-center px-2 text-sm leading-4 mt-2`, collectData[item.code].selected ? tw`text-white` : tw`text-gray-800`]}>{item.title}</Text>
+                                                    <Text style={[tw`text-center px-2 text-base leading-5 mt-3`, collectData[item.code].selected ? tw`text-white` : tw`text-gray-800`]}>{item.title}</Text>
                                                     <CheckBox
                                                         disabled={false}
                                                         style={styles.checkbox}
@@ -229,8 +229,8 @@ const Daily = ( { navigation } ) => {
                                     )
                                 } else if (item.type == 'question') {
                                     return (
-                                        <View style={[tw`bg-white rounded mt-4 shadow pb-4`, { width: width, height: 'auto'}]} key={item.code}>
-                                            <Text style={[tw`text-left p-4 text-sm leading-4 text-gray-800`]}>{item.text}</Text>
+                                        <View style={[tw`bg-gray-100 rounded mt-4 pb-4`, { width: width, height: 'auto'}]} key={item.code}>
+                                            <Text style={[tw`text-left p-4 text-base leading-5 text-gray-800`]}>{item.text}</Text>
                                             <View style={tw`px-4 flex-row items-center justify-center`}>
                                                 <View style={[tw`rounded-full p-1 w-4/12`, collectData[item.code].selected==false ? tw`bg-blue-600` : tw`bg-gray-100`]}>
                                                     <TouchableHighlight style={[tw``, {}]} onPress={() => {}}>
@@ -262,7 +262,7 @@ const Daily = ( { navigation } ) => {
                                 } else {}
                             })}
                             <View style={tw`w-full mt-4`}>
-                                <TouchableOpacity onPress={senData} style={tw`bg-blue-600 py-2 rounded-full`}>
+                                <TouchableOpacity onPress={senData} style={tw`bg-blue-600 py-3 rounded-full`}>
                                     <Text style={tw`text-center text-white text-xl`}>Enviar</Text>
                                 </TouchableOpacity>
                             </View>
