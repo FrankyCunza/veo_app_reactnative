@@ -15,6 +15,7 @@ const SliderProtocols = ( { route, navigation } ) => {
     const { width } = useWindowDimensions();
     const [steps, setSteps] = useState({})
     const [isLoading, setLoading] = useState(true)
+    const [response, setResponse] = useState({})
 
     useEffect(() => {
         // alert(JSON.stringify(data))
@@ -102,7 +103,8 @@ const SliderProtocols = ( { route, navigation } ) => {
                 })
                 .then((response) => response.json())
                 .then((json) => {
-                    // alert(JSON.stringify(json))
+                    alert(JSON.stringify(json))
+                    setResponse(json)
                 })
                 .catch((error) => {
                     alert('Error Save Form1', error)
@@ -143,7 +145,7 @@ const SliderProtocols = ( { route, navigation } ) => {
                 <View style={[tw`bg-white rounded-full mt-4 h-10 shadow ml-2`, { width: '30%' }, steps[item.id].selected == undefined ? tw`opacity-20` : 'opacity-100', !steps[item.id].selected && steps[item.id].selected!==undefined ? tw`bg-blue-600` : '']}>
                     <TouchableHighlight style={[tw``, {}]} onPress={() => {}}>
                         <View style={tw`h-full justify-center items-center`}> 
-                            <Text style={[tw`text-center px-2 text-base`, steps[item.id].selected ? tw`text-white` : tw`text-gray-800`]}>No</Text>
+                            <Text style={[tw`text-center px-2 text-base`, steps[item.id].selected||steps[item.id].selected==undefined ? tw`text-gray-800` : tw`text-white`]}>No</Text>
                             <CheckBox
                                 disabled={false}
                                 style={styles.checkbox}
