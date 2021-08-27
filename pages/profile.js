@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text, TextInput, View, ScrollView, ActivityIndicator, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, TextInput, View, ScrollView, ActivityIndicator, TouchableOpacity, useWindowDimensions, TouchableHighlight, Image } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Title from '../components/title'
 import { useForm, Controller, set } from "react-hook-form"
 import tw from 'tailwind-react-native-classnames'
+import CheckBox from '@react-native-community/checkbox';
 import RNPickerSelect from 'react-native-picker-select'
 
 const Profile = () => {
-    const { control, register, handleSubmit, setValue,formState: { errors } } = useForm();
+    const { control, register, handleSubmit, setValue, formState: { errors } } = useForm();
     const [data, setData] = useState([])
     const [values, setValues] = useState({})
     const [isLoading, setLoading] = useState(true)
+    const { width } = useWindowDimensions();
 
     useEffect(() => {
         getData()
     }, [])
+
+    let getKeyValues = {}
 
     const getData = async () => {
         try {
@@ -34,8 +38,20 @@ const Profile = () => {
                 .then((json) => {
                     setData(json.data)
                     setLoading(false)
+                    let format = {}
+                    for (let i=0; i<json.data.length; i++) {
+                        if ('name' in json.data[i]) {
+                            format[json.data[i].name] = ''
+                            // alert(json.data[i].title)
+                        } else {
+                            // alert(json.data[i].title)
+                        }
+                    }
+                    // setValues(format)
+                    getKeyValues = format
+                    // test = format
                     getValues()
-                    // alert(JSON.stringify(json))
+                    // alert(JSON.stringify(values))
                 })
                 .catch((error) => {
                     alert(error)
@@ -59,17 +75,15 @@ const Profile = () => {
                 })
                 .then((response) => response.json())
                 .then((json) => {
-                    setValues(json.data.data)
                     setLoading(false)
-                    for (const [key, value] of Object.entries(json.data.data)) {
-                        // console.log(key, value);
-                        if (JSON.stringify(value).startsWith("{") && JSON.stringify(value).endsWith("}")) {
-                            // alert
-                        } else {
-                            setValue(key, value||'');
+                    let getValues = {...getKeyValues} 
+                    for (const [key, value] of Object.entries(getKeyValues)) {
+                        if (key in json.data.data) {
+                            getValues[key] = json.data.data[key]
                         }
                     }
-                    // alert(JSON.stringify(json.data.data))
+                    setValues(getValues)
+                    // alert(JSON.stringify(getValues))
                 })
                 .catch((error) => {
                     alert(error)
@@ -80,6 +94,8 @@ const Profile = () => {
     }
 
     const onSubmit = async(form) => {
+        alert(JSON.stringify(values))
+        return false
         form['document'] = {
             "type_document": "DNI",
             "document": "99999716"
@@ -214,6 +230,32 @@ const Profile = () => {
                                             onValueChange={(value) => setValue(item.name, value)}
                                             items={item.data}
                                         />
+                                    </View>
+                                </View>
+                            )
+                        } else if (item.form_type == 'checkboxes') {
+                            return (
+                                <View key={item.name} style={tw`mt-2`}>
+                                    <Text style={tw`text-gray-800 mb-1 text-base text-xl font-bold`}>{item.title}</Text>
+                                    <View style={{flex: 1, flexDirection: 'row', flexWrap:'wrap' ,width: width-30, backgroundColor: 'transparent', marginTop: -14, justifyContent: 'space-between', paddingHorizontal: 0}}>
+                                        {item.loop.map((el, i) => {
+                                            return (
+                                                <View style={[tw`bg-white rounded mt-4 h-28 shadow`, { width: width/2-21}]} key={'box'+i}>
+                                                    <TouchableHighlight style={[tw``, {}]} onPress={() => {}}>
+                                                        <View style={tw`h-full justify-center items-center`}>
+                                                            <Image style={{width: 45, height: 45, resizeMode: 'contain'}} source={{uri: "https://image.flaticon.com/icons/png/512/1021/1021606.png"}} />
+                                                            <Text style={[tw`text-center px-2 text-sm leading-4 mt-2`]}>{el.name}</Text>
+                                                            <CheckBox
+                                                                disabled={false}
+                                                                // style={styles.checkbox}
+                                                                value={values[item.name] ? values[item.name][el.id] : false}
+                                                                onValueChange={(newValue) => { }}
+                                                            />
+                                                        </View>
+                                                    </TouchableHighlight>
+                                                </View>
+                                            )
+                                        })}
                                     </View>
                                 </View>
                             )

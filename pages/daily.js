@@ -178,7 +178,7 @@ const Daily = ( { navigation } ) => {
                                 disabled={false}
                                 style={styles.checkbox}
                                 value={collectData[item.code].selected}
-                                onValueChange={(newValue) => { setCollectData({...collectData, [item.code]: {...item, selected: newValue}}, changeCheck(newValue, item.id, item.value, item.image) ) }}
+                                onValueChange={(newValue) => { setCollectData({...collectData, [item.code]: {...item, selected: newValue}}), changeCheck(newValue, item.id, item.value, item.image) }}
                             />
                         </View>
                     </TouchableHighlight>
