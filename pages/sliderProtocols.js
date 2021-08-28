@@ -125,13 +125,13 @@ const SliderProtocols = ( { route, navigation } ) => {
 
     const _renderItem = ({item,index}) => {
         return (
-          <View style={[tw`bg-white py-14 px-5 items-center`, {borderRadius: 5,
+          <View style={[tw`bg-white py-14 px-5 items-center rounded-xl`, {
             //   height: 250,
               marginLeft: 0}]}>
             <Image style={{width: 50, height: 50, resizeMode: 'contain'}} source={{uri: getImage(item.icon)}} />
             <Text style={[tw`text-center mt-4 mb-2`, {fontSize: 18}]}>{item.instructions}</Text>
             <View style={tw`flex-row justify-center`}>
-                <View style={[tw`bg-white rounded-full mt-4 h-10 shadow`, { width: '30%' }, steps[item.id].selected == undefined ? tw`opacity-20` : 'opacity-100', steps[item.id].selected ? tw`bg-blue-600` : '']}>
+                <View style={[tw`bg-white rounded-full mt-4 h-12 shadow`, { width: '40%' }, steps[item.id].selected == undefined ? tw`opacity-50` : 'opacity-100', steps[item.id].selected ? tw`bg-blue-600` : '']}>
                     <TouchableHighlight style={[tw``, {}]} onPress={() => {}}>
                         <View style={tw`h-full justify-center items-center`}> 
                             <Text style={[tw`text-center px-2 text-base`, steps[item.id].selected ? tw`text-white` : tw`text-gray-800`]}>Yes</Text>
@@ -144,7 +144,7 @@ const SliderProtocols = ( { route, navigation } ) => {
                         </View>
                     </TouchableHighlight>
                 </View>
-                <View style={[tw`bg-white rounded-full mt-4 h-10 shadow ml-2`, { width: '30%' }, steps[item.id].selected == undefined ? tw`opacity-20` : 'opacity-100', !steps[item.id].selected && steps[item.id].selected!==undefined ? tw`bg-blue-600` : '']}>
+                <View style={[tw`bg-white rounded-full mt-4 h-12 shadow ml-2`, { width: '40%' }, steps[item.id].selected == undefined ? tw`opacity-50` : 'opacity-100', !steps[item.id].selected && steps[item.id].selected!==undefined ? tw`bg-blue-600` : '']}>
                     <TouchableHighlight style={[tw``, {}]} onPress={() => {}}>
                         <View style={tw`h-full justify-center items-center`}> 
                             <Text style={[tw`text-center px-2 text-base`, steps[item.id].selected||steps[item.id].selected==undefined ? tw`text-gray-800` : tw`text-white`]}>No</Text>

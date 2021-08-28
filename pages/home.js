@@ -86,7 +86,7 @@ const Home = ( { route, navigation} ) => {
 
     const renderItem = ({item}) => {
         return (
-            <View style={[tw`bg-white rounded mt-4 h-28 shadow-sm`, {width: '100%'}]}>
+            <View style={[tw`bg-white rounded-xl mt-4 h-28 shadow-sm`, {width: '100%'}]}>
                 <TouchableHighlight onPress={() => {goPage(item.routerLink)}} style={[tw``, {}]}>
                     <View style={tw`h-full justify-center items-center`}>
                         {/* <Image
@@ -142,13 +142,13 @@ const Home = ( { route, navigation} ) => {
                     cards.map((item, index) => {
                         return (
                             <View style={[tw``, {width: '100%'}]} key={'menu'+index}>
-                                <TouchableHighlight onPress={() => {goPage(item.routerLink)}} style={[tw`bg-gray-100 rounded mt-4 h-16 p-2`, {}]}>
+                                <TouchableHighlight onPress={() => {goPage(item.routerLink)}} style={[tw`bg-gray-100 rounded-xl mt-4 h-16 p-3`, {}]}>
                                     <View style={[tw`h-full items-center`, {display: 'flex', flexWrap: 'nowrap', flexDirection: 'row'}]}>
                                         <View style={tw`bg-white rounded p-2`}>
                                             <Image style={{width: 30, height: 30, resizeMode: 'contain'}} source={{uri: getImage(item.icon)}} />
                                         </View>
                                         <Text style={tw`text-gray-800 text-center px-2 text-sm leading-4`}>{item.title}</Text>
-                                        <View style={tw`absolute top-2 right-1 w-8 h-8 bg-white rounded flex items-center justify-center`}>
+                                        <View style={tw`absolute top-1 right-1 w-8 h-8 bg-white rounded flex items-center justify-center`}>
                                             <Icon style={tw``} name="arrowright" color="black" type="antdesign" size={14} />
                                         </View>
                                     </View>

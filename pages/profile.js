@@ -7,7 +7,7 @@ import tw from 'tailwind-react-native-classnames'
 import CheckBox from '@react-native-community/checkbox';
 import RNPickerSelect from 'react-native-picker-select'
 
-const Profile = () => {
+const Profile = ( { navigation } ) => {
     const { control, register, handleSubmit, setValue, formState: { errors } } = useForm();
     const [data, setData] = useState([])
     const [values, setValues] = useState({})
@@ -94,8 +94,6 @@ const Profile = () => {
     }
 
     const onSubmit = async(form) => {
-        alert(JSON.stringify(values))
-        return false
         form['document'] = {
             "type_document": "DNI",
             "document": "99999716"
@@ -142,34 +140,17 @@ const Profile = () => {
     }
 
     return (
-        <ScrollView>
-            <Title title="Perfil Personal" />
+        <ScrollView style={tw`bg-white`}>
+            <Title title="Perfil Personal" navigation={navigation} />
             {isLoading ? <ActivityIndicator size="small" color="#0000ff" style={tw`py-8`} /> :
             
                 <View style={tw`px-4`}>
                     {data.map((item, index) => {
                         if (item.form_type == 'text' 
-                        || item.form_type == 'title' 
-                        || item.form_type == 'work_job' 
-                        || item.form_type == 'work_area' 
-                        || item.form_type == 'work_name' 
-                        || item.form_type == 'work_address' 
-                        || item.form_type == 'work_area' 
-                        || item.form_type == 'full_name' 
-                        || item.form_type == 'paternal_surname' 
-                        || item.form_type == 'maternal_surname' 
-                        || item.form_type == 'birth_day' 
-                        || item.form_type == 'cell_phone' 
-                        || item.form_type == 'email' 
-                        || item.form_type == 'address' 
-                        || item.type == 'address'  
-                        || item.form_type == 'work_job' 
-                        || item.form_type == 'work_area' 
-                        || item.form_type == 'work_name' 
-                        || item.form_type == 'work_address' 
+                        || item.form_type == 'number'
                         ) {
                             return (
-                                <View style={tw`mt-2`} key={'form'+index}>
+                                <View style={tw`mt-3`} key={'form'+index}>
                                     <Text style={tw`text-gray-800 mb-1 text-base`}>{item.title}</Text>
                                     <Controller
                                         control={control}
@@ -178,7 +159,7 @@ const Profile = () => {
                                         }}
                                         render={({ field: { onChange, onBlur, value } }) => (
                                         <TextInput
-                                            style={tw`bg-white py-3 rounded px-4 shadow-sm`}
+                                            style={tw`bg-gray-100 border border-solid border-gray-300 py-3 rounded-xl px-4`}
                                             onBlur={onBlur}
                                             onChangeText={onChange}
                                             defaultValue={values ? values[item.name] : ''}
@@ -190,7 +171,7 @@ const Profile = () => {
                                     />
                                 </View>
                             )
-                        } else if (item.type == 'title') {
+                        } else if (item.form_type == 'title') {
                             return (
                                 <View style={tw`mt-2`} key={'form'+index}>
                                     <Text style={tw`text-gray-800 text-2xl font-bold`}>{item.title}</Text>
@@ -207,7 +188,7 @@ const Profile = () => {
                                         }}
                                         render={({ field: { onChange, onBlur, value } }) => (
                                         <TextInput
-                                            style={tw`bg-white py-3 rounded px-4 shadow-sm`}
+                                            style={tw`bg-gray-100 border border-solid border-gray-300 py-3 rounded-xl px-4`}
                                             onBlur={onBlur}
                                             onChangeText={onChange}
                                             defaultValue={values ? values[item.name] : ''}
@@ -223,7 +204,7 @@ const Profile = () => {
                             return (
                                 <View key={item.name} style={tw`mt-2`}>
                                     <Text style={tw`text-gray-800 mb-1 text-base`}>{item.title}</Text>
-                                    <View style={tw`bg-white`}>
+                                    <View style={tw`bg-gray-100 border border-solid border-gray-300 rounded-xl px-4`}>
                                         <RNPickerSelect
                                             style={tw`bg-white`}
                                             value={values ? values[item.name] : ''}
@@ -240,7 +221,7 @@ const Profile = () => {
                                     <View style={{flex: 1, flexDirection: 'row', flexWrap:'wrap' ,width: width-30, backgroundColor: 'transparent', marginTop: -14, justifyContent: 'space-between', paddingHorizontal: 0}}>
                                         {item.loop.map((el, i) => {
                                             return (
-                                                <View style={[tw`rounded mt-4 h-36 shadow`, values[item.name] ? values[item.name][el.id] ? tw`bg-blue-600` : tw`bg-white` : '', { width: width/2-21}]} key={'box'+i}>
+                                                <View style={[tw`rounded-xl mt-4 h-36`, values[item.name] ? values[item.name][el.id] ? tw`bg-blue-600` : tw`bg-gray-100` : '', { width: width/2-21}]} key={'box'+i}>
                                                     <TouchableHighlight style={[tw``, {}]} onPress={() => {}}>
                                                         <View style={tw`h-full justify-center items-center`}>
                                                             <Image style={{width: 45, height: 45, resizeMode: 'contain'}} source={{uri: "https://image.flaticon.com/icons/png/512/1021/1021606.png"}} />
@@ -270,9 +251,11 @@ const Profile = () => {
                     })}
                 </View>
             }
-            <TouchableOpacity onPress={handleSubmit(onSubmit)} style={tw`bg-blue-600 py-2 rounded-full`}>
-                <Text style={tw`text-center text-white text-xl`}>Enviar</Text>
-            </TouchableOpacity>
+            <View style={tw`px-4 pb-4`}>
+                <TouchableOpacity onPress={handleSubmit(onSubmit)} style={tw`bg-blue-600 py-3 rounded-full mt-4`}>
+                    <Text style={tw`text-center text-white text-xl`}>Enviar</Text>
+                </TouchableOpacity>
+            </View>
         </ScrollView>
     )
 }

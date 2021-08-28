@@ -212,7 +212,7 @@ const Daily = ( { navigation } ) => {
                             {cards.map((item, index) => {
                                 if (item.type == 'check') {
                                     return (
-                                        <View style={[tw`bg-gray-100 rounded mt-4 h-36`, { width: width/2-21 }, collectData[item.code].selected ? tw`bg-blue-600` : '']} key={item.code}>
+                                        <View style={[tw`bg-gray-100 rounded-xl mt-4 h-36`, { width: width/2-21 }, collectData[item.code].selected ? tw`bg-blue-600` : '']} key={item.code}>
                                             <TouchableHighlight style={[tw``, {}]} onPress={() => {}}>
                                                 <View style={tw`h-full justify-center items-center`}>
                                                     <Image style={{width: 45, height: 45, resizeMode: 'contain'}} source={{uri: getImage(item.image)}} />
