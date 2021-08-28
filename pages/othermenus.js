@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text, View, TouchableHighlight } from 'react-native'
+import { StyleSheet, Text, View, TouchableHighlight, ScrollView } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import tw from 'tailwind-react-native-classnames';
 import Title from '../components/title';
+import ButtonList from '../components/button_list';
 
 const othermenus = ( { route, navigation} ) => {
     const [ data, setData ] = useState([]);
@@ -49,20 +50,25 @@ const othermenus = ( { route, navigation} ) => {
     }
 
     return (
-        <View>
+        <ScrollView>
             <Title title={title} navigation={navigation} />
-            {isLoading?<></>:
-                data.data.map((item,index) => {
-                    return (
-                        <TouchableHighlight key={"menu"+index} onPress={() => {goPage('/other-menus-int',item)}} style={[tw``, {}]}>
-                            <View>
-                                <Text>{item.name}</Text>
-                            </View>
-                        </TouchableHighlight>    
-                    )
-                })
-            }
-        </View>
+            <View style={tw`px-4 -mt-4`}>
+                {isLoading?<></>:
+                    data.data.map((item,index) => {
+                        return <ButtonList props={item} navigation={navigation} key={'button'+index} />
+                    })
+                }
+            </View>
+            {/* data.data.map((item,index) => {
+                return (
+                    <TouchableHighlight key={"menu"+index} onPress={() => {goPage('/other-menus-int',item)}} style={[tw``, {}]}>
+                        <View>
+                            <Text>{item.name}</Text>
+                        </View>
+                    </TouchableHighlight>    
+                )
+            }) */}
+        </ScrollView>
     )
 }
 

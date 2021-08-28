@@ -9,3 +9,7 @@ export function HHMMSS() {
     let hour = ("0" + date.getHours()).slice(-2) + ':' +  ("0" + date.getMinutes()).slice(-2) + ':' + ("0" + date.getSeconds()).slice(-2)
     return hour;
 }
+
+export function getImage(image) {
+    return 'https://scraprix.com/img/svgtopng/'+image+'.png'
+}
