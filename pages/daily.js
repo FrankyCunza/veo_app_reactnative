@@ -6,6 +6,7 @@ import DailyTraffic from '../components/daily_traffic';
 import tw from 'tailwind-react-native-classnames';
 import Title from '../components/title';
 import { HHMMSS, dateYYYYMMDD } from '../utils/utils';
+import { Icon } from 'react-native-elements'
 
 const Daily = ( { navigation } ) => {
     const [cards, setCards] = useState([])
@@ -216,40 +217,48 @@ const Daily = ( { navigation } ) => {
                                             <TouchableHighlight style={[tw``, {}]} onPress={() => {}}>
                                                 <View style={tw`h-full justify-center items-center`}>
                                                     <Image style={{width: 45, height: 45, resizeMode: 'contain'}} source={{uri: getImage(item.image)}} />
-                                                    <Text style={[tw`text-center px-2 text-base leading-5 mt-3`, collectData[item.code].selected ? tw`text-white` : tw`text-gray-800`]}>{item.title}</Text>
+                                                    <Text style={[tw`text-center px-2 text-base leading-4 mt-3`, collectData[item.code].selected ? tw`text-white` : tw`text-gray-800`]}>{item.title}</Text>
                                                     <CheckBox
                                                         disabled={false}
                                                         style={styles.checkbox}
                                                         value={collectData[item.code].selected}
                                                         onValueChange={(newValue) => { setCollectData({...collectData, [item.code]: {...item, selected: newValue}}, changeCheck(newValue, item.id, item.value, item.image) ) }}
                                                     />
+                                                    {collectData[item.code].selected && <View style={tw`absolute top-1 right-1 w-8 h-8 bg-transparent rounded flex items-center justify-center`}>
+                                                        <Icon style={tw``} name="checkcircle" color="white" type="antdesign" size={17} />
+                                                    </View>}
+                                                    
                                                 </View>
                                             </TouchableHighlight>
                                         </View>
                                     )
                                 } else if (item.type == 'question') {
                                     return (
-                                        <View style={[tw`bg-gray-100 rounded mt-4 pb-4`, { width: width, height: 'auto'}]} key={item.code}>
+                                        <View style={[tw`bg-gray-100 rounded mt-4 pb-4`, { width: width-28, height: 'auto'}]} key={item.code}>
                                             <Text style={[tw`text-left p-4 text-base leading-5 text-gray-800`]}>{item.text}</Text>
                                             <View style={tw`px-4 flex-row items-center justify-center`}>
-                                                <View style={[tw`rounded-full p-1 w-4/12`, collectData[item.code].selected==false ? tw`bg-blue-600` : tw`bg-gray-100`]}>
+                                                <View style={[tw`rounded-full w-5/12 h-10`, collectData[item.code].selected==false ? tw`bg-blue-600` : tw`bg-gray-50`]}>
                                                     <TouchableHighlight style={[tw``, {}]} onPress={() => {}}>
-                                                        <View style={[tw`justify-center items-center`, {flexWrap: 'wrap', flexDirection: 'row'}]}>
-                                                            <Text style={[tw`text-center px-2 text-sm leading-4`, collectData[item.code].selected ? tw`text-white` : tw`text-gray-800`]}>No</Text>
+                                                        <View style={[tw`justify-center items-center h-full`, {flexDirection: 'row'}]}>
+                                                            <Text style={[tw`text-center px-2 text-base mt-0.5 mr-1 leading-4`, collectData[item.code].selected==false ? tw`text-white` : tw`text-gray-800`]}>No</Text>
+                                                            <Icon style={collectData[item.code].selected==false ? tw`opacity-100` : tw`opacity-0`} name="checkcircle" color="white" type="antdesign" size={17} />
                                                             <CheckBox
                                                                 disabled={false}
+                                                                style={styles.checkbox}
                                                                 value={collectData[item.code].selected==false}
                                                                 onValueChange={(newValue) => { setCollectData({...collectData, [item.code]: {...item, selected: false}}, changeCheck(newValue, item.id, item.value, item.image) ) }}
                                                             />
                                                         </View>
                                                     </TouchableHighlight>
                                                 </View>
-                                                <View style={[tw`rounded-full p-1 w-4/12 ml-4`, collectData[item.code].selected==true ? tw`bg-blue-600` : tw`bg-gray-100`]}>
+                                                <View style={[tw`rounded-full w-5/12 h-10 ml-4`, collectData[item.code].selected==true ? tw`bg-blue-600` : tw`bg-gray-50`]}>
                                                     <TouchableHighlight style={[tw``, {}]} onPress={() => {}}>
-                                                        <View style={[tw`justify-center items-center`, {flexWrap: 'wrap', flexDirection: 'row'}]}>
-                                                            <Text style={[tw`text-center px-2 text-sm leading-4`, collectData[item.code].selected ? tw`text-white` : tw`text-gray-800`]}>Si</Text>
+                                                        <View style={[tw`justify-center items-center h-full`, {flexDirection: 'row'}]}>
+                                                            <Text style={[tw`text-center px-2 text-base mt-0.5 mr-1 leading-4`, collectData[item.code].selected==true ? tw`text-white` : tw`text-gray-800`]}>Si</Text>
+                                                            <Icon style={collectData[item.code].selected==true ? tw`opacity-100` : tw`opacity-0`} name="checkcircle" color="white" type="antdesign" size={17} />
                                                             <CheckBox
                                                                 disabled={false}
+                                                                style={styles.checkbox}
                                                                 value={collectData[item.code].selected==true}
                                                                 onValueChange={(newValue) => { setCollectData({...collectData, [item.code]: {...item, selected: true}}, changeCheck(newValue, item.id, item.value, item.image) ) }}
                                                             />

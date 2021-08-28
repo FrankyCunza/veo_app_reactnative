@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet, Image, TouchableHighlight, ActivityIndicator, ScrollView, useWindowDimensions } from 'react-native';
+import { View, Text, FlatList, StyleSheet, Image, TouchableHighlight, ActivityIndicator, ScrollView, useWindowDimensions, BackHandler } from 'react-native';
 import tw from 'tailwind-react-native-classnames';
 import { Icon } from 'react-native-elements'
 
@@ -11,6 +11,9 @@ const Home = ( { route, navigation} ) => {
     const { width } = useWindowDimensions();
 
     useEffect(() => {
+        BackHandler.addEventListener('hardwareBackPress', function () {
+            // return false;
+        });
         if (id && token) {
             getData()
             getBrand()
@@ -106,7 +109,7 @@ const Home = ( { route, navigation} ) => {
     }
 
     return (
-        <ScrollView style={tw`bg-white px-4 pb-4`}>
+        <ScrollView style={tw`bg-white pb-4`}>
             {/* {isLoading ? <ActivityIndicator size="small" color="#0000ff" style={tw`py-8`} /> :
                 (<FlatList data={cards} numColumns={2} 
                     renderItem={renderItem} 
@@ -127,7 +130,7 @@ const Home = ( { route, navigation} ) => {
                     }
                     columnWrapperStyle={{justifyContent: 'space-between', paddingHorizontal: 14, flex: 2}} keyExtractor={((item, i) => item.title)} />)
             } */}
-            <View style={[tw`py-4 items-center mb-1 bg-transparent`, {display: 'flex', flexDirection: 'row', justifyContent: 'center'}]}>
+            <View style={[tw`pb-5 pt-3 items-center mb-1 bg-transparent`, {display: 'flex', flexDirection: 'row', justifyContent: 'center'}]}>
                 <View>
                     <Image source={{uri: "https://veo365.com/assets/images/logo-veo-color-8.png"}} style={[tw`w-12 h-12`, { resizeMode: 'contain' }]} />
                 </View>
@@ -137,18 +140,18 @@ const Home = ( { route, navigation} ) => {
                     </View>
                 ) : <></>}
             </View>
-            <View style={tw`-mt-4 pb-4`}>
+            <View style={tw`-mt-4 px-4 pb-4 pt-2 rounded-tl-3xl shadow-sm  bg-gray-100`}>
                 {isLoading ? <ActivityIndicator size="small" color="#0000ff" style={tw`py-8`} /> :
                     cards.map((item, index) => {
                         return (
                             <View style={[tw``, {width: '100%'}]} key={'menu'+index}>
-                                <TouchableHighlight onPress={() => {goPage(item.routerLink)}} style={[tw`bg-gray-100 rounded-xl mt-4 h-16 p-3`, {}]}>
+                                <TouchableHighlight onPress={() => {goPage(item.routerLink)}} style={[tw`bg-white rounded-xl mt-4 h-16 p-3`, {}]}>
                                     <View style={[tw`h-full items-center`, {display: 'flex', flexWrap: 'nowrap', flexDirection: 'row'}]}>
-                                        <View style={tw`bg-white rounded p-2`}>
+                                        <View style={tw`bg-gray-50 rounded p-2`}>
                                             <Image style={{width: 30, height: 30, resizeMode: 'contain'}} source={{uri: getImage(item.icon)}} />
                                         </View>
                                         <Text style={tw`text-gray-800 text-center px-2 text-sm leading-4`}>{item.title}</Text>
-                                        <View style={tw`absolute top-1 right-1 w-8 h-8 bg-white rounded flex items-center justify-center`}>
+                                        <View style={tw`absolute top-1 right-1 w-8 h-8 bg-gray-50 rounded flex items-center justify-center`}>
                                             <Icon style={tw``} name="arrowright" color="black" type="antdesign" size={14} />
                                         </View>
                                     </View>

@@ -6,6 +6,7 @@ import { useForm, Controller, set } from "react-hook-form"
 import tw from 'tailwind-react-native-classnames'
 import CheckBox from '@react-native-community/checkbox';
 import RNPickerSelect from 'react-native-picker-select'
+import { Icon } from 'react-native-elements'
 
 const Profile = ( { navigation } ) => {
     const { control, register, handleSubmit, setValue, formState: { errors } } = useForm();
@@ -233,6 +234,9 @@ const Profile = ( { navigation } ) => {
                                                                 value={values[item.name] ? values[item.name][el.id] : false}
                                                                 onValueChange={(newValue) => {values[item.name] ? setValues({...values, [item.name]: {...values[item.name], [el.id]: newValue}}) : ''}}
                                                             />
+                                                            {values[item.name] ? values[item.name][el.id] && <View style={tw`absolute top-1 right-1 w-8 h-8 bg-transparent rounded flex items-center justify-center`}>
+                                                                <Icon style={tw``} name="checkcircle" color="white" type="antdesign" size={17} />
+                                                            </View> : <></>}
                                                         </View>
                                                     </TouchableHighlight>
                                                 </View>

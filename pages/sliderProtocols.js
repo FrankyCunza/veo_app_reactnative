@@ -125,10 +125,12 @@ const SliderProtocols = ( { route, navigation } ) => {
 
     const _renderItem = ({item,index}) => {
         return (
-          <View style={[tw`bg-white py-14 px-5 items-center rounded-xl`, {
+          <View style={[tw`bg-white py-10 px-5 items-center rounded-xl`, {
             //   height: 250,
               marginLeft: 0}]}>
-            <Image style={{width: 50, height: 50, resizeMode: 'contain'}} source={{uri: getImage(item.icon)}} />
+                <View style={[tw`bg-gray-50 rounded-full items-center justify-center`, {width: 100, height: 100}]}>
+                    <Image style={{width: 60, height: 60, resizeMode: 'contain'}} source={{uri: getImage(item.icon)}} />
+                </View>
             <Text style={[tw`text-center mt-4 mb-2`, {fontSize: 18}]}>{item.instructions}</Text>
             <View style={tw`flex-row justify-center`}>
                 <View style={[tw`bg-white rounded-full mt-4 h-12 shadow`, { width: '40%' }, steps[item.id].selected == undefined ? tw`opacity-50` : 'opacity-100', steps[item.id].selected ? tw`bg-blue-600` : '']}>
