@@ -240,16 +240,17 @@ const Profile = () => {
                                     <View style={{flex: 1, flexDirection: 'row', flexWrap:'wrap' ,width: width-30, backgroundColor: 'transparent', marginTop: -14, justifyContent: 'space-between', paddingHorizontal: 0}}>
                                         {item.loop.map((el, i) => {
                                             return (
-                                                <View style={[tw`bg-white rounded mt-4 h-28 shadow`, { width: width/2-21}]} key={'box'+i}>
+                                                <View style={[tw`rounded mt-4 h-36 shadow`, values[item.name] ? values[item.name][el.id] ? tw`bg-blue-600` : tw`bg-white` : '', { width: width/2-21}]} key={'box'+i}>
                                                     <TouchableHighlight style={[tw``, {}]} onPress={() => {}}>
                                                         <View style={tw`h-full justify-center items-center`}>
                                                             <Image style={{width: 45, height: 45, resizeMode: 'contain'}} source={{uri: "https://image.flaticon.com/icons/png/512/1021/1021606.png"}} />
-                                                            <Text style={[tw`text-center px-2 text-sm leading-4 mt-2`]}>{el.name}</Text>
+                                                            <Text style={[tw`text-center px-2 text-base leading-5 mt-3`, values[item.name] ? values[item.name][el.id] ? tw`text-white` : tw`text-gray-800` : '', ]}>{el.name}</Text>
                                                             <CheckBox
                                                                 disabled={false}
+                                                                style={tw`bg-red-500 absolute w-full h-full opacity-0`}
                                                                 // style={styles.checkbox}
                                                                 value={values[item.name] ? values[item.name][el.id] : false}
-                                                                onValueChange={(newValue) => { }}
+                                                                onValueChange={(newValue) => {values[item.name] ? setValues({...values, [item.name]: {...values[item.name], [el.id]: newValue}}) : ''}}
                                                             />
                                                         </View>
                                                     </TouchableHighlight>
@@ -271,7 +272,7 @@ const Profile = () => {
             }
             <TouchableOpacity onPress={handleSubmit(onSubmit)} style={tw`bg-blue-600 py-2 rounded-full`}>
                 <Text style={tw`text-center text-white text-xl`}>Enviar</Text>
-            </TouchableOpacity>    
+            </TouchableOpacity>
         </ScrollView>
     )
 }
