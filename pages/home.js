@@ -74,10 +74,11 @@ const Home = ( { route, navigation} ) => {
         }
     }
 
-    const goPage = (name) => {
+    const goPage = (route, title) => {
         // routerLink
-        navigation.navigate(name, {
-            term: name
+        navigation.navigate(route, {
+            term: route,
+            title: title
         })
     }
 
@@ -90,7 +91,7 @@ const Home = ( { route, navigation} ) => {
     const renderItem = ({item}) => {
         return (
             <View style={[tw`bg-white rounded-xl mt-4 h-28 shadow-sm`, {width: '100%'}]}>
-                <TouchableHighlight onPress={() => {goPage(item.routerLink)}} style={[tw``, {}]}>
+                <TouchableHighlight onPress={() => {goPage(item.routerLink, item.title)}} style={[tw``, {}]}>
                     <View style={tw`h-full justify-center items-center`}>
                         {/* <Image
                         source={{
@@ -145,7 +146,7 @@ const Home = ( { route, navigation} ) => {
                     cards.map((item, index) => {
                         return (
                             <View style={[tw``, {width: '100%'}]} key={'menu'+index}>
-                                <TouchableHighlight onPress={() => {goPage(item.routerLink)}} style={[tw`bg-white rounded-xl mt-4 h-16 p-3`, {}]}>
+                                <TouchableHighlight onPress={() => {goPage(item.routerLink, item.title)}} style={[tw`bg-white rounded-xl mt-4 h-16 p-3`, {}]}>
                                     <View style={[tw`h-full items-center`, {display: 'flex', flexWrap: 'nowrap', flexDirection: 'row'}]}>
                                         <View style={tw`bg-gray-50 rounded p-2`}>
                                             <Image style={{width: 30, height: 30, resizeMode: 'contain'}} source={{uri: getImage(item.icon)}} />

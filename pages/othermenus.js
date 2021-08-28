@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View, TouchableHighlight } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import tw from 'tailwind-react-native-classnames';
+import Title from '../components/title';
 
 const othermenus = ( { route, navigation} ) => {
-    const [data, setData] = useState([]);
-    const [isLoading, setLoading] = useState(true);
+    const [ data, setData ] = useState([]);
+    const [ isLoading, setLoading ] = useState(true);
+    const { title } = route.params
     useEffect(() => {
         getData()
     }, [])
@@ -48,7 +50,7 @@ const othermenus = ( { route, navigation} ) => {
 
     return (
         <View>
-            <Text>Hola a todos</Text>
+            <Title title={title} navigation={navigation} />
             {isLoading?<></>:
                 data.data.map((item,index) => {
                     return (

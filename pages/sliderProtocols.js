@@ -135,8 +135,9 @@ const SliderProtocols = ( { route, navigation } ) => {
             <View style={tw`flex-row justify-center`}>
                 <View style={[tw`bg-white rounded-full mt-4 h-12 shadow`, { width: '40%' }, steps[item.id].selected == undefined ? tw`opacity-50` : 'opacity-100', steps[item.id].selected ? tw`bg-blue-600` : '']}>
                     <TouchableHighlight style={[tw``, {}]} onPress={() => {}}>
-                        <View style={tw`h-full justify-center items-center`}> 
+                        <View style={tw`h-full justify-center items-center flex-row`}> 
                             <Text style={[tw`text-center px-2 text-base`, steps[item.id].selected ? tw`text-white` : tw`text-gray-800`]}>Yes</Text>
+                            <Icon style={tw``} name="check" color="white" type="antdesign" size={14} />
                             <CheckBox
                                 disabled={false}
                                 style={styles.checkbox}
@@ -148,8 +149,9 @@ const SliderProtocols = ( { route, navigation } ) => {
                 </View>
                 <View style={[tw`bg-white rounded-full mt-4 h-12 shadow ml-2`, { width: '40%' }, steps[item.id].selected == undefined ? tw`opacity-50` : 'opacity-100', !steps[item.id].selected && steps[item.id].selected!==undefined ? tw`bg-blue-600` : '']}>
                     <TouchableHighlight style={[tw``, {}]} onPress={() => {}}>
-                        <View style={tw`h-full justify-center items-center`}> 
+                        <View style={tw`h-full justify-center items-center flex-row`}> 
                             <Text style={[tw`text-center px-2 text-base`, steps[item.id].selected||steps[item.id].selected==undefined ? tw`text-gray-800` : tw`text-white`]}>No</Text>
+                            <Icon style={tw``} name="check" color="white" type="antdesign" size={14} />
                             <CheckBox
                                 disabled={false}
                                 style={styles.checkbox}
@@ -187,9 +189,15 @@ const SliderProtocols = ( { route, navigation } ) => {
             
             {isLoading ? <ActivityIndicator size="small" color="#0000ff" style={tw`py-8`} /> : 
                 (   
-                    Object.keys(response).length>0 ? <View>
-                        <Text>Hello</Text>
-                    </View> : 
+                    Object.keys(response).length>0 ? 
+                    <View style={tw`px-4 pb-4`}>
+                        <View style={tw`px-4 bg-white p-4 rounded-xl`}>
+                            <Text style={tw`text-base leading-5`}>
+                                {response.message ? response.message : 'Nullam quis quam vitae felis aliquam malesuada. Donec ut nisi euismod, luctus purus ut, iaculis ligula. Pellentesque commodo, justo at imperdiet feugiat, ipsum diam tempus orci, in fermentum nulla metus at nulla. Duis tincidunt nibh a consequat sodales. Sed sollicitudin eros ut imperdiet feugiat. Etiam fermentum tempor tellus, in maximus erat. Praesent quis ipsum nulla. Vivamus tempor dapibus felis non ullamcorper. Nulla pharetra dignissim nisl id eleifend. Nulla dolor eros, tristique in efficitur eu, vehicula eu metus. Pellentesque volutpat vehicula elit id feugiat. Duis dui erat, vestibulum nec sagittis vitae, vulputate vitae diam. Etiam in eros tellus. Donec nec elit sit amet est mollis efficitur quis in libero. Aliquam suscipit pellentesque enim, eu tincidunt velit.'}
+                            </Text>
+                        </View>
+                    </View>
+                     : 
                     Object.keys(data.steps).length-1==activeIndex ? 
                     <View style={[tw`px-4 items-center`, steps[Object.keys(steps)[activeIndex]].selected == undefined ? tw`opacity-30` : tw`opacity-100`, {}]}>
                         <View style={[tw`bg-white rounded-full mt-4 h-12 shadow-sm px-8`, {}]}>
