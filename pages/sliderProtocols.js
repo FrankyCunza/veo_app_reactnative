@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, ScrollView, TouchableHighlight, useWindowDimensions, StyleSheet, ActivityIndicator, Image } from 'react-native'
+import { View, Text, ScrollView, TouchableHighlight, useWindowDimensions, StyleSheet, ActivityIndicator, Image, TouchableOpacity } from 'react-native'
 import Title from '../components/title';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Carousel from 'react-native-snap-carousel';
@@ -218,6 +218,11 @@ const SliderProtocols = ( { route, navigation } ) => {
                             <Text style={tw`text-base leading-5`}>
                                 {response.message ? response.message : 'Nullam quis quam vitae felis aliquam malesuada. Donec ut nisi euismod, luctus purus ut, iaculis ligula. Pellentesque commodo, justo at imperdiet feugiat, ipsum diam tempus orci, in fermentum nulla metus at nulla. Duis tincidunt nibh a consequat sodales. Sed sollicitudin eros ut imperdiet feugiat. Etiam fermentum tempor tellus, in maximus erat. Praesent quis ipsum nulla. Vivamus tempor dapibus felis non ullamcorper. Nulla pharetra dignissim nisl id eleifend. Nulla dolor eros, tristique in efficitur eu, vehicula eu metus. Pellentesque volutpat vehicula elit id feugiat. Duis dui erat, vestibulum nec sagittis vitae, vulputate vitae diam. Etiam in eros tellus. Donec nec elit sit amet est mollis efficitur quis in libero. Aliquam suscipit pellentesque enim, eu tincidunt velit.'}
                             </Text>
+                        </View>
+                        <View style={tw`pt-4`}>
+                            <TouchableOpacity onPress={() => {navigation.goBack()}} style={[tw`bg-blue-600 py-3 rounded-full`, {width: '100%'}]}>
+                                <Text style={tw`text-center text-white text-xl`}>Regresar</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
                      : 
