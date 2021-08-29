@@ -252,6 +252,11 @@ const Profile = ( { navigation } ) => {
                                             )
                                         })}
                                     </View>
+                                    <View style={tw`px-4 pb-4`}>
+                                        <TouchableOpacity onPress={handleSubmit(onSubmit)} style={tw`bg-blue-600 py-3 rounded-full mt-4`}>
+                                            <Text style={tw`text-center text-white text-xl`}>Enviar</Text>
+                                        </TouchableOpacity>
+                                    </View>
                                 </View>
                             )
                         } else {
@@ -264,11 +269,6 @@ const Profile = ( { navigation } ) => {
                     })}
                 </View>
             }
-            <View style={tw`px-4 pb-4`}>
-                <TouchableOpacity onPress={handleSubmit(onSubmit)} style={tw`bg-blue-600 py-3 rounded-full mt-4`}>
-                    <Text style={tw`text-center text-white text-xl`}>Enviar</Text>
-                </TouchableOpacity>
-            </View>
         </ScrollView>
     )
 }
