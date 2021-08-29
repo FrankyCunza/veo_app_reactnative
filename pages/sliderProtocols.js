@@ -165,9 +165,9 @@ const SliderProtocols = ( { route, navigation } ) => {
                     </View>
                 </View>
                 {Object.keys(data.steps).length-1==activeIndex ? 
-                    <View style={[tw`px-4 items-center`, steps[Object.keys(steps)[activeIndex]].selected == undefined ? tw`opacity-30` : tw`opacity-100`, {}]}>
-                        <View style={[tw`bg-white rounded-full mt-4 h-12 shadow-sm px-8`, {}]}>
-                            <TouchableHighlight onPress={() => {steps[Object.keys(steps)[activeIndex]].selected == undefined ? '': senData()}} style={[tw``, {}]}>
+                    <View style={[tw`px-4 items-center pb-4`, steps[Object.keys(steps)[activeIndex]].selected == undefined ? tw`opacity-30` : tw`opacity-100`, {}]}>
+                        <View style={[tw`bg-white rounded-full mt-4 h-12 shadow-sm`, {}]}>
+                            <TouchableHighlight onPress={() => {steps[Object.keys(steps)[activeIndex]].selected == undefined ? '': senData()}} style={[tw`px-8 rounded-full`, {}]}>
                                 <View style={tw`h-full justify-center items-center flex-row`}>
                                     <Text style={tw`text-gray-800 text-center px-2 text-lg mr-2`}>Finalizar</Text>
                                     <Icon style={tw``} name="arrowright" color="black" type="antdesign" size={14} />
