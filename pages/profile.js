@@ -118,10 +118,12 @@ const Profile = ( { navigation } ) => {
                     "code": "SD2005",
                     "version": "4.00",
                     "health_staff": false,
-                    "data": form
+                    "data": values
                 }
             }
 
+            // alert(JSON.stringify(data))
+            // return false
             // alert(JSON.stringify(data))
             // return false
             
@@ -171,7 +173,7 @@ const Profile = ( { navigation } ) => {
                                         <TextInput
                                             style={tw`bg-gray-100 border border-solid border-gray-300 py-3 rounded-xl px-4`}
                                             onBlur={onBlur}
-                                            onChangeText={onChange}
+                                            onChangeText={(newValue) => {onChange, setValues({...values, [item.name]: newValue})}}
                                             defaultValue={values ? values[item.name] : ''}
                                             value={value}
                                         />
