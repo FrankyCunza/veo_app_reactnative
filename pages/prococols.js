@@ -51,7 +51,6 @@ const Protocols = ( { navigation } ) => {
 
     const getImage = (image) => {
         if (image.includes('/static/img')) {
-            // alert(JSON.stringify('https://scraprix.com/img/svgtopng/'+image.split('../assets/svgs/')[1]))
             return 'https://scraprix.com/img/svgtopng/'+image.split('/static/img/protocols/')[1].replace(".svg", ".png")
         }
     }
@@ -77,16 +76,9 @@ const Protocols = ( { navigation } ) => {
     return (
         <View style={tw`bg-white h-full`}>
             <Title title="Protocolos" navigation={navigation} />
-            {/* {data.data ? (data.data.map((el, index) => {
-                return (
-                    <View>
-                        <Text>Hello</Text>
-                    </View>
-                )
-            })) : (<></>)} */}
             {isLoading  ? <ActivityIndicator style={tw`py-12`} size="small" color="#0000ff" /> :
                 (
-                    <FlatList data={data.data} style={tw`pb-4 -mt-4 px-4`} renderItem={renderItem} keyExtractor={((item, i) => item.name)} />
+                    <FlatList data={data.data} style={tw`-mt-4 px-4`} renderItem={renderItem} keyExtractor={((item, i) => item.name)} ListFooterComponent={<View style={tw`pb-4`}></View>} />
                 )
             }
         </View>
