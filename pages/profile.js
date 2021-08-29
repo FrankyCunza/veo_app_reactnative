@@ -231,7 +231,7 @@ const Profile = ( { navigation } ) => {
                                     <View style={{flex: 1, flexDirection: 'row', flexWrap:'wrap' ,width: width-30, backgroundColor: 'transparent', marginTop: -14, justifyContent: 'space-between', paddingHorizontal: 0}}>
                                         {item.loop.map((el, i) => {
                                             return (
-                                                <View style={[tw`rounded-xl mt-4 h-36`, values[item.name] ? values[item.name][el.id] ? tw`bg-blue-600` : tw`bg-gray-100` : '', { width: width/2-21}]} key={'box'+i}>
+                                                <View style={[tw`rounded-xl mt-4 h-36`, values[item.name] ? values[item.name][el.id] ? tw`bg-blue-600` : tw`bg-gray-100` : tw`bg-gray-100`, { width: width/2-21}]} key={'box'+i}>
                                                     <TouchableHighlight style={[tw``, {}]} onPress={() => {}}>
                                                         <View style={tw`h-full justify-center items-center`}>
                                                             <Image style={{width: 45, height: 45, resizeMode: 'contain'}} source={{uri: "https://image.flaticon.com/icons/png/512/1021/1021606.png"}} />
@@ -241,7 +241,7 @@ const Profile = ( { navigation } ) => {
                                                                 style={tw`bg-red-500 absolute w-full h-full opacity-0`}
                                                                 // style={styles.checkbox}
                                                                 value={values[item.name] ? values[item.name][el.id] : false}
-                                                                onValueChange={(newValue) => {values[item.name] ? setValues({...values, [item.name]: {...values[item.name], [el.id]: newValue}}) : ''}}
+                                                                onValueChange={(newValue) => {values[item.name] ? setValues({...values, [item.name]: {...values[item.name], [el.id]: newValue}}) : setValues({...values, [item.name]: {...values[item.name], [el.id]: newValue}})}}
                                                             />
                                                             {values[item.name] ? values[item.name][el.id] && <View style={tw`absolute top-1 right-1 w-8 h-8 bg-transparent rounded flex items-center justify-center`}>
                                                                 <Icon style={tw``} name="checkcircle" color="white" type="antdesign" size={17} />
