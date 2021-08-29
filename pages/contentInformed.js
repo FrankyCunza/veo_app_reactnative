@@ -21,7 +21,7 @@ const contentInformed = ( { route, navigation } ) => {
 
     return (
         <ScrollView>
-            <Title title={title} />
+            <Title title={title} navigation={navigation} />
             <View style={tw`px-4`}>
                 <View style={tw`bg-white rounded shadow p-4`}>
                     <RenderHtml

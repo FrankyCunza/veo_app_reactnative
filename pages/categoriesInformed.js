@@ -41,7 +41,7 @@ const categoriesInformed = ( { route, navigation } ) => {
 
     return (
         <View>
-            <Title title={title} />
+            <Title title={title} navigation={navigation} />
             {isLoading  ? <ActivityIndicator style={tw`py-12`} size="small" color="#0000ff" /> :
                 (
                     <FlatList data={data} style={tw`pb-4 -mt-4`} renderItem={renderItem} keyExtractor={((item, i) => item.name)} />

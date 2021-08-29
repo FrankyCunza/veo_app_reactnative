@@ -66,10 +66,10 @@ const Informed = ( { route, navigation } ) => {
 
     return (
         <View>
-            <Title title="Informed" />
+            <Title title="Informed" navigation={navigation} />
             {isLoading  ? <ActivityIndicator style={tw`py-12`} size="small" color="#0000ff" /> :
                 (
-                    <FlatList data={data.data} style={tw`pb-4 -mt-4`} renderItem={renderItem} keyExtractor={((item, i) => item.name)} />
+                    <FlatList data={data.data} style={tw`pb-4 -mt-4`} renderItem={renderItem} keyExtractor={((item, i) => item.name)} ListFooterComponent={<View style={tw`pb-4`}></View>} />
                 )
             }
         </View>
