@@ -125,44 +125,67 @@ const SliderProtocols = ( { route, navigation } ) => {
 
     const _renderItem = ({item,index}) => {
         return (
-          <View style={[tw`bg-white py-10 px-5 items-center rounded-xl`, {
-            //   height: 250,
-              marginLeft: 0}]}>
-                <View style={[tw`bg-gray-50 rounded-full items-center justify-center`, {width: 100, height: 100}]}>
-                    <Image style={{width: 60, height: 60, resizeMode: 'contain'}} source={{uri: getImage(item.icon)}} />
-                </View>
-            <Text style={[tw`text-center mt-4 mb-2`, {fontSize: 18}]}>{item.instructions}</Text>
-            <View style={tw`flex-row justify-center`}>
-                <View style={[tw`bg-white rounded-full mt-4 h-12 shadow`, { width: '40%' }, steps[item.id].selected == undefined ? tw`opacity-50` : 'opacity-100', steps[item.id].selected ? tw`bg-blue-600` : '']}>
-                    <TouchableHighlight style={[tw``, {}]} onPress={() => {}}>
-                        <View style={tw`h-full justify-center items-center flex-row`}> 
-                            <Text style={[tw`text-center px-2 text-base`, steps[item.id].selected ? tw`text-white` : tw`text-gray-800`]}>Yes</Text>
-                            <Icon style={tw``} name="check" color="white" type="antdesign" size={14} />
-                            <CheckBox
-                                disabled={false}
-                                style={styles.checkbox}
-                                value={steps[item.id].selected}
-                                onValueChange={(newValue) => { setSteps({...steps, [item.id]: {...item, selected: true}} ) }}
-                            />
+            <View>
+                <View style={[tw`bg-white py-10 px-5 items-center rounded-xl`, {
+                    //   height: 250,
+                    marginLeft: 0}]}>
+                        <View style={[tw`bg-gray-50 rounded-full items-center justify-center`, {width: 100, height: 100}]}>
+                            <Image style={{width: 60, height: 60, resizeMode: 'contain'}} source={{uri: getImage(item.icon)}} />
                         </View>
-                    </TouchableHighlight>
-                </View>
-                <View style={[tw`bg-white rounded-full mt-4 h-12 shadow ml-2`, { width: '40%' }, steps[item.id].selected == undefined ? tw`opacity-50` : 'opacity-100', !steps[item.id].selected && steps[item.id].selected!==undefined ? tw`bg-blue-600` : '']}>
-                    <TouchableHighlight style={[tw``, {}]} onPress={() => {}}>
-                        <View style={tw`h-full justify-center items-center flex-row`}> 
-                            <Text style={[tw`text-center px-2 text-base`, steps[item.id].selected||steps[item.id].selected==undefined ? tw`text-gray-800` : tw`text-white`]}>No</Text>
-                            <Icon style={tw``} name="check" color="white" type="antdesign" size={14} />
-                            <CheckBox
-                                disabled={false}
-                                style={styles.checkbox}
-                                value={steps[item.id].selected}
-                                onValueChange={(newValue) => { setSteps({...steps, [item.id]: {...item, selected: false}} ) }}
-                            />
+                    <Text style={[tw`text-center mt-4 mb-2`, {fontSize: 18}]}>{item.instructions}</Text>
+                    <View style={tw`flex-row justify-center`}>
+                        <View style={[tw`bg-white rounded-full mt-4 h-12 shadow`, { width: '40%' }, steps[item.id].selected == undefined ? tw`opacity-50` : 'opacity-100', steps[item.id].selected ? tw`bg-blue-600` : '']}>
+                            <TouchableHighlight style={[tw``, {}]} onPress={() => {}}>
+                                <View style={tw`h-full justify-center items-center flex-row`}> 
+                                    <Text style={[tw`text-center px-2 text-base`, steps[item.id].selected ? tw`text-white` : tw`text-gray-800`]}>Yes</Text>
+                                    <Icon style={tw``} name="check" color="white" type="antdesign" size={14} />
+                                    <CheckBox
+                                        disabled={false}
+                                        style={styles.checkbox}
+                                        value={steps[item.id].selected}
+                                        onValueChange={(newValue) => { setSteps({...steps, [item.id]: {...item, selected: true}} ) }}
+                                    />
+                                </View>
+                            </TouchableHighlight>
                         </View>
-                    </TouchableHighlight>
+                        <View style={[tw`bg-white rounded-full mt-4 h-12 shadow ml-2`, { width: '40%' }, steps[item.id].selected == undefined ? tw`opacity-50` : 'opacity-100', !steps[item.id].selected && steps[item.id].selected!==undefined ? tw`bg-blue-600` : '']}>
+                            <TouchableHighlight style={[tw``, {}]} onPress={() => {}}>
+                                <View style={tw`h-full justify-center items-center flex-row`}> 
+                                    <Text style={[tw`text-center px-2 text-base`, steps[item.id].selected||steps[item.id].selected==undefined ? tw`text-gray-800` : tw`text-white`]}>No</Text>
+                                    <Icon style={tw``} name="check" color="white" type="antdesign" size={14} />
+                                    <CheckBox
+                                        disabled={false}
+                                        style={styles.checkbox}
+                                        value={steps[item.id].selected}
+                                        onValueChange={(newValue) => { setSteps({...steps, [item.id]: {...item, selected: false}} ) }}
+                                    />
+                                </View>
+                            </TouchableHighlight>
+                        </View>
+                    </View>
                 </View>
+                {Object.keys(data.steps).length-1==activeIndex ? 
+                    <View style={[tw`px-4 items-center`, steps[Object.keys(steps)[activeIndex]].selected == undefined ? tw`opacity-30` : tw`opacity-100`, {}]}>
+                        <View style={[tw`bg-white rounded-full mt-4 h-12 shadow-sm px-8`, {}]}>
+                            <TouchableHighlight onPress={() => {steps[Object.keys(steps)[activeIndex]].selected == undefined ? '': senData()}} style={[tw``, {}]}>
+                                <View style={tw`h-full justify-center items-center flex-row`}>
+                                    <Text style={tw`text-gray-800 text-center px-2 text-lg mr-2`}>Finalizar</Text>
+                                    <Icon style={tw``} name="arrowright" color="black" type="antdesign" size={14} />
+                                </View>
+                            </TouchableHighlight>
+                        </View>
+                    </View> : 
+                    <View style={[tw`px-4 items-center pb-4`, steps[Object.keys(steps)[activeIndex]].selected == undefined ? tw`opacity-30` : tw`opacity-100`, {}]}>
+                        <View style={[tw`bg-white rounded-full mt-4 h-12 shadow-sm`, {}]}>
+                            <TouchableHighlight onPress={() => {steps[Object.keys(steps)[activeIndex]].selected == undefined ? '': next()}} style={[tw`px-8 rounded-full`, {}]}>
+                                <View style={tw`h-full justify-center items-center flex-row`}>
+                                    <Text style={tw`text-gray-800 text-center px-2 text-lg mr-2`}>Next</Text>
+                                    <Icon style={tw``} name="arrowright" color="black" type="antdesign" size={18} />
+                                </View>
+                            </TouchableHighlight>
+                        </View>
+                    </View>}
             </View>
-          </View>
         )
     }
 
@@ -198,43 +221,9 @@ const SliderProtocols = ( { route, navigation } ) => {
                         </View>
                     </View>
                      : 
-                    Object.keys(data.steps).length-1==activeIndex ? 
-                    <View style={[tw`px-4 items-center`, steps[Object.keys(steps)[activeIndex]].selected == undefined ? tw`opacity-30` : tw`opacity-100`, {}]}>
-                        <View style={[tw`bg-white rounded-full mt-4 h-12 shadow-sm px-8`, {}]}>
-                            <TouchableHighlight onPress={() => {steps[Object.keys(steps)[activeIndex]].selected == undefined ? '': senData()}} style={[tw``, {}]}>
-                                <View style={tw`h-full justify-center items-center flex-row`}>
-                                    <Text style={tw`text-gray-800 text-center px-2 text-lg mr-2`}>Finalizar</Text>
-                                    <Icon style={tw``} name="arrowright" color="black" type="antdesign" size={14} />
-                                </View>
-                            </TouchableHighlight>
-                        </View>
-                    </View> : 
-                    <View style={[tw`px-4 items-center pb-4`, steps[Object.keys(steps)[activeIndex]].selected == undefined ? tw`opacity-30` : tw`opacity-100`, {}]}>
-                        <View style={[tw`bg-white rounded-full mt-4 h-12 shadow-sm`, {}]}>
-                            <TouchableHighlight onPress={() => {steps[Object.keys(steps)[activeIndex]].selected == undefined ? '': next()}} style={[tw`px-8 rounded-full`, {}]}>
-                                <View style={tw`h-full justify-center items-center flex-row`}>
-                                    <Text style={tw`text-gray-800 text-center px-2 text-lg mr-2`}>Next</Text>
-                                    <Icon style={tw``} name="arrowright" color="black" type="antdesign" size={18} />
-                                </View>
-                            </TouchableHighlight>
-                        </View>
-                    </View>
+                    <></>
                 )
             }
-            
-            {/* <View style={tw`px-4 -mt-4`}>
-                {data.steps ? (
-                    data.steps.map((item, index) => {
-                        return (
-                            <View style={tw`bg-white rounded shadow mt-4 px-6 py-6`} key={'steps'+index}>
-                                <View>
-                                    <Text style={tw`font-medium text-base`}>{item.instructions}</Text>
-                                </View>
-                            </View>
-                        )
-                    })
-                ) : <></>}
-            </View> */}
         </ScrollView>
     )
 }
