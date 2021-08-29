@@ -279,7 +279,7 @@ const Daily = ( { navigation } ) => {
                         )
                     }
                 </View>
-                {isLoadingTraffic ? <></> : (<DailyTraffic name={resultTraffic} />)}
+                {isLoadingTraffic ? <></> : (<DailyTraffic name={resultTraffic} navigation={navigation} />)}
             </ScrollView>
         </SafeAreaView>
     )

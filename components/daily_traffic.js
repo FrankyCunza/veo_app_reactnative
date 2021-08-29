@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import CheckBox from '@react-native-community/checkbox';
 import tw from 'tailwind-react-native-classnames';
 
-const DailyTraffic = ({ name }) => {
+const DailyTraffic = ({ name, navigation }) => {
     const [data, setData] = useState({})
     const [isLoading, setLoading] = useState(true);
     
@@ -76,6 +76,11 @@ const DailyTraffic = ({ name }) => {
                     </View>
                </View>
             : (<></>)}
+            <View style={tw`px-4 pb-4`}>
+                <TouchableOpacity onPress={() => {navigation.goBack()}} style={tw`bg-blue-600 py-3 rounded-full`}>
+                    <Text style={tw`text-center text-white text-xl`}>Regresar</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     )
 }
