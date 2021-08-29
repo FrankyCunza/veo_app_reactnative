@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text, TextInput, View, ScrollView, ActivityIndicator, TouchableOpacity, useWindowDimensions, TouchableHighlight, Image } from 'react-native'
+import { StyleSheet, Text, TextInput, View, ScrollView, ActivityIndicator, TouchableOpacity, useWindowDimensions, TouchableHighlight, Image, Alert } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Title from '../components/title'
 import { useForm, Controller, set } from "react-hook-form"
@@ -94,6 +94,15 @@ const Profile = ( { navigation } ) => {
         }
     }
 
+    const sendAlert = (title, text) =>
+        Alert.alert(
+            title,
+            text,
+            [
+                { text: "OK", onPress: () => navigation.goBack() }
+            ]
+        );
+
     const onSubmit = async(form) => {
         form['document'] = {
             "type_document": "DNI",
@@ -130,7 +139,7 @@ const Profile = ( { navigation } ) => {
                 })
                 .then((response) => response.json())
                 .then((json) => {
-                    alert(JSON.stringify(json))
+                    sendAlert('', json.message)
                 })
                 .catch((error) => {
                     alert('Error Save Form', error)
