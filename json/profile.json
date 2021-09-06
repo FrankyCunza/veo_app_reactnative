@@ -1,0 +1,44 @@
+{
+    "cards": [
+        { 
+            "form_type" : "select",  
+            "title" : "Tipo de documento",  
+            "name" : "type_document",
+            "loop": [
+                { "label": "DNI", "value": "dni" },
+                { "label": "Baseball", "value": "baseball" },
+                { "label": "Hockey", "value": "hockey" }
+            ]
+        },
+        { 
+            "form_type" : "text",  
+            "title" : "Número de documento",  
+            "name" : "document" 
+        },
+        { 
+            "form_type" : "text",  
+            "title" : "Nacionalidad:",  
+            "name" : "nationality" 
+        },  
+        { 
+            "form_type" : "text",  
+            "title" : "Nombres:",  
+            "name" : "full_name" 
+        },
+        { 
+            "form_type" : "checkboxes",  
+            "title" : "Factores de riesgo",  
+            "name" : "risk_factors",
+            "loop": [
+                {
+                    "id": 42,
+                    "name": "Gestante"
+                },
+                {
+                    "id": 43,
+                    "name": "Asma"
+                }
+            ]
+        }
+    ]
+}

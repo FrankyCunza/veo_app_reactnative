@@ -7,7 +7,7 @@ const Home = ( { route, navigation} ) => {
     const [cards, setCards] = useState([]);
     const [brand, setBrand] = useState("")
     const [isLoading, setLoading] = useState(true);
-    const { id, token } = route.params;
+    const { id, token, end_point } = route.params;
     const { width } = useWindowDimensions();
 
     useEffect(() => {
@@ -25,7 +25,9 @@ const Home = ( { route, navigation} ) => {
         try {
         //   const token = await AsyncStorage.getItem('token')
         //   const id = await AsyncStorage.getItem('id')
-          fetch('https://gateway.vim365.com/first-menu/menu', {
+        //   const end_point = await AsyncStorage.getItem('end_point')
+        // alert(end_point)
+          fetch(`https://gateway.vim365.com/first-menu/menu?end_point=${end_point}`, {
                 headers: {
                     'security-header': 'Vim365Aputek/2020.04',
                     Authorization: token,
@@ -67,7 +69,7 @@ const Home = ( { route, navigation} ) => {
         }
     }
 
-    getImage = (image) => {
+    const getImage = (image) => {
         if (image.includes('../assets')) {
             // alert(JSON.stringify('https://scraprix.com/img/svgtopng/'+image.split('../assets/svgs/')[1]))
             return 'https://scraprix.com/img/svgtopng/'+image.split('../assets/svgs/')[1].replace(".svg", ".png")
@@ -146,7 +148,7 @@ const Home = ( { route, navigation} ) => {
                     cards.map((item, index) => {
                         return (
                             <View style={[tw``, {width: '100%'}]} key={'menu'+index}>
-                                <TouchableHighlight onPress={() => {goPage(item.routerLink, item.title)}} style={[tw`bg-white rounded-xl mt-4 h-16 p-3`, {}]}>
+                                <TouchableHighlight onPress={() => {goPage(item.route, item.title)}} style={[tw`bg-white rounded-xl mt-4 h-16 p-3`, {}]}>
                                     <View style={[tw`h-full items-center`, {display: 'flex', flexWrap: 'nowrap', flexDirection: 'row'}]}>
                                         <View style={tw`bg-gray-50 rounded p-2`}>
                                             <Image style={{width: 30, height: 30, resizeMode: 'contain'}} source={{uri: getImage(item.icon)}} />

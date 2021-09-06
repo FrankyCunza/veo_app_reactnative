@@ -27,6 +27,7 @@ const Profile = ( { navigation } ) => {
             const id = await AsyncStorage.getItem('id')
             const company_id = await AsyncStorage.getItem('company_id')
             const end_point = await AsyncStorage.getItem('end_point')
+            // alert(company_id)
             fetch(`https://gateway.vim365.com/checkcards/cards?company_id=${company_id}&end_point=${end_point}&page=profileFormReactive`, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -48,11 +49,9 @@ const Profile = ( { navigation } ) => {
                             // alert(json.data[i].title)
                         }
                     }
-                    // setValues(format)
                     getKeyValues = format
-                    // test = format
                     getValues()
-                    // alert(JSON.stringify(values))
+                    // alert(JSON.stringify(json))
                 })
                 .catch((error) => {
                     alert(error)
@@ -79,12 +78,13 @@ const Profile = ( { navigation } ) => {
                     setLoading(false)
                     let getValues = {...getKeyValues} 
                     for (const [key, value] of Object.entries(getKeyValues)) {
-                        if (key in json.data.data) {
-                            getValues[key] = json.data.data[key]
+                        if (key in json.data.form) {
+                            getValues[key] = json.data.form[key]
                         }
                     }
                     setValues(getValues)
                     // alert(JSON.stringify(getValues))
+                    // alert(JSON.stringify(json))
                 })
                 .catch((error) => {
                     alert(error)
@@ -104,10 +104,10 @@ const Profile = ( { navigation } ) => {
         );
 
     const onSubmit = async(form) => {
-        form['document'] = {
-            "type_document": "DNI",
-            "document": "99999716"
-        }
+        // form['document'] = {
+        //     "type_document": "DNI",
+        //     "document": "99999716"
+        // }
         // alert(JSON.stringify(form))
         // return false
         try {
@@ -118,7 +118,7 @@ const Profile = ( { navigation } ) => {
                     "code": "SD2005",
                     "version": "4.00",
                     "health_staff": false,
-                    "data": values
+                    "form": values
                 }
             }
 
@@ -189,29 +189,6 @@ const Profile = ( { navigation } ) => {
                                     <Text style={tw`text-gray-800 text-2xl font-bold`}>{item.title}</Text>
                                 </View>
                             )
-                        } else if (item.form_type == 'number') {
-                            return (
-                                <View style={tw`mt-2`} key={'form'+index}>
-                                    <Text style={tw`text-gray-800 mb-1 text-base`}>{item.title}</Text>
-                                    <Controller
-                                        control={control}
-                                        rules={{
-                                            required: false,
-                                        }}
-                                        render={({ field: { onChange, onBlur, value } }) => (
-                                        <TextInput
-                                            style={tw`bg-gray-100 border border-solid border-gray-300 py-3 rounded-xl px-4`}
-                                            onBlur={onBlur}
-                                            onChangeText={onChange}
-                                            defaultValue={values ? values[item.name] : ''}
-                                            value={value}
-                                        />
-                                        )}
-                                        name={item.name}
-                                        // defaultValue=""
-                                    />
-                                </View>
-                            )
                         } else if (item.form_type == 'select') {
                             return (
                                 <View key={item.name} style={tw`mt-2`}>
@@ -221,7 +198,7 @@ const Profile = ( { navigation } ) => {
                                             style={tw`bg-white`}
                                             value={values ? values[item.name] : ''}
                                             onValueChange={(value) => setValue(item.name, value)}
-                                            items={item.data}
+                                            items={item.loop}
                                         />
                                     </View>
                                 </View>
@@ -254,11 +231,6 @@ const Profile = ( { navigation } ) => {
                                             )
                                         })}
                                     </View>
-                                    <View style={tw`px-4 pb-4`}>
-                                        <TouchableOpacity onPress={handleSubmit(onSubmit)} style={tw`bg-blue-600 py-3 rounded-full mt-4`}>
-                                            <Text style={tw`text-center text-white text-xl`}>Enviar</Text>
-                                        </TouchableOpacity>
-                                    </View>
                                 </View>
                             )
                         } else {
@@ -269,6 +241,11 @@ const Profile = ( { navigation } ) => {
                             )
                         }
                     })}
+                    <View style={tw`px-4 pb-4`}>
+                        <TouchableOpacity onPress={handleSubmit(onSubmit)} style={tw`bg-blue-600 py-3 rounded-full mt-4`}>
+                            <Text style={tw`text-center text-white text-xl`}>Enviar</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             }
         </ScrollView>

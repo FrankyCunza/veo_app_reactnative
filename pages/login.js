@@ -31,6 +31,9 @@ const Login = ( { navigation } ) => {
             password: data.password,
             social: false
         }
+        // https://gateway.vim365.com/
+        // https://gateway.vim365.com/
+        https://gateway.vim365.com
         try {
             fetch(`https://gateway.vim365.com/users/checkuser?user=${param.user}&password=${param.password}&social=false`, {
                 headers: {
@@ -41,9 +44,12 @@ const Login = ( { navigation } ) => {
             .then((json) => {
                 storeData(json)
                 setLoading(false)
+                // alert(JSON.stringify(json))
+                // return false
                 navigation.navigate('Home', {
                     token: json.token,
-                    id: json.id
+                    id: json.id,
+                    end_point: json.end_point
                 })
             })
             .catch((error) => {
