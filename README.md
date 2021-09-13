@@ -48,3 +48,9 @@ https://medium.com/geekculture/react-native-generate-apk-debug-and-release-apk-4
 
 ## RUN DEVICE ID
 `react-native run-android --deviceId DEVICEID`
+
+`npm start -- --reset-cache`
+
+watchman watch-del-all && rm -rf $TMPDIR/react-native-packager-cache-* &&
+rm -rf $TMPDIR/metro-bundler-cache-* && rm -rf node_modules/ && npm cache clean --force &&
+npm install && npm start -- --reset-cache
